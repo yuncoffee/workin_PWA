@@ -6,5 +6,8 @@ module.exports = withPWA({
     pwa: {
         dest: "public",
         runtimeCaching,
+        sassOptions: {
+            includePaths: [path.join(__dirname, "styles")],
+        },
     },
 })
