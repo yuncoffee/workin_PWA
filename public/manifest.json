@@ -2,7 +2,7 @@
     "name": "Warkin",
     "short_name": "Warkin",
     "theme_color": "#ffffff",
-    "background_color": "#004740",
+    "background_color": "#0052ff",
     "display": "standalone",
     "orientation": "portrait",
     "scope": "/",

@@ -2,6 +2,7 @@ import Head from "next/head"
 import "../styles/globals.css"
 import "../styles/_global.scss"
 import { AppProps } from "next/app"
+import Layout from "../src/components/Layout"
 
 export default function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -34,9 +35,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                     rel="apple-touch-icon"
                     href="/images/icons/apple-icon.png"
                 ></link>
+                <link
+                    href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+                    rel="stylesheet"
+                />
                 <meta name="theme-color" content="#317EFB" />
             </Head>
-            <Component {...pageProps} />
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
         </>
     )
 }
