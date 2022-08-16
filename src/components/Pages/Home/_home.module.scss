@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+.main {
+    background: tomato;
+    height: calc(100% - 144px);
+    position: relative;
+
+    &[data-device="ios"] {
+        height: calc(100% - 178px);
+    }
+}

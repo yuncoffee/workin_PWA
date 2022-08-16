@@ -1,11 +1,14 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React, { useEffect } from "react"
+import { useRecoilValue } from "recoil"
+import { rcDeviceAtom } from "../../recoil/Common"
 
 import styles from "./_Nav.module.scss"
 
 function GlobalNav() {
     const router = useRouter()
+    const deviceAtom = useRecoilValue(rcDeviceAtom)
 
     const NAV_LIST = [
         { name: "Home", iconName: "ri-home-6-fill", pathName: "/" },
@@ -18,8 +21,12 @@ function GlobalNav() {
         { name: "ID Card", iconName: "ri-user-3-fill", pathName: "/idcard" },
     ]
 
+    useEffect(() => {
+        console.log(deviceAtom)
+    }, [])
+
     return (
-        <article className={styles.globalNav}>
+        <article className={styles.globalNav} data-device={deviceAtom.device}>
             {NAV_LIST.map((navItem, index) => {
                 return (
                     <section

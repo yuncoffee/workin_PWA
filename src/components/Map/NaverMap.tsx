@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import styles from "./_Map.module.scss"
 
 function NaverMap() {
     useEffect(() => {
@@ -25,7 +26,7 @@ function NaverMap() {
     }, [])
 
     return (
-        <article style={{ width: "100vw", height: "100vh" }}>
+        <article className={styles.naverMap}>
             <div id="map" style={{ width: "100%", height: "100%" }}></div>
         </article>
     )

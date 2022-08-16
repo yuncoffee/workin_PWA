@@ -3,10 +3,11 @@ import "../styles/globals.css"
 import "../styles/_global.scss"
 import { AppProps } from "next/app"
 import Layout from "../src/components/Layout"
+import { RecoilRoot } from "recoil"
 
 export default function MyApp({ Component, pageProps }: AppProps) {
     return (
-        <>
+        <RecoilRoot>
             <Head>
                 <meta charSet="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -44,6 +45,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             <Layout>
                 <Component {...pageProps} />
             </Layout>
-        </>
+        </RecoilRoot>
     )
 }

@@ -1,7 +1,268 @@
 @charset "utf-8";
+@import "./variables/variables";
+@import "./mixin/mixin";
 
-html {
-    font-size: 10px;
+#__next {
+    height: 100%;
 }
 
-$sy-pri-normal: #0052ff;
+input,
+textarea,
+select,
+button {
+    font-family: inherit;
+    outline: none;
+    border: 0;
+    @include font(1.4rem, 1.8em, 600, 0);
+}
+
+a {
+    text-decoration: none;
+    color: hsla(var(--sy-gray-07), 1);
+
+    @include h6;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:visited {
+        text-decoration: none;
+    }
+}
+
+h1 {
+    @include h1;
+    color: hsla(var(--sy-gray-09), 1);
+}
+
+h2 {
+    @include h2;
+
+    color: hsla(var(--sy-gray-09), 1);
+}
+
+h3 {
+    @include h3;
+    color: hsla(var(--sy-gray-07), 1);
+}
+
+h4 {
+    @include h4;
+    color: hsla(var(--sy-gray-07), 1);
+}
+
+h5 {
+    @include h5;
+    color: hsla(var(--sy-gray-07), 1);
+}
+
+h6 {
+    @include h6;
+    color: hsla(var(--sy-gray-07), 1);
+}
+
+$textAligns: "left", "right", "center";
+@each $textAlign in $textAligns {
+    [s-text-align="#{$textAlign}"] {
+        text-align: #{$textAlign};
+    }
+}
+
+$textDecorations: "none", "line-through", "overline", "underline";
+@each $textDecoration in $textDecorations {
+    [s-text-deco="#{$textDecoration}"] {
+        text-decoration: #{$textDecoration};
+    }
+}
+
+$boxTypes: "v-box", "h-box";
+@each $boxType in $boxTypes {
+    [s-box="#{$boxType}"] {
+        display: flex;
+        @if $boxType == "v-box" {
+            flex-direction: column;
+        }
+    }
+}
+
+// display 값
+$displays: "flex", "block", "inline", "inline-block", "none";
+@each $display in $displays {
+    [s-display="#{$display}"] {
+        display: #{$display};
+    }
+}
+
+// flex-wrap 값
+$flexWraps: "no-wrap", "wrap", "wrap-reverse", "unset";
+@each $flexWrap in $flexWraps {
+    [s-flex-wrap="#{$flexWrap}"] {
+        flex-wrap: #{$flexWrap};
+    }
+}
+
+// flex-direction 값
+$directions: "column", "column-reverse", "row", "row-reverse";
+@each $direction in $directions {
+    [s-direction="#{$direction}"] {
+        flex-direction: #{$direction};
+    }
+}
+
+// align-items
+$alignItems: "center", "start", "end", "flex-start", "flex-end", "baseline";
+@each $alignItem in $alignItems {
+    [s-align="#{$alignItem}"] {
+        align-items: #{$alignItem};
+    }
+}
+
+// justify-content
+$justifyContents: "center", "left", "right", "start", "end", "flex-start",
+    "flex-end", "space-between", "space-around", "space-around";
+@each $justifyContent in $justifyContents {
+    [s-justify="#{$justifyContent}"] {
+        justify-content: #{$justifyContent};
+    }
+}
+
+$positions: "static", "relative", "absolute", "fixed", "sticky";
+@each $position in $positions {
+    [s-position="#{$position}"] {
+        position: #{$position};
+    }
+}
+
+$spaces: 0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 24, 28, 30, 32, 36, 40, 48, 56, 64,
+    72, 80;
+@each $space in $spaces {
+    //  margin
+    [s-margin="#{$space}px"] {
+        margin: #{$space}px;
+    }
+    [s-margin-x="#{$space}px"] {
+        margin: 0 #{$space}px;
+    }
+    [s-margin-y="#{$space}px"] {
+        margin: #{$space}px 0;
+    }
+    [s-margin-top="#{$space}px"] {
+        margin-top: #{$space}px;
+    }
+    [s-margin-btm="#{$space}px"] {
+        margin-bottom: #{$space}px;
+    }
+    [s-margin-left="#{$space}px"] {
+        margin-left: #{$space}px;
+    }
+    [s-margin-right="#{$space}px"] {
+        margin-right: #{$space}px;
+    }
+
+    //  padding
+    [s-padding="#{$space}px"] {
+        padding: #{$space}px;
+    }
+    [s-padding-x="#{$space}px"] {
+        padding: 0 #{$space}px;
+    }
+    [s-padding-y="#{$space}px"] {
+        padding: #{$space}px 0;
+    }
+    [s-padding-top="#{$space}px"] {
+        padding-top: #{$space}px;
+    }
+    [s-padding-btm="#{$space}px"] {
+        padding-bottom: #{$space}px;
+    }
+    [s-padding-left="#{$space}px"] {
+        padding-left: #{$space}px;
+    }
+    [s-padding-right="#{$space}px"] {
+        padding-right: #{$space}px;
+    }
+
+    //  top, bottom, left, right
+    [s-top="#{$space}px"] {
+        top: #{$space}px;
+    }
+    [s-btm="#{$space}px"] {
+        bottom: #{$space}px;
+    }
+    [s-left="#{$space}px"] {
+        left: #{$space}px;
+    }
+    [s-right="#{$space}px"] {
+        right: #{$space}px;
+    }
+}
+
+// gap 범위 0 ~ 64px
+@for $gaps from 0 to 64 {
+    [s-gap="#{$gaps}px"] {
+        gap: #{$gaps}px;
+    }
+}
+
+$radiuses: 2, 3, 4, 6, 8, 12, 16, 24, 50;
+@each $radius in $radiuses {
+    [s-radius="#{$radius}px"] {
+        border-radius: #{$radius}px;
+    }
+}
+
+$font-sizes: "h1", "h2", "h3", "h4", "h5", "h6";
+@each $font-size in $font-sizes {
+    [s-font-size="#{$font-size}"] {
+        @if $font-size == "h1" {
+            @include h1();
+        }
+        @if $font-size == "h2" {
+            @include h2();
+        }
+        @if $font-size == "h3" {
+            @include h3();
+        }
+        @if $font-size == "h4" {
+            @include h4();
+        }
+        @if $font-size == "h5" {
+            @include h5();
+        }
+        @if $font-size == "h6" {
+            @include h6();
+        }
+    }
+}
+
+$font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+@each $font-weight in $font-weights {
+    [s-font-weight="#{$font-weight}"] {
+        font-weight: $font-weight;
+    }
+}
+
+[s-divider="line"] {
+    width: 100%;
+    height: 1px;
+    min-height: 1px;
+    background: hsla(var(--sy-gray-04), 1);
+}
+
+:root {
+    @each $name, $map in $graySystemLight {
+        @each $color in $map {
+            --#{$name}: #{$color};
+        }
+    }
+
+    @each $name, $map in $colorSystemLight {
+        @each $mode, $color in $map {
+            --#{$name}-#{$mode}: #{$color};
+        }
+    }
+
+    --sy-shadow: 0, 0%, 17%;
+    --any-white: 0, 0%, 100%;
+}

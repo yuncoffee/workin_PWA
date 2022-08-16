@@ -1,0 +1,143 @@
+@charset "utf-8";
+@use "../variables/variables";
+
+@mixin font($size: 1.6rem, $height: 1.5em, $weight: 500, $spacing: 0) {
+    font-size: $size;
+    line-height: $height;
+    font-weight: $weight;
+    letter-spacing: $spacing;
+}
+
+@mixin ellipsis-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
+}
+@mixin ellipsis-text2($length: 2) {
+    display: -webkit-box;
+    -webkit-line-clamp: $length;
+    -webkit-box-orient: vertical;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin h1 {
+    @include font(2.8rem, 4.2rem, 800, 0);
+}
+
+@mixin h2 {
+    @include font(2.4rem, 1.8em, 800, 0);
+}
+
+@mixin h3 {
+    @include font(2rem, 1.8em, 500, 0);
+}
+
+@mixin h4 {
+    @include font(1.6rem, 1.8em, 500, 0);
+}
+
+@mixin h5 {
+    @include font(1.4rem, 1.8em, 500, 0);
+}
+
+@mixin h6 {
+    @include font(1.2rem, 1.8em, 400, 0);
+}
+
+@mixin xl {
+    padding: variables.$xlSize;
+    font-weight: 600;
+}
+
+@mixin lg {
+    padding: variables.$lgSize;
+    font-weight: 600;
+}
+
+@mixin mid {
+    padding: variables.$midSize;
+    font-weight: 500;
+}
+
+@mixin sm {
+    @include h6;
+    font-weight: 500;
+    padding: variables.$smSize;
+}
+
+@mixin xs {
+    @include h6;
+    font-weight: 500;
+    padding: variables.$xsSize;
+}
+
+@mixin beforeLine(
+    $w: calc(100% - 2px),
+    $h: calc(100% - 2px),
+    $top: "",
+    $btm: "",
+    $left: "",
+    $right: ""
+) {
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: $w;
+        height: $h;
+
+        @if $top != "" {
+            border-top-color: $top;
+            border-top-style: solid;
+            border-top-width: variables.$borderSize;
+        }
+
+        @if $btm != "" {
+            border-bottom-color: $btm;
+            border-bottom-style: solid;
+            border-bottom-width: variables.$borderSize;
+        }
+
+        @if $left != "" {
+            border-left-color: $left;
+            border-left-style: solid;
+            border-left-width: variables.$borderSize;
+        }
+
+        @if $right != "" {
+            border-right-color: $right;
+            border-right-style: solid;
+            border-right-width: variables.$borderSize;
+        }
+        z-index: -1;
+    }
+}
+
+@mixin scrollbar(
+    $bg-c: var(--sy-gray-03),
+    $bg-a: 1,
+    $track-c: var(--sy-gray-03),
+    $track-a: 0,
+    $thumb-c: var(--sy-gray-05),
+    $thumb-a: 0.4
+) {
+    &::-webkit-scrollbar {
+        background: hsla($bg-c, $bg-a);
+        width: 10px;
+        height: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: hsla($track-c, $track-a);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: hsla($thumb-c, $thumb-a);
+        border: 1.5px solid hsla($bg-c, $bg-a);
+        border-radius: 8px;
+    }
+}

@@ -11,6 +11,15 @@
     display: flex;
     box-shadow: 0 -4px 4px 0 rgba(#2b2b2b, 0.1);
 
+    &[data-device="ios"] {
+        max-height: 83px;
+        min-height: 83px;
+
+        .globalNav__item {
+            max-height: 49px;
+        }
+    }
+
     &__item {
         width: 100%;
         padding: 1px 0;
@@ -19,7 +28,10 @@
         color: #c4c4c4;
 
         &[data-current="true"] {
-            color: #0052ff;
+            a,
+            span {
+                color: hsla(var(--sy-pri-normal), 1);
+            }
         }
 
         a {
@@ -28,6 +40,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+            color: hsla(var(--sy-gray-04), 1);
         }
 
         i {
@@ -37,6 +50,7 @@
         span {
             font-size: 1rem;
             font-weight: 1.5em;
+            color: hsla(var(--sy-gray-05), 1);
         }
     }
 }

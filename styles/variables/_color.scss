@@ -1,0 +1,79 @@
+@charset "utf-8";
+
+$syGray01: 0, 0%, 97%; //#f8f8f8
+$syGray02: 0, 0%, 96%; // #f6f6f6
+$syGray03: 0, 0%, 92%;
+$syGray04: 0, 0%, 88%;
+$syGray05: 0, 0%, 77%;
+$syGray06: 0, 0%, 53%;
+$syGray07: 0, 0%, 38%;
+$syGray08: 0, 0%, 26%;
+$syGray09: 0, 0%, 20%;
+$syBlack: 0, 0%, 17%;
+$syWhite: 0, 0%, 100%;
+
+$syPri: 221, 100%;
+$syPriLightness: 50%;
+$syPriLightness_light: calc($syPriLightness + 10%);
+$syPriLightness_dark: calc($syPriLightness - 10%);
+
+$graySystemLight: () !default;
+$graySystemLight: map-merge(
+    (
+        "sy-gray-01": (
+            $syGray01,
+        ),
+        "sy-gray-02": (
+            $syGray02,
+        ),
+        "sy-gray-03": (
+            $syGray03,
+        ),
+        "sy-gray-04": (
+            $syGray04,
+        ),
+        "sy-gray-05": (
+            $syGray05,
+        ),
+        "sy-gray-06": (
+            $syGray06,
+        ),
+        "sy-gray-07": (
+            $syGray07,
+        ),
+        "sy-gray-08": (
+            $syGray08,
+        ),
+        "sy-gray-09": (
+            $syGray09,
+        ),
+        "sy-black": (
+            $syBlack,
+        ),
+        "sy-white": (
+            $syWhite,
+        ),
+    ),
+    $graySystemLight
+);
+
+$colorSystemLight: () !default;
+$colorSystemLight: map-merge(
+    (
+        "sy-pri": (
+            "light": (
+                $syPri,
+                $syPriLightness_light,
+            ),
+            "normal": (
+                $syPri,
+                $syPriLightness,
+            ),
+            "dark": (
+                $syPri,
+                $syPriLightness_dark,
+            ),
+        ),
+    ),
+    $colorSystemLight
+);
