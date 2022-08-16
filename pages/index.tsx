@@ -2,7 +2,7 @@ import Head from "next/head"
 import { useEffect } from "react"
 import { useRecoilValue } from "recoil"
 import NaverMap from "../src/components/Map/NaverMap"
-import styles from "../src/components/Pages/Home/_Home.module.scss"
+import styles from "../src/components/Pages/Home/_home.module.scss"
 import { rcDeviceAtom } from "../src/recoil/Common"
 
 export default function Home() {
