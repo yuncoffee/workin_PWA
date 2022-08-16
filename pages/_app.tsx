@@ -40,7 +40,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                     href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
                     rel="stylesheet"
                 />
-                <meta name="theme-color" content="#317EFB" />
+                <meta name="theme-color" content="#0052FF" />
             </Head>
             <Layout>
                 <Component {...pageProps} />
