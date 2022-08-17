@@ -6,3 +6,14 @@ export const rcDeviceAtom = atom({
         device: "",
     },
 })
+
+export const rcCurrentLocationAtom = atom<{
+    location: string
+    coordinate: number[]
+}>({
+    key: "rcCurrentLoactionAtom",
+    default: {
+        location: "",
+        coordinate: [],
+    },
+})

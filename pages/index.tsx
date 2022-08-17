@@ -1,15 +1,33 @@
 import Head from "next/head"
 import { useEffect } from "react"
-import { useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import NaverMap from "../src/components/Map/NaverMap"
 import styles from "../src/components/Pages/Home/_home.module.scss"
-import { rcDeviceAtom } from "../src/recoil/Common"
+import { rcCurrentLocationAtom, rcDeviceAtom } from "../src/recoil/Common"
 
 export default function Home() {
     const deviceAtom = useRecoilValue(rcDeviceAtom)
+    const [currentLocation, setCurrentLocation] = useRecoilState(
+        rcCurrentLocationAtom,
+    )
 
     useEffect(() => {
-        console.log("test")
+        if (navigator.geolocation) {
+            console.log("yes!")
+            navigator.geolocation.getCurrentPosition((position) => {
+                console.log(position)
+
+                const latitude = position.coords.latitude
+                const longitude = position.coords.longitude
+
+                setCurrentLocation({
+                    ...currentLocation,
+                    coordinate: [latitude, longitude],
+                })
+            })
+        } else {
+            alert("위치정보 사용불가")
+        }
         console.log(process.env.NEXT_PUBLIC_MAP_CLIENT_ID)
     }, [])
 
@@ -24,6 +42,7 @@ export default function Home() {
 
             <main className={styles.main} data-device={deviceAtom.device}>
                 <NaverMap />
+
                 <p className={styles.description}>
                     Get started by editing{" "}
                     <code className={styles.code}>pages/index.js</code>
