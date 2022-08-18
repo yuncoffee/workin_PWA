@@ -6,7 +6,7 @@ import NaverMap from "../src/components/Map/NaverMap"
 import CheckContainer from "../src/components/Pages/Home/CheckContainer/CheckContainer"
 import NoticeContainer from "../src/components/Pages/Home/NoticeContainer/NoticeContainer"
 import WorkDetailContainer from "../src/components/Pages/Home/WorkDetailContainer/WorkDetailContainer"
-import styles from "../src/components/Pages/Home/_Home.module.scss"
+import styles from "../src/components/Pages/Home/_home.module.scss"
 
 export default function Home() {
     const deviceAtom = useRecoilValue(rcDeviceAtom)

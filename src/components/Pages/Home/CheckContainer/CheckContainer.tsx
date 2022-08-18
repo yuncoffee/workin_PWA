@@ -1,4 +1,4 @@
-import styles from "../_Home.module.scss"
+import styles from "../_home.module.scss"
 
 function CheckContainer() {
     return (
