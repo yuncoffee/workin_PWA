@@ -1,12 +1,12 @@
 import Head from "next/head"
 import { useEffect } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
+import { rcCurrentLocationAtom, rcDeviceAtom } from "../src/recoil/Common"
 import NaverMap from "../src/components/Map/NaverMap"
 import CheckContainer from "../src/components/Pages/Home/CheckContainer/CheckContainer"
 import NoticeContainer from "../src/components/Pages/Home/NoticeContainer/NoticeContainer"
 import WorkDetailContainer from "../src/components/Pages/Home/WorkDetailContainer/WorkDetailContainer"
 import styles from "../src/components/Pages/Home/_Home.module.scss"
-import { rcCurrentLocationAtom, rcDeviceAtom } from "../src/recoil/Common"
 
 export default function Home() {
     const deviceAtom = useRecoilValue(rcDeviceAtom)
