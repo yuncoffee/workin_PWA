@@ -1,5 +1,5 @@
-import React from "react"
 import styles from "../_Home.module.scss"
+
 function CheckContainer() {
     return (
         <article className={styles.checkContainer}>
