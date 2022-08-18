@@ -18,6 +18,14 @@ const nextConfig = {
     sassOptions: {
         includePaths: [path.join(__dirname, "styles")],
     },
+    async rewrites() {
+        return [
+            {
+                source: "/naver/:path*",
+                destination: `https://naveropenapi.apigw.ntruss.com/:path*`,
+            },
+        ]
+    },
 }
 
 module.exports = withPlugins(

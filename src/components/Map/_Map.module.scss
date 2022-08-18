@@ -5,3 +5,24 @@
     height: 100%;
     position: relative;
 }
+
+.canvas {
+    width: 100%;
+    height: calc(100% - 88px);
+}
+
+.mapInfoContainer {
+    background: white;
+    min-height: 44px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+        min-width: 36px;
+        min-height: 36px;
+        max-width: 36px;
+        max-height: 36px;
+    }
+}
