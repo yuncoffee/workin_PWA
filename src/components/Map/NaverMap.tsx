@@ -47,7 +47,7 @@ function NaverMap() {
         }
         initMap()
 
-        if (currentLocation) {
+        if (currentLocation && currentLocation.coordinate.length > 0) {
             reqCurrentAddress(
                 currentLocation.coordinate[1],
                 currentLocation.coordinate[0],
