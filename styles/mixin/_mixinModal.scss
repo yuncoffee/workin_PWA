@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 @use "./mixin";
-@use "../Variables/variables";
+@use "../variables/variables";
 
 @mixin smallModal() {
     @include mixin.absoluteCenter();
@@ -89,17 +89,16 @@
         z-index: -1;
     }
 
-    .btnReset{
-        i{
+    .btnReset {
+        i {
             transition: variables.$transition;
         }
-        &:hover{
-            i{
+        &:hover {
+            i {
                 transform: translate3d(-50%, -50%, 0) rotate(30deg);
             }
         }
     }
-
 
     &__header {
         padding: 16px;
@@ -108,11 +107,10 @@
         align-items: center;
         color: hsla(var(--sy-gray-07), 1);
 
-        h4{
+        h4 {
             display: flex;
             align-items: center;
             gap: 4px;
         }
     }
-
 }

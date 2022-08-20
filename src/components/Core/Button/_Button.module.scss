@@ -2,7 +2,7 @@
 
 @use "../../../../styles/mixin/mixin";
 @use "../../../../styles/mixin/mixinButton";
-@use "../../../../styles/Variables/variables";
+@use "../../../../styles/variables/variables";
 
 @mixin buttonSize($type: "button") {
     @include mixin.lySize();
@@ -86,9 +86,6 @@
 
     &:hover {
         background-color: hsla(var(--sy-pri-dark), 1);
-
-
-
     }
 
     &:disabled[data-c-type][data-c-size] {
@@ -111,22 +108,19 @@
     @include buttonSize();
     @include mixinButton.buttonColor();
 
-    &[data-c-type="block-line"]{
-        [data-c-color=pri]::after{
+    &[data-c-type="block-line"] {
+        [data-c-color="pri"]::after {
             border-color: hsla(var(--sy-pri-normal), 1);
             border-top-color: hsla(var(--sy-pri-normal), 0);
         }
 
-        &:hover{
-            [data-c-color=pri]::after{
+        &:hover {
+            [data-c-color="pri"]::after {
                 border-color: hsla(var(--sy-white), 1);
                 border-top-color: hsla(var(--sy-white), 0);
             }
         }
-
     }
-
-
 }
 
 .icon {
@@ -204,7 +198,6 @@
         &:hover,
         &.isActive {
             background: hsla(var(--sy-white), 1);
-        
         }
     }
 

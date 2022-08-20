@@ -1,6 +1,6 @@
 @charset "utf-8";
 @use "../../../../styles/Mixin/mixin";
-@use "../../../../styles/Variables/variables";
+@use "../../../../styles/variables/variables";
 
 $contentsColor: hsla(var(--sy-white), 1);
 $borderColor: hsla(var(--sy-gray-09), 1);

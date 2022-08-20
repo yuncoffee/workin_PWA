@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 @use "../../../../styles/Mixin/mixin";
-@use "../../../../styles/Variables/variables";
+@use "../../../../styles/variables/variables";
 
 $optionsBackgroundColor: hsla(var(--sy-gray-02), 1);
 $optionsBackgroundColor__hover: hsla(var(--sy-gray-05), 0.3);

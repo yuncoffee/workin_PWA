@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 @use "./mixin";
-@use "../Variables/variables";
+@use "../variables/variables";
 
 $buttonColorList: () !default;
 $buttonColorList: map-merge(

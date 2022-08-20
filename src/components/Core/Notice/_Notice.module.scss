@@ -2,7 +2,7 @@
 
 @use "../../../../styles/Mixin/mixin";
 @use "../../../../styles/mixin/mixinButton";
-@use "../../../../styles/Variables/variables";
+@use "../../../../styles/variables/variables";
 
 $border: variables.$defaultBorder;
 $transition: variables.$transition;
@@ -103,38 +103,38 @@ $tagBackgroundColor_none: hsla(var(--sy-gray-03), 0);
     }
 }
 
-.envBadge{
-    &[data-type="before"]{
+.envBadge {
+    &[data-type="before"] {
         background: hsla(var(--sy-livid-normal), 0.2);
         border: $border hsla(var(--sy-livid-normal), 0);
         color: hsla(var(--sy-livid-normal), 1);
     }
-    &[data-type="created"]{
+    &[data-type="created"] {
         background: hsla(var(--sy-purple-normal), 0.3);
         border: $border hsla(var(--sy-purple-normal), 0);
         color: hsla(var(--sy-purple-normal), 1);
     }
-    &[data-type="planned"]{
+    &[data-type="planned"] {
         background: hsla(var(--sy-cyan-normal), 0.25);
         border: $border hsla(var(--sy-cyan-normal), 0);
         color: hsla(var(--sy-cyan-normal), 1);
     }
-    &[data-type="plan-errored"]{
+    &[data-type="plan-errored"] {
         background: hsla(var(--sy-red-normal), 0.2);
         border: $border hsla(var(--sy-red-normal), 0);
         color: hsla(var(--sy-red-normal), 1);
     }
-    &[data-type="applied"]{
+    &[data-type="applied"] {
         background: hsla(var(--sy-green-normal), 0.25);
         border: $border hsla(var(--sy-green-normal), 0);
         color: hsla(var(--sy-green-normal), 1);
     }
-    &[data-type="apply-errored"]{
+    &[data-type="apply-errored"] {
         background: hsla(var(--sy-critical-light), 0.4);
         border: $border hsla(var(--sy-critical-normal), 0);
         color: hsla(var(--sy-critical-light), 1);
     }
-    &[data-type="destroyed"]{
+    &[data-type="destroyed"] {
         background: hsla(var(--sy-black), 0.3);
         border: $border hsla(var(--sy-black), 0);
         color: hsla(var(--sy-black), 1);

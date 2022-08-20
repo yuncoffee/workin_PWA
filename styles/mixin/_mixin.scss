@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@use "../Variables/variables";
+@use "../variables/variables";
 
 @mixin font($size: 1.6rem, $height: 1.5em, $weight: 500, $spacing: 0) {
     font-size: $size;
