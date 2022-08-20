@@ -1,0 +1,316 @@
+@charset "utf-8";
+
+@use "./mixin";
+@use "../Variables/variables";
+
+$buttonColorList: () !default;
+$buttonColorList: map-merge(
+    (
+        "pri": (
+            --sy-pri,
+        ),
+        "sec": (
+            --sy-sec,
+        ),
+        "red": (
+            --sy-red,
+        ),
+        "green": (
+            --sy-green,
+        ),
+        "cyan": (
+            --sy-cyan,
+        ),
+        "lapis": (
+            --sy-lapis,
+        ),
+        "purple": (
+            --sy-purple,
+        ),
+        "pink": (
+            --sy-pirnk,
+        ),
+        "livid": (
+            --sy-livid,
+        ),
+        "white": (
+            --sy-white,
+        ),
+        "gray": (
+            --sy-gray-06,
+        ),
+        "black": (
+            --sy-gray-09,
+        ),
+    ),
+    $buttonColorList
+);
+
+@mixin buttonColor() {
+    @each $name, $map in $buttonColorList {
+        @each $color in $map {
+            @if $name == "white" or $name == "gray" or $name == "black" {
+                @if $name == "white" {
+                    &[data-c-color="#{$name}"] {
+                        @include buttonTypeGray(
+                            $color,
+                            $hoverColor: --sy-gray-02,
+                            $conetnsColor: --sy-gray-07
+                        );
+                    }
+                }
+                @if $name == "gray" {
+                    &[data-c-color="#{$name}"] {
+                        @include buttonTypeGray(
+                            $color,
+                            $hoverColor: --sy-gray-07
+                        );
+                    }
+                }
+                @if $name == "black" {
+                    &[data-c-color="#{$name}"] {
+                        @include buttonTypeGray(
+                            $color,
+                            $hoverColor: --sy-black
+                        );
+                    }
+                }
+            } @else {
+                &[data-c-color="#{$name}"] {
+                    @include buttonTypeColor($color);
+                }
+            }
+        }
+    }
+}
+
+@mixin buttonTypeGray($color, $hoverColor, $conetnsColor: --sy-white) {
+    @each $buttonType in variables.$buttonTypeList {
+        &[data-c-type="#{$buttonType}"] {
+            @if $buttonType == "circle" or $buttonType == "circle-line" {
+                border-radius: 50%;
+                max-width: 18px;
+                max-height: 18px;
+                padding: 0;
+            }
+            @if $buttonType ==
+                "box" or
+                $buttonType ==
+                "box-line" or
+                $buttonType ==
+                "box-ghost"
+            {
+                border-radius: 0;
+            }
+            @if $buttonType ==
+                "block" or
+                $buttonType ==
+                "block-line" or
+                $buttonType ==
+                "block-ghost"
+            {
+                border-radius: variables.$borderRadius;
+            }
+            @if $buttonType ==
+                "round" or
+                $buttonType ==
+                "round-line" or
+                $buttonType ==
+                "round-ghost"
+            {
+                border-radius: variables.$roundBorderRadius;
+            }
+            @if $buttonType ==
+                "box" or
+                $buttonType ==
+                "block" or
+                $buttonType ==
+                "round"
+                $buttonType ==
+                "circle"
+            {
+                background: hsla(var($color), 1);
+                border-color: hsla(var($color), 1);
+                color: hsla(var($conetnsColor), 1);
+
+                &:hover:not(label) {
+                    background: hsla(var($hoverColor), 1);
+                    border-color: hsla(var($hoverColor), 1);
+                }
+            }
+            @if $buttonType ==
+                "box-line" or
+                $buttonType ==
+                "block-line" or
+                $buttonType ==
+                "round-line" or
+                $buttonType ==
+                "circle-line"
+            {
+                background: hsla(var($color), 0);
+                border-color: hsla(var($color), 1);
+                color: hsla(var($color), 1);
+
+                &:hover:not(label) {
+                    background: hsla(var($hoverColor), 1);
+                    border-color: hsla(var($hoverColor), 1);
+                    color: hsla(var($conetnsColor), 1);
+                }
+            }
+            @if $buttonType ==
+                "box-ghost" or
+                $buttonType ==
+                "block-ghost" or
+                $buttonType ==
+                "round-ghost"
+            {
+                background: hsla(var($color), 0);
+                border-color: hsla(var($color), 0);
+                color: hsla(var(--sy-gray-07), 1);
+
+                &:hover:not(label) {
+                    background: hsla(var($hoverColor), 1);
+                    border-color: hsla(var($hoverColor), 1);
+                    color: hsla(var($conetnsColor), 1);
+                }
+            }
+            @if $buttonType == "text" {
+                background: hsla(var($color), 0);
+                border-color: hsla(var($color), 0);
+                color: hsla(var(--sy-gray-07), 1);
+
+                &:hover:not(label) {
+                    background: hsla(var($hoverColor), 0);
+                    border-color: hsla(var($hoverColor), 0);
+                    color: hsla(var($color), 1);
+                }
+            }
+        }
+    }
+}
+
+@mixin buttonTypeColor($color) {
+    @each $buttonType in variables.$buttonTypeList {
+        &[data-c-type="#{$buttonType}"] {
+            @if $buttonType == "circle" or $buttonType == "circle-line" {
+                border-radius: 50%;
+                max-width: 18px;
+                max-height: 18px;
+                padding: 0;
+            }
+            @if $buttonType ==
+                "box" or
+                $buttonType ==
+                "box-line" or
+                $buttonType ==
+                "box-ghost"
+            {
+                border-radius: 0;
+            }
+            @if $buttonType ==
+                "block" or
+                $buttonType ==
+                "block-line" or
+                $buttonType ==
+                "block-ghost"
+            {
+                border-radius: variables.$borderRadius;
+            }
+            @if $buttonType ==
+                "round" or
+                $buttonType ==
+                "round-line" or
+                $buttonType ==
+                "round-ghost"
+            {
+                border-radius: variables.$roundBorderRadius;
+            }
+            @if $buttonType ==
+                "box" or
+                $buttonType ==
+                "block" or
+                $buttonType ==
+                "round" or
+                $buttonType ==
+                "circle"
+            {
+                background: hsla(var(#{$color}-normal), 1);
+                border-color: hsla(var(#{$color}-normal), 1);
+                color: hsla(var(--any-white), 1);
+
+                &:hover:not(label) {
+                    background: hsla(var(#{$color}-dark), 1);
+                    border-color: hsla(var(#{$color}-dark), 1);
+                }
+            }
+            @if $buttonType ==
+                "box-line" or
+                $buttonType ==
+                "block-line" or
+                $buttonType ==
+                "round-line" or
+                $buttonType ==
+                "circle-line"
+            {
+                background: hsla(var(#{$color}-normal), 0);
+                border-color: hsla(var(#{$color}-normal), 1);
+                color: hsla(var(#{$color}-normal), 1);
+
+                &:hover:not(label) {
+                    background: hsla(var(#{$color}-dark), 1);
+                    border-color: hsla(var(#{$color}-dark), 1);
+                    color: hsla(var(--any-white), 1);
+                }
+            }
+            @if $buttonType ==
+                "box-ghost" or
+                $buttonType ==
+                "block-ghost" or
+                $buttonType ==
+                "round-ghost"
+            {
+                background: hsla(var(#{$color}-normal), 0);
+                border-color: hsla(var(#{$color}-normal), 0);
+                color: hsla(var(--sy-gray-07), 1);
+
+                &:hover:not(label) {
+                    background: hsla(var(#{$color}-dark), 1);
+                    border-color: hsla(var(#{$color}-dark), 1);
+                    color: hsla(var(--any-white), 1);
+                }
+            }
+            @if $buttonType == "text" {
+                background: hsla(var(#{$color}-normal), 0);
+                border-color: hsla(var(#{$color}-normal), 0);
+                color: hsla(var(--sy-gray-07), 1);
+
+                &:hover:not(label) {
+                    background: hsla(var(#{$color}-normal), 0);
+                    border-color: hsla(var(#{$color}-normal), 0);
+                    color: hsla(var(#{$color}-normal), 1);
+                }
+            }
+
+            @if $buttonType ==
+                "transparent" or
+                $buttonType ==
+                "transparent-line"
+            {
+                border-radius: variables.$borderRadius;
+                background: hsla(var(--sy-gray-02), 0);
+                color: hsla(var(--sy-gray-07), 1);
+                border-color: hsla(var(--sy-gray-02), 0);
+
+                &:hover,
+                &[data-click="true"] {
+                    background: hsla(var(--sy-gray-03), 1);
+                    border-color: hsla(var(--sy-gray-02), 0);
+                }
+            }
+
+            @if $buttonType == "transparent-line" {
+                border-color: hsla(var(--sy-gray-04), 1);
+            }
+        }
+    }
+}

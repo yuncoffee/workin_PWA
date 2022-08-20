@@ -39,6 +39,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                     href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
                     rel="stylesheet"
                 />
+                <script
+                    type="text/javascript"
+                    src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_MAP_CLIENT_ID}`}
+                />
                 <meta name="theme-color" content="#0052FF" />
             </Head>
             <Layout>

@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+@use "../../../../styles/Variables/variables";
+@use "../../../../styles/mixin/mixin";
+@use "../../../../styles/mixin/mixinInput";
+
+// radio, checkobx를 제외한 input
+.input:not([type="radio"]):not([type="checkbox"]) {
+    @include mixin.lySize();
+    @include mixinInput.inputStyle();
+}
+// number 시
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+// textarea
+.textarea {
+    @include mixinInput.inputStyle($type: "textarea");
+}

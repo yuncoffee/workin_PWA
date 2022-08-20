@@ -1,0 +1,175 @@
+@charset "utf-8";
+
+@use "../../../../styles/Variables/variables";
+@use "../../../../styles/Mixin/mixin";
+
+$spinnerSize: 48px;
+$coreSize: 24px;
+$borderSize: 3px;
+
+@mixin spinnerSize() {
+    @each $size in variables.$sizeList {
+        &[data-c-size="#{$size}"] {
+            @if $size == "xl" {
+                $spinnerSize: 72px;
+                $coreSize: 36px;
+                $borderSize: 3px;
+
+                width: $spinnerSize;
+                height: $spinnerSize;
+
+                &:after {
+                    width: $coreSize;
+                    height: $coreSize;
+                    border-width: $borderSize;
+                    border-style: solid;
+                }
+            }
+            @if $size == "lg" {
+                $spinnerSize: 56px;
+                $coreSize: 28px;
+
+                $borderSize: 3px;
+                width: $spinnerSize;
+                height: $spinnerSize;
+
+                &:after {
+                    width: $coreSize;
+                    height: $coreSize;
+                    border-width: $borderSize;
+                    border-style: solid;
+                }
+            }
+            @if $size == "mid" {
+                $spinnerSize: 48px;
+                $coreSize: 24px;
+
+                $borderSize: 3px;
+                width: $spinnerSize;
+                height: $spinnerSize;
+
+                &:after {
+                    width: $coreSize;
+                    height: $coreSize;
+                    border-width: $borderSize;
+                    border-style: solid;
+                }
+            }
+            @if $size == "sm" {
+                $spinnerSize: 32px;
+                $coreSize: 16px;
+                $borderSize: 2px;
+
+                width: $spinnerSize;
+                height: $spinnerSize;
+
+                &:after {
+                    width: $coreSize;
+                    height: $coreSize;
+                    border-width: $borderSize;
+                    border-style: solid;
+                }
+            }
+            @if $size == "xs" {
+                $spinnerSize: 20px;
+                $coreSize: 12px;
+                $borderSize: 2px;
+
+                width: $spinnerSize;
+                height: $spinnerSize;
+
+                &:after {
+                    width: $coreSize;
+                    height: $coreSize;
+                    border-width: $borderSize;
+                    border-style: solid;
+                }
+            }
+        }
+    }
+}
+
+@mixin spinnerColor() {
+    $colorList: () !default;
+    $colorList: map-merge(
+        (
+            "pri": (
+                --sy-pri-normal,
+            ),
+            "red": (
+                --sy-red-normal,
+            ),
+            "green": (
+                --sy-green-normal,
+            ),
+            "white": (
+                --sy-white,
+            ),
+            "gray": (
+                --sy-gray-06,
+            ),
+            "black": (
+                --sy-black,
+            ),
+        ),
+        $colorList
+    );
+
+    @each $name, $map in $colorList {
+        @each $color in $map {
+            &[data-c-color="#{$name}"] {
+                &::after {
+                    border-color: hsla(var($color), 1);
+                    border-top-color: hsla(var($color), 0);
+                }
+            }
+        }
+    }
+}
+
+.spinner {
+    @include spinnerSize();
+    @include spinnerColor();
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsla(var(--sy-gray-09), 1);
+
+    &::after {
+        content: "";
+        position: absolute;
+        background: hsla(var(--sy-pri-normal), 0);
+        border-radius: 50%;
+        animation: spinner_spin linear 0.8s infinite;
+    }
+
+    &::before {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+    }
+}
+
+// .isRunning {
+//     i {
+//         transform-origin: center;
+//         transition: 0.4s;
+//         animation: spinner_spin linear 0.8s infinite;
+//     }
+// }
+
+@keyframes spinner_spin {
+    from {
+        transform: rotate(0);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

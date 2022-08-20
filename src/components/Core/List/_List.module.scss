@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+@use "../../../../styles/mixin/mixin";
+@use "../../../../styles/Variables/variables";
+
+$listItemBackground: hsla(var(--sy-white), 1);
+
+$listItemShadow: variables.$shadow-btm hsla(var(--sy-shadow), 0.1);
+
+.listItem {
+    padding: 8px;
+    background: $listItemBackground;
+    border-radius: variables.$borderRadius;
+    box-shadow: $listItemShadow;
+    overflow: visible;
+
+    h5 {
+        line-height: 1.5em;
+        font-weight: 600;
+
+        @include mixin.ellipsis-text();
+    }
+
+    h6 {
+        @include mixin.ellipsis-text();
+    }
+}

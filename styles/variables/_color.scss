@@ -1,5 +1,3 @@
-@charset "utf-8";
-
 $syGray01: 0, 0%, 97%; //#f8f8f8
 $syGray02: 0, 0%, 96%; // #f6f6f6
 $syGray03: 0, 0%, 92%;
@@ -12,10 +10,75 @@ $syGray09: 0, 0%, 20%;
 $syBlack: 0, 0%, 17%;
 $syWhite: 0, 0%, 100%;
 
-$syPri: 221, 100%;
-$syPriLightness: 50%;
+$syPri: 214, 74%;
+$syPriLightness: 48%;
 $syPriLightness_light: calc($syPriLightness + 10%);
 $syPriLightness_dark: calc($syPriLightness - 10%);
+
+$sySec: 215, 100%;
+$sySecLightness: 36%;
+$sySecLightness_light: calc($sySecLightness + 10%);
+$sySecLightness_dark: calc($sySecLightness - 10%);
+
+$syRed: 0, 100%;
+$syRedLightness: 68%;
+$syRedLightness_light: calc($syRedLightness + 10%);
+$syRedLightness_dark: calc($syRedLightness - 10%);
+
+$syYellow: 47, 100%;
+$syYellowLightness: 66%;
+$syYellowLightness_light: calc($syYellowLightness + 10%);
+$syYellowLightness_dark: calc($syYellowLightness - 10%);
+
+$syGreen: 164, 75%;
+$syGreenLightness: 49%;
+$syGreenLightness_light: calc($syGreenLightness + 10%);
+$syGreenLightness_dark: calc($syGreenLightness - 5%);
+
+$syCyan: 187, 98%;
+$syCyanLightness: 46%;
+$syCyanLightness_light: calc($syCyanLightness + 10%);
+$syCyanLightness_dark: calc($syCyanLightness - 10%);
+
+$syLapis: 246, 91%;
+$syLapisLightness: 63%;
+$syLapisLightness_light: calc($syLapisLightness + 10%);
+$syLapisLightness_dark: calc($syLapisLightness - 10%);
+
+$syPurple: 284, 72%;
+$syPurpleLightness: 51%;
+$syPurpleLightness_light: calc($syPurpleLightness + 10%);
+$syPurpleLightness_dark: calc($syPurpleLightness - 10%);
+
+$syPink: 337, 100%;
+$syPinkLightness: 68%;
+$syPinkLightness_light: calc($syPinkLightness + 10%);
+$syPinkLightness_dark: calc($syPinkLightness - 10%);
+
+$syLivid: 206, 39%;
+$syLividLightness: 76%;
+$syLividLightness_light: calc($syLividLightness + 10%);
+$syLividLightness_dark: calc($syLividLightness - 10%);
+
+$syAzure: 202, 100%;
+$syAzureLightness: 42%;
+$syAzureLightness_light: calc($syAzureLightness + 10%);
+$syAzureLightness_dark: calc($syAzureLightness - 10%);
+
+$syAws: 32, 100%;
+$syAwsLightness: 60%;
+$syAwsLightness_light: calc($syAwsLightness + 10%);
+$syAwsLightness_dark: calc($syAwsLightness - 10%);
+
+$syNcloud: 154, 100%;
+$syNcloudLightness: 55%;
+$syNcloudLightness_light: calc($syNcloudLightness + 10%);
+$syNcloudLightness_dark: calc($syNcloudLightness - 10%);
+
+$syCritical: 0, 81%;
+$syCriticalLightness: 48%;
+$syCriticalLightness_light: calc($syCriticalLightness + 10%);
+$syCriticalLightness_dark: calc($syCriticalLightness - 10%);
 
 $graySystemLight: () !default;
 $graySystemLight: map-merge(
@@ -74,6 +137,392 @@ $colorSystemLight: map-merge(
                 $syPriLightness_dark,
             ),
         ),
+        "sy-sec": (
+            "light": (
+                $sySec,
+                $sySecLightness_light,
+            ),
+            "normal": (
+                $sySec,
+                $sySecLightness,
+            ),
+            "dark": (
+                $sySec,
+                $sySecLightness_dark,
+            ),
+        ),
+        "sy-red": (
+            "light": (
+                $syRed,
+                $syRedLightness_light,
+            ),
+            "normal": (
+                $syRed,
+                $syRedLightness,
+            ),
+            "dark": (
+                $syRed,
+                $syRedLightness_dark,
+            ),
+        ),
+        "sy-yellow": (
+            "light": (
+                $syYellow,
+                $syYellowLightness_light,
+            ),
+            "normal": (
+                $syYellow,
+                $syYellowLightness,
+            ),
+            "dark": (
+                $syYellow,
+                $syYellowLightness_dark,
+            ),
+        ),
+        "sy-green": (
+            "light": (
+                $syGreen,
+                $syGreenLightness_light,
+            ),
+            "normal": (
+                $syGreen,
+                $syGreenLightness,
+            ),
+            "dark": (
+                $syGreen,
+                $syGreenLightness_dark,
+            ),
+        ),
+        "sy-cyan": (
+            "light": (
+                $syCyan,
+                $syCyanLightness_light,
+            ),
+            "normal": (
+                $syCyan,
+                $syCyanLightness,
+            ),
+            "dark": (
+                $syCyan,
+                $syCyanLightness_dark,
+            ),
+        ),
+        "sy-lapis": (
+            "light": (
+                $syLapis,
+                $syLapisLightness_light,
+            ),
+            "normal": (
+                $syLapis,
+                $syLapisLightness,
+            ),
+            "dark": (
+                $syLapis,
+                $syLapisLightness_dark,
+            ),
+        ),
+        "sy-purple": (
+            "light": (
+                $syPurple,
+                $syPurpleLightness_light,
+            ),
+            "normal": (
+                $syPurple,
+                $syPurpleLightness,
+            ),
+            "dark": (
+                $syPurple,
+                $syPurpleLightness_dark,
+            ),
+        ),
+        "sy-pink": (
+            "light": (
+                $syPink,
+                $syPinkLightness_light,
+            ),
+            "normal": (
+                $syPink,
+                $syPinkLightness,
+            ),
+            "dark": (
+                $syPink,
+                $syPinkLightness_dark,
+            ),
+        ),
+        "sy-livid": (
+            "light": (
+                $syLivid,
+                $syLividLightness_light,
+            ),
+            "normal": (
+                $syLivid,
+                $syLividLightness,
+            ),
+            "dark": (
+                $syLivid,
+                $syLividLightness_dark,
+            ),
+        ),
+        "sy-azure": (
+            "light": (
+                $syAzure,
+                $syAzureLightness_light,
+            ),
+            "normal": (
+                $syAzure,
+                $syAzureLightness,
+            ),
+            "dark": (
+                $syAzure,
+                $syAzureLightness_dark,
+            ),
+        ),
+        "sy-aws": (
+            "light": (
+                $syAws,
+                $syAwsLightness_light,
+            ),
+            "normal": (
+                $syAws,
+                $syAwsLightness,
+            ),
+            "dark": (
+                $syAws,
+                $syAwsLightness_dark,
+            ),
+        ),
+        "sy-ncloud": (
+            "light": (
+                $syNcloud,
+                $syNcloudLightness_light,
+            ),
+            "normal": (
+                $syNcloud,
+                $syNcloudLightness,
+            ),
+            "dark": (
+                $syNcloud,
+                $syNcloudLightness_dark,
+            ),
+        ),
+        "sy-critical": (
+            "light": (
+                $syCritical,
+                $syCriticalLightness_light,
+            ),
+            "normal": (
+                $syCritical,
+                $syCriticalLightness,
+            ),
+            "dark": (
+                $syCritical,
+                $syCriticalLightness_dark,
+            ),
+        ),
     ),
     $colorSystemLight
+);
+
+$syGray01: 0, 0%, 17%; //#f8f8f8
+$syGray02: 0, 0%, 20%; // #f6f6f6
+$syGray03: 0, 0%, 26%;
+$syGray04: 0, 0%, 34%;
+$syGray05: 0, 0%, 38%;
+$syGray06: 0, 0%, 47%;
+$syGray07: 0, 0%, 63%;
+$syGray08: 0, 0%, 72%;
+$syGray09: 0, 0%, 88%;
+$syBlack: 0, 0%, 96%;
+$syWhite: 0, 0%, 13%;
+
+$graySystemDark: () !default;
+$graySystemDark: map-merge(
+    (
+        "sy-gray-01": (
+            $syGray01,
+        ),
+        "sy-gray-02": (
+            $syGray02,
+        ),
+        "sy-gray-03": (
+            $syGray03,
+        ),
+        "sy-gray-04": (
+            $syGray04,
+        ),
+        "sy-gray-05": (
+            $syGray05,
+        ),
+        "sy-gray-06": (
+            $syGray06,
+        ),
+        "sy-gray-07": (
+            $syGray07,
+        ),
+        "sy-gray-08": (
+            $syGray08,
+        ),
+        "sy-gray-09": (
+            $syGray09,
+        ),
+        "sy-black": (
+            $syBlack,
+        ),
+        "sy-white": (
+            $syWhite,
+        ),
+    ),
+    $graySystemDark
+);
+
+$sy-pri: 214, 100%;
+$syPriLightness: 58%;
+$syPriLightness_light: calc($syPriLightness - 10%);
+$syPriLightness_dark: calc($syPriLightness + 10%);
+
+$colorSystemDark: () !default;
+$colorSystemDark: map-merge(
+    (
+        "sy-pri": (
+            "light": (
+                $syPri,
+                $syPriLightness_light,
+            ),
+            "normal": (
+                $syPri,
+                $syPriLightness,
+            ),
+            "dark": (
+                $syPri,
+                $syPriLightness_dark,
+            ),
+        ),
+        "sy-sec": (
+            "light": (
+                $sySec,
+                $sySecLightness_light,
+            ),
+            "normal": (
+                $sySec,
+                $sySecLightness,
+            ),
+            "dark": (
+                $sySec,
+                $sySecLightness_dark,
+            ),
+        ),
+        "sy-red": (
+            "light": (
+                $syRed,
+                $syRedLightness_light,
+            ),
+            "normal": (
+                $syRed,
+                $syRedLightness,
+            ),
+            "dark": (
+                $syRed,
+                $syRedLightness_dark,
+            ),
+        ),
+        "sy-yellow": (
+            "light": (
+                $syYellow,
+                $syYellowLightness_light,
+            ),
+            "normal": (
+                $syYellow,
+                $syYellowLightness,
+            ),
+            "dark": (
+                $syYellow,
+                $syYellowLightness_dark,
+            ),
+        ),
+        "sy-green": (
+            "light": (
+                $syGreen,
+                $syGreenLightness_light,
+            ),
+            "normal": (
+                $syGreen,
+                $syGreenLightness,
+            ),
+            "dark": (
+                $syGreen,
+                $syGreenLightness_dark,
+            ),
+        ),
+        "sy-cyan": (
+            "light": (
+                $syCyan,
+                $syCyanLightness_light,
+            ),
+            "normal": (
+                $syCyan,
+                $syCyanLightness,
+            ),
+            "dark": (
+                $syCyan,
+                $syCyanLightness_dark,
+            ),
+        ),
+        "sy-lapis": (
+            "light": (
+                $syLapis,
+                $syLapisLightness_light,
+            ),
+            "normal": (
+                $syLapis,
+                $syLapisLightness,
+            ),
+            "dark": (
+                $syLapis,
+                $syLapisLightness_dark,
+            ),
+        ),
+        "sy-purple": (
+            "light": (
+                $syPurple,
+                $syPurpleLightness_light,
+            ),
+            "normal": (
+                $syPurple,
+                $syPurpleLightness,
+            ),
+            "dark": (
+                $syPurple,
+                $syPurpleLightness_dark,
+            ),
+        ),
+        "sy-pink": (
+            "light": (
+                $syPink,
+                $syPinkLightness_light,
+            ),
+            "normal": (
+                $syPink,
+                $syPinkLightness,
+            ),
+            "dark": (
+                $syPink,
+                $syPinkLightness_dark,
+            ),
+        ),
+        "sy-livid": (
+            "light": (
+                $syLivid,
+                $syLividLightness_light,
+            ),
+            "normal": (
+                $syLivid,
+                $syLividLightness,
+            ),
+            "dark": (
+                $syLivid,
+                $syLividLightness_dark,
+            ),
+        ),
+    ),
+    $colorSystemDark
 );

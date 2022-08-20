@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+@use "../../../../styles/Mixin/mixinSelector";
+
+.checkbox {
+    @include mixinSelector.selectorStyle($type: "checkbox");
+    @include mixinSelector.optionSize();
+
+    &[data-c-size="sm"]{
+        label::after{
+            border-radius: 3px;
+        }
+    }
+}

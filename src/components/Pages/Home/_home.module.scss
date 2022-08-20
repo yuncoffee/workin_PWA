@@ -1,5 +1,6 @@
 @charset "utf-8";
 @use "../../../../styles/mixin/mixin";
+@use "../../../../styles/variables/variables";
 
 .main {
     // background: tomato;
@@ -64,7 +65,7 @@
     min-height: 44px;
     width: 100%;
     background: hsla(var(--sy-gray-02), 1);
-    padding: 0 16px;
+    padding: 0 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -76,12 +77,19 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    // gap: 8px;
     background: hsla(var(--sy-white), 0.7);
     backdrop-filter: blur(60px);
     overflow-y: hidden;
-    max-height: 44px;
+    max-height: 46px;
+    height: 100%;
+    transition: variables.$transition;
     z-index: 100;
+
+    @include mixin.isActive(true) {
+        max-height: 320px;
+        height: 100%;
+    }
 
     &__header {
         min-height: 44px;
@@ -89,6 +97,11 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 16px;
-        border-top: 2px solid hsla(var(--sy-white), 1);
+        border-top: variables.$defaultBorder hsla(var(--sy-white), 1);
+    }
+
+    &__body {
+        border-top: variables.$defaultBorder hsla(var(--sy-gray-03), 1);
+        padding: 8px 16px;
     }
 }

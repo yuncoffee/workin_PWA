@@ -1,0 +1,289 @@
+@charset "utf-8";
+
+@use "./mixin";
+@use "../Variables/variables";
+
+$backgroundColor: variables.$gradient_input;
+$backgroundColor_none: variables.$gradient_input_none;
+
+$borderColor_disabled: hsla(var(--sy-gray-04), 1);
+$backgroundColor_disabled: hsla(var(--sy-gray-04), 1);
+$contentsColor_disabled: hsla(var(--sy-gray-06), 1);
+
+$borderColor: variables.$borderColor;
+$borderColor_none: variables.$borderColor_none;
+
+$contentsColor: variables.$contentsColor;
+$contentsColor_none: variables.$contentsColor_none;
+
+$borderRadius: variables.$borderRadius;
+$roundBorderRadius: variables.$roundBorderRadius;
+
+$focusBorderColor: variables.$focusBorderColor;
+$shadow_focus: variables.$shadow_focus;
+
+$invalidBorderColor_invalid: variables.$invalidBorderColor_invalid;
+$shadow_invalid: variables.$shadow_invalid;
+
+$invalidBorderColor_valid: variables.$invalidBorderColor_valid;
+$shadow_valid: variables.$shadow_valid;
+
+@mixin inputStyle($type: "input") {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: variables.$defaultBorder;
+    height: max-content;
+    min-width: 80px;
+    gap: 4px;
+    transition: variables.$transition;
+    @include mixin.h5;
+    font-weight: 500;
+
+    &::placeholder {
+        color: variables.$placeholderColor;
+    }
+
+    border-color: $borderColor;
+    color: $contentsColor;
+
+    @each $type in variables.$inputTypeList {
+        &[data-c-type="#{$type}"] {
+            @if $type == "box" or $type == "block" or $type == "round" {
+                background: $backgroundColor;
+            }
+
+            @if $type ==
+                "box-line" or
+                $type ==
+                "block-line" or
+                $type ==
+                "round-line"
+            {
+                background: $backgroundColor_none;
+            }
+
+            @if $type == "box" or $type == "box-line" {
+                border-radius: 0;
+            }
+            @if $type == "block" or $type == "block-line" {
+                border-radius: $borderRadius;
+            }
+            @if $type == "round" or $type == "round-line" {
+                border-radius: $roundBorderRadius;
+            }
+
+            @if $type == "text" {
+                border-color: $borderColor_none;
+                background: $backgroundColor_none;
+            }
+            @if $type == "underline" {
+                background: $borderColor_none;
+                @include underLineColor();
+            }
+        }
+    }
+
+    &:focus:not([data-c-focus="false"]),
+    &[data-c-focus="true"] {
+        @include inputEmphasize(var(--sy-pri-normal));
+    }
+
+    &[data-c-invalid="true"] {
+        @include inputEmphasize(var(--sy-red-normal));
+    }
+
+    &[data-c-invalid="false"] {
+        @include inputEmphasize(var(--sy-green-normal));
+    }
+
+    &:disabled {
+        color: $contentsColor_disabled;
+        border-color: $borderColor_disabled;
+        background: $backgroundColor_disabled;
+    }
+
+    @if $type == "textarea" {
+        resize: none;
+        padding: 8px 16px;
+        @include mixin.scrollbar($bg-a: 0);
+
+        &[data-c-size="xl"] {
+            min-height: 114px;
+        }
+
+        &[data-c-size="lg"] {
+            min-height: 91px;
+        }
+
+        &[data-c-size="mid"] {
+            min-height: 72px;
+        }
+
+        &[data-c-type="round"] {
+            border-radius: 16px;
+            background: $backgroundColor;
+            color: $contentsColor;
+            // border-color: $borderColor;
+
+            &::-webkit-scrollbar {
+                border-radius: 16px;
+            }
+        }
+
+        &[data-c-type="round-line"] {
+            border-radius: 16px;
+            background: $backgroundColor_none;
+            color: $contentsColor;
+            // border-color: $borderColor;
+
+            &::-webkit-scrollbar {
+                border-radius: 16px;
+            }
+        }
+    }
+}
+
+@mixin underLineColor($color: var(--sy-gray-04)) {
+    border-top-color: $borderColor_none;
+    border-left-color: $borderColor_none;
+    border-right-color: $borderColor_none;
+    border-bottom-color: hsla($color, 1);
+}
+
+@mixin inputEmphasize($color) {
+    border-color: hsla($color, 1);
+    box-shadow: variables.$shadow-out hsla($color, 0.5);
+
+    // &:focus:not([data-c-focus="false"]) {
+    //     box-shadow: variables.$shadow-out hsla($color, 0.5);
+    // }
+
+    &[data-c-type="text"],
+    &[data-c-type="underline"] {
+        @include underLineColor($color: $color);
+        box-shadow: variables.$shadow-in hsla($color, 0.5);
+    }
+}
+
+@mixin selectBoxStyle() {
+    @each $selectType in variables.$selectTypeList {
+        &[data-c-type="#{$selectType}"] {
+            color: $contentsColor;
+            border-color: $borderColor;
+            @if $selectType == "box" or $selectType == "box-line" {
+                border-radius: 0;
+            }
+            @if $selectType == "block" or $selectType == "block-line" {
+                border-radius: $borderRadius;
+                background: $backgroundColor;
+            }
+            @if $selectType == "block-line" or $selectType == "box-line" {
+                background: $backgroundColor_none;
+            } @else {
+                background: $backgroundColor;
+            }
+        }
+
+        &[data-c-focus="true"] {
+            border: variables.$defaultBorder $focusBorderColor;
+            box-shadow: $shadow_focus;
+        }
+
+        &[data-c-invalid="true"] {
+            border: variables.$defaultBorder $invalidBorderColor_invalid;
+            box-shadow: $shadow_invalid;
+        }
+
+        &[data-c-invalid="false"] {
+            border: variables.$defaultBorder $invalidBorderColor_valid;
+            box-shadow: $shadow_valid;
+        }
+    }
+}
+
+@mixin toggle() {
+    display: inline-flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    border: variables.$defaultBorder $borderColor;
+    height: max-content;
+    transition: 0.3s;
+    gap: 4px;
+    @include h5;
+    font-weight: 500;
+    border-radius: 50px;
+    background: $backgroundColor;
+
+    &[data-c-size="xl"] {
+        padding: $xlSize;
+        min-height: 40px;
+        width: 75px;
+    }
+
+    &[data-c-size="lg"] {
+        padding: $lgSize;
+        min-height: 36px;
+        width: 67px;
+    }
+
+    &[data-c-size="mid"] {
+        padding: $midSize;
+        min-height: 32px;
+        width: 59px;
+    }
+
+    &[data-c-size="sm"] {
+        @include h6;
+        font-weight: 500;
+        padding: $smSize;
+        min-height: 28px;
+        width: 51px;
+    }
+
+    &[data-c-size="xs"] {
+        @include h6;
+        font-weight: 500;
+        padding: $smSize;
+        min-height: 20px;
+        width: 34px;
+    }
+
+    &[data-current="true"] {
+        border: $defaultBorder hsla(var(--sy-pri-noraml), 1);
+        background: hsla(var(--sy-pri-noraml), 1);
+        box-shadow: inset 0px 0px 6px -1px hsla(var(--sy-pri-normal), 0.2);
+
+        .toggle__item {
+            box-shadow: 0px 0px 6px -1px hsla(var(--sy-pri-normal), 0.5);
+            background: hsla(var(--sy-gray-01), 1);
+            border: $defaultBorder hsla(var(--sy-white), 1);
+        }
+    }
+
+    &:disabled {
+        background: hsla(var(--sy-gray-05), 1);
+        border: $defaultBorder $borderColor;
+
+        .toggle__item {
+            background: hsla(var(--sy-gray-03), 1);
+            border: $defaultBorder $bgColor;
+        }
+    }
+
+    .toggle__item {
+        position: absolute;
+        height: calc(100% - 2px);
+        background: hsla(var(--sy-gray-01), 1);
+        border: $defaultBorder hsla(var(--sy-white), 1);
+        border-radius: 50%;
+        transition: 0.3s;
+        transform: translateX(-50%);
+
+        &.isActive {
+            transform: translateX(50%);
+        }
+    }
+}

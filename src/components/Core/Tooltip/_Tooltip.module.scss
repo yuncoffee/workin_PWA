@@ -1,0 +1,436 @@
+@charset "utf-8";
+@use "../../../../styles/Mixin/mixin";
+@use "../../../../styles/Variables/variables";
+
+$contentsColor: hsla(var(--sy-white), 1);
+$borderColor: hsla(var(--sy-gray-09), 1);
+$backgroundColor: hsla(var(--sy-gray-08), 1);
+
+$border: variables.$defaultBorder;
+$borderRadius: variables.$borderRadius;
+$transition: variables.$transition;
+
+@mixin tooltipContentsLength() {
+    &[data-c-contentslength="short"] {
+        min-width: 80px;
+        word-break: break-word;
+    }
+    &[data-c-contentslength="medium"] {
+        min-width: 120px;
+        word-break: break-word;
+    }
+    &[data-c-contentslength="long"] {
+        min-width: 186px;
+        word-break: break-word;
+    }
+}
+
+@mixin tooltipDirection() {
+    &[data-c-direction="left top"] {
+        top: -8px;
+        left: 0;
+        transform: translate3D(calc(-100% - 12px), 0, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: 4px;
+            left: calc(100% + 2px);
+            border-top: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid $borderColor;
+        }
+    }
+
+    &[data-c-direction="left center"] {
+        top: 50%;
+        left: 0;
+        transform: translate3D(calc(-100% - 12px), -50%, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: 50%;
+            left: calc(100% + 2px);
+            border-top: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid $borderColor;
+            transform: translate3D(0, -50%, 0);
+        }
+    }
+
+    &[data-c-direction="left btm"] {
+        top: 100%;
+        left: 0;
+        transform: translate3D(calc(-100% - 12px), calc(-100% + 12px), 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            bottom: 8px;
+            left: calc(100% + 2px);
+            border-top: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid $borderColor;
+        }
+    }
+
+    &[data-c-direction="right top"] {
+        top: -8px;
+        right: 0;
+        transform: translate3D(calc(+100% + 12px), 0, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: 4px;
+            left: -18px;
+            border-top: 8px solid transparent;
+            border-left: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 8px solid $borderColor;
+        }
+    }
+
+    &[data-c-direction="right center"] {
+        top: 50%;
+        right: 0;
+        transform: translate3D(calc(+100% + 12px), -50%, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: 50%;
+            left: -18px;
+            border-top: 8px solid transparent;
+            border-left: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 8px solid $borderColor;
+            transform: translate3D(0, -50%, 0);
+        }
+    }
+
+    &[data-c-direction="right btm"] {
+        top: 100%;
+        right: 0;
+        transform: translate3D(calc(+100% + 12px), calc(-100% + 12px), 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            bottom: 8px;
+
+            left: -18px;
+            border-top: 8px solid transparent;
+            border-left: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 8px solid $borderColor;
+        }
+    }
+
+    &[data-c-direction="top left"] {
+        top: 0;
+        left: 0;
+        transform: translate3D(0%, calc(-100% - 12px), 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: calc(100% + 2px);
+            left: 8px;
+            border-top: 8px solid $borderColor;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+    }
+
+    &[data-c-direction="top center"] {
+        top: 0;
+        left: 50%;
+        transform: translate3D(-50%, calc(-100% - 12px), 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: calc(100% + 2px);
+            left: 50%;
+            border-top: 8px solid $borderColor;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            transform: translate3D(-50%, 0, 0);
+        }
+    }
+
+    &[data-c-direction="top right"] {
+        top: 0;
+        right: 0;
+        transform: translate3D(0, calc(-100% - 12px), 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: calc(100% + 2px);
+            right: 8px;
+            border-top: 8px solid $borderColor;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+    }
+
+    &[data-c-direction="btm left"] {
+        top: calc(100% + 12px);
+        left: 0;
+        transform: translate3D(0, 0, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: -18px;
+            left: 8px;
+            border-top: 8px solid transparent;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid $borderColor;
+        }
+    }
+
+    &[data-c-direction="btm center"] {
+        top: calc(100% + 12px);
+        left: 50%;
+        transform: translate3D(-50%, 0, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: -18px;
+            left: 50%;
+            border-top: 8px solid transparent;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid $borderColor;
+            transform: translate3D(-50%, 0, 0);
+        }
+    }
+
+    &[data-c-direction="btm right"] {
+        top: calc(100% + 12px);
+        right: 0;
+        transform: translate3D(0, 0, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 0px;
+            height: 0px;
+            top: -18px;
+            right: 8px;
+            border-top: 8px solid transparent;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid $borderColor;
+        }
+    }
+}
+
+.tooltip {
+    position: absolute;
+    background: $backgroundColor;
+    border: $border $borderColor;
+    border-radius: $borderRadius;
+    padding: 4px;
+    transition: $transition;
+    width: auto;
+    min-width: 80px;
+    z-index: 2001;
+
+    h5 {
+        opacity: 1;
+        word-break: break-word;
+        text-align: center;
+        @include tooltipContentsLength();
+        color: $contentsColor;
+    }
+    @include tooltipDirection();
+}
+
+.tooltipGlobal {
+    position: absolute;
+    background: $backgroundColor;
+    border: $border $borderColor;
+    border-radius: 4px;
+    // width: 80px;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translate3d(-50%, 0%, 0);
+    // transition: 0.4s;
+    padding: 4px;
+    opacity: 0;
+    color: $contentsColor;
+    z-index: 2001;
+    min-width: 80px;
+    transition-property: opacity;
+
+    &[data-c-direction="left"] {
+        left: calc(-100% - 16px);
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: calc(100% + 8px);
+            width: 0px;
+            height: 0px;
+            border-right: 8px solid transparent;
+            border-left: 8px solid $backgroundColor;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            border-radius: 2px;
+        }
+    }
+
+    &[data-c-direction="right"] {
+        left: calc(100% + 8px);
+        top: 50%;
+        transform: translate3d(0%, -50%, 0);
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: -16px;
+            width: 0px;
+            height: 0px;
+            border-right: 8px solid $backgroundColor;
+            border-left: 8px solid transparent;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            top: 50%;
+            transform: translate3d(0, -50%, 0);
+            border-radius: 2px;
+        }
+    }
+
+    h5 {
+        opacity: 1;
+        word-break: break-word;
+        text-align: center;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: calc(50%);
+        width: 0px;
+        height: 0px;
+        border-right: 8px solid transparent;
+        border-left: 8px solid transparent;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid $backgroundColor;
+        top: -16px;
+        transform: translate3d(-50%, 0%, 0);
+        border-radius: 2px;
+    }
+
+    &.isShow {
+        animation-name: tooltipProfileShow;
+        animation-duration: 0.4s;
+        animation-direction: normal;
+        animation-fill-mode: forwards;
+        border: $border $borderColor;
+        display: block;
+        h5 {
+            opacity: 1;
+        }
+    }
+
+    &.isHide {
+        animation-name: tooltipProfileHide;
+        animation-duration: 0.4s;
+        animation-direction: normal;
+        animation-fill-mode: forwards;
+        padding: 0;
+        display: none;
+    }
+}
+
+@keyframes tooltipProfileShow {
+    from {
+        overflow: visible;
+        width: 0px;
+    }
+    to {
+        opacity: 1;
+        overflow: visible;
+        width: auto;
+    }
+}
+
+@keyframes tooltipProfileHide {
+    from {
+        opacity: 1;
+        overflow: visible;
+        width: auto;
+        padding: 4px;
+    }
+    to {
+        overflow: visible;
+        width: 0px;
+        opacity: 0;
+        padding: 4px;
+    }
+}
+
+@keyframes tooltipShow {
+    from {
+        overflow: visible;
+        width: 0px;
+    }
+    to {
+        opacity: 1;
+        overflow: visible;
+        width: 200px;
+    }
+}
+
+@keyframes tooltipHide {
+    from {
+        opacity: 1;
+        overflow: visible;
+        width: 200px;
+    }
+    to {
+        overflow: visible;
+        width: 0px;
+        opacity: 0;
+    }
+}

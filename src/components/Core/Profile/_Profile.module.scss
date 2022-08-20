@@ -1,0 +1,203 @@
+@charset "utf-8";
+
+@use "../../../../styles/Mixin/mixin";
+@use "../../../../styles/Variables/variables";
+
+$shadow: variables.$shadow-btm hsla(var(--sy-shadow), 0.2);
+$border: variables.$defaultBorder;
+$backgroundColor: hsla(var(--sy-white), 1);
+$askChangeColor: hsla(var(--sy-red-normal), 1);
+$onlineColor: variables.$gradient_green;
+$offlineColor: variables.$gradient_red;
+$editColor: variables.$gradient_edit;
+
+@mixin profileStyle() {
+    &[data-type="isEdit"] {
+        animation: rotateProfile 1.5s linear infinite;
+        background: $editColor;
+
+        .profileImg {
+            animation: rotateReverseProfile 1.5s linear infinite;
+        }
+    }
+    &[data-type="isOnline"] {
+        &::after {
+            content: "";
+            background: $onlineColor;
+        }
+    }
+    &[data-type="isOffline"] {
+        &::after {
+            content: "";
+            background: $offlineColor;
+        }
+    }
+    &[data-type="isAskChange"] {
+        animation: isAskChange 1.5s linear infinite;
+    }
+    &[data-type="none"] {
+        &::after {
+            content: none;
+        }
+    }
+}
+
+@mixin profileSize() {
+    @each $size in variables.$sizeList {
+        &[data-c-size="#{$size}"] {
+            @if $size == "xl" {
+                $conSize: 54px;
+                $imgSize: 50px;
+                $decoSize: 14px;
+
+                width: $conSize;
+                height: $conSize;
+
+                .profileImg {
+                    width: $imgSize;
+                    height: $imgSize;
+                }
+
+                &::after {
+                    width: $decoSize;
+                    height: $decoSize;
+                }
+            }
+            @if $size == "lg" {
+                $conSize: 48px;
+                $imgSize: 44px;
+                $decoSize: 12px;
+
+                width: $conSize;
+                height: $conSize;
+
+                .profileImg {
+                    width: $imgSize;
+                    height: $imgSize;
+                }
+
+                &::after {
+                    width: $decoSize;
+                    height: $decoSize;
+                }
+            }
+            @if $size == "mid" {
+                $conSize: 42px;
+                $imgSize: 38px;
+                $decoSize: 10px;
+
+                width: $conSize;
+                height: $conSize;
+
+                .profileImg {
+                    width: $imgSize;
+                    height: $imgSize;
+                }
+
+                &::after {
+                    width: $decoSize;
+                    height: $decoSize;
+                }
+            }
+            @if $size == "sm" {
+                $conSize: 36px;
+                $imgSize: 32px;
+                $decoSize: 8px;
+
+                width: $conSize;
+                height: $conSize;
+
+                .profileImg {
+                    width: $imgSize;
+                    height: $imgSize;
+                }
+
+                &::after {
+                    width: $decoSize;
+                    height: $decoSize;
+                }
+            }
+            @if $size == "xs" {
+                $conSize: 30px;
+                $imgSize: 26px;
+                $decoSize: 7px;
+
+                width: $conSize;
+                height: $conSize;
+
+                .profileImg {
+                    width: $imgSize;
+                    height: $imgSize;
+                }
+
+                &::after {
+                    width: $decoSize;
+                    height: $decoSize;
+                }
+            }
+        }
+    }
+}
+
+@keyframes rotateProfile {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// 회전 안시키게
+@keyframes rotateReverseProfile {
+    // 155 -205
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes isAskChange {
+    from {
+        background: $askChangeColor;
+    }
+
+    50% {
+        background: $backgroundColor;
+    }
+
+    to {
+        background: $askChangeColor;
+    }
+}
+
+.profile {
+    .con_profileImg {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px;
+        border-radius: 50%;
+
+        background: hsla(var(--any-white), 0.5);
+        box-shadow: $shadow;
+
+        .profileImg {
+            border-radius: 50%;
+        }
+
+        &::after {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-radius: 50%;
+            border: $border $backgroundColor;
+        }
+
+        @include profileStyle();
+        @include profileSize();
+    }
+}

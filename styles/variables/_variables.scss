@@ -1,11 +1,104 @@
 @charset "utf-8";
+
 @import "./color";
 
+// button, field size
 $xsSize: 0.15em 1em;
 $smSize: 0.434em 1em;
 $midSize: 0.458em 1em;
 $lgSize: 0.6725em 1em;
 $xlSize: 0.815em 1em;
+
 $transition: 0.3s;
+
 $borderRadius: 6px;
 $roundBorderRadius: 50px;
+
+$borderSize: 2px;
+$defaultBorder: $borderSize solid;
+
+$backgroundColor: hsla(var(--sy-gray-02), 1);
+$backgrodunColor_none: hsla(var(--sy-gray-02), 0);
+
+$borderColor: hsla(var(--sy-gray-04), 1);
+$borderColor_none: hsla(var(--sy-gray-04), 0);
+
+$contentsColor: hsla(var(--sy-gray-07), 1);
+$contentsColor_none: hsla(var(--sy-gray-07), 0);
+
+$placeholderColor: hsla(var(--sy-gray-05), 1);
+
+$shadow-out: 1px 1px 6px 0px;
+$shadow-in: inset 0px -5px 6px -7px;
+
+$shadow-left: -1px 0px 4px 0px;
+$shadow-btm: 0px 4px 8px -1px;
+
+$shadow-default: 0px 0px 4px -1px;
+
+$gradient_input: linear-gradient(
+        180deg,
+        hsla(var(--sy-gray-02), 0.6) 0%,
+        hsla(var(--sy-gray-04), 0.6) 100%
+    ),
+    hsla(var(--sy-gray-04), 0.6);
+
+$gradient_input_none: linear-gradient(
+        180deg,
+        hsla(var(--sy-gray-02), 0) 0%,
+        hsla(var(--sy-gray-04), 0) 100%
+    ),
+    디 hsla(var(--sy-gray-04), 0);
+
+$gradient_edit: linear-gradient(
+    270deg,
+    hsla(var(--any-white), 1) 0%,
+    hsla(var(--sy-purple-normal), 1) 11.72%,
+    hsla(var(--sy-lapis-normal), 1) 50%
+);
+
+$gradient_pri: linear-gradient(
+        180deg,
+        hsla(var(--sy-pri-normal), 0.8) 0%,
+        hsla(var(--sy-sec-normal), 0.8) 100%
+    ),
+    hsla(var(--sy-sec-normal), 0.6);
+
+$gradient_pri_hover: linear-gradient(
+        180deg,
+        hsla(var(--sy-pri-normal), 1) 0%,
+        hsla(var(--sy-sec-normal), 1) 100%
+    ),
+    hsla(var(--sy-sec-normal), 1);
+
+$gradient_red: linear-gradient(
+    180deg,
+    hsla(var(--sy-red-normal), 1) 0%,
+    hsla(var(--sy-pink-normal), 1) 100%
+);
+$gradient_purple: linear-gradient(
+    90deg,
+    hsla(var(--sy-purple-normal), 1) 0%,
+    hsla(var(--sy-lapis-normal), 1) 100%
+);
+$gradient_green: linear-gradient(
+    90deg,
+    hsla(var(--sy-ncloud-normal), 1) 0%,
+    hsla(var(--sy-green-normal), 1) 100%
+);
+
+$focusBorderColor: hsla(var(--sy-pri-normal), 1);
+$shadow_focus: $shadow-out hsla(var(--sy-pri-normal), 0.5);
+
+$invalidBorderColor_invalid: hsla(var(--sy-red-normal), 1);
+$shadow_invalid: $shadow-out hsla(var(--sy-red-normal), 0.5);
+
+$invalidBorderColor_valid: hsla(var(--sy-green-normal), 1);
+$shadow_valid: $shadow-out hsla(var(--sy-green-normal), 0.5);
+
+$inputTypeList: "box", "box-line", "block", "block-line", "text", "underline";
+$selectTypeList: "box", "box-line", "block", "block-line";
+$buttonTypeList: "box", "box-line", "box-ghost", "block", "block-line",
+    "block-ghost", "round", "round-line", "round-ghost", "text", "circle",
+    "circle-line", "transparent", "transparent-line";
+$sizeList: "xl", "lg", "mid", "sm", "xs";

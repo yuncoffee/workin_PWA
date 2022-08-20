@@ -1,4 +1,3 @@
-import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { reqCurrentAddress } from "../../api/NaverMap"

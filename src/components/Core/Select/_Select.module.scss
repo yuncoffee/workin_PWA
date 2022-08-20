@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+@use "../../../../styles/Variables/variables";
+@use "../../../../styles/Mixin/mixin";
+@use "../../../../styles/Mixin/mixinInput";
+
+@mixin selectStyle() {
+    position: relative;
+    @include mixin.h5;
+
+    select {
+        @include mixin.a11y-hidden();
+    }
+    .isActive {
+        .select__icon {
+            i {
+                transform: rotate(-180deg);
+            }
+        }
+    }
+
+    &__box {
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        border: variables.$defaultBorder;
+        min-width: 120px;
+        height: max-content;
+        transition: variables.$transition;
+        gap: 4px;
+        font-weight: 500;
+    }
+
+    &__icon {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+            transition: variables.$transition - 0.1s;
+        }
+    }
+}
+
+.select {
+    @include selectStyle();
+
+    &__box {
+        @include mixin.lySize();
+        @include mixinInput.selectBoxStyle();
+    }
+}

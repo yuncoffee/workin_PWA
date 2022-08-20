@@ -11,7 +11,7 @@ function GlobalNav() {
     const deviceAtom = useRecoilValue(rcDeviceAtom)
 
     const NAV_LIST = [
-        { name: "Home", iconName: "ri-home-6-fill", pathName: "/" },
+        { name: "Home", iconName: "ri-home-6-fill", pathName: "/home" },
         {
             name: "Scheduler",
             iconName: "ri-calendar-event-fill",

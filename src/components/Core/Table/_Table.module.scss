@@ -1,0 +1,78 @@
+@charset "utf-8";
+
+@use "../../../../styles/Variables/variables";
+@use "../../../../styles/Mixin/mixin";
+
+$theadBackground: hsla(var(--sy-gray-03), 1);
+
+.table {
+    width: 100%;
+    // display: inline-flex;
+    flex-direction: column;
+    padding: 1em;
+}
+
+.thead {
+    .tr {
+        background: $theadBackground;
+        border-radius: variables.$borderRadius variables.$borderRadius 0 0;
+        color: hsla(var(--sy-gray-07), 1);
+        padding-right: 24px;
+    }
+}
+
+.tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+    padding-right: 8px;
+    height: calc(100% - 8px);
+    overflow-y: scroll;
+
+    @include mixin.scrollbar($bg-a: 0, $thumb-a: 0);
+
+    &:hover {
+        @include mixin.scrollbar($bg-a: 0, $thumb-a: 0.4);
+    }
+
+    tr {
+        padding: 0.7143em 0.5em;
+        display: flex;
+        gap: 8px;
+        background: hsla(var(--sy-white), 0);
+        transition: variables.$transition;
+
+        &:hover {
+            background: hsla(var(--sy-white), 0.4);
+        }
+    }
+
+    td {
+        color: hsla(var(--sy-gray-07), 1);
+        display: flex;
+        @include mixin.h5();
+    }
+}
+
+.tr {
+    padding: 0.7143em 0.5em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    background: thistle;
+
+    @include mixin.h5();
+}
+
+.th {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.td {
+    @include mixin.ellipsis-text();
+}

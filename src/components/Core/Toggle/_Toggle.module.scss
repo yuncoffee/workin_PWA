@@ -1,0 +1,163 @@
+@charset "utf-8";
+
+@use "../../../../styles/Mixin/mixin";
+@use "../../../../styles/Variables/variables";
+
+$backgroundColor: variables.$gradient_input;
+$borderColor: hsla(var(--sy-gray-04), 1);
+$contentsColor: hsla(var(--sy-gray-07), 1);
+
+$backgroundColor_selected: hsla(var(--sy-pri-normal), 1);
+
+$backgroundColor_disabled: hsla(var(--sy-gray-05), 1);
+$borderColor_disabled: hsla(var(--sy-gray-06), 0.3);
+$backgroundColor_selected_disabled: hsla(var(--sy-gray-03), 1);
+
+$backgorundColor_item: hsla(var(--any-white), 1);
+
+$borderRadius: variables.$borderRadius;
+
+$border: 2px solid;
+$shadow-out: 1px 1px 6px 1px;
+$shadow-in: inset 0px 0px 6px -1px;
+
+$shadow: $shadow-out hsla(var(--sy-pri-normal), 0.3);
+$shadow_wrap: $shadow-in hsla(var(--sy-pri-normal), 0.5);
+$shadow_disabled: $shadow-out hsla(var(--sy-shadow), 0.3);
+
+$invalidColor_invalid: variables.$invalidBorderColor_invalid;
+$invalidColor_valid: variables.$invalidBorderColor_valid;
+$shadow_invalid: $shadow-out hsla(var(--sy-red-normal), 0.5);
+$shadow_valid: $shadow-out hsla(var(--sy-green-normal), 0.5);
+
+@mixin toggleSize() {
+    &[data-c-size="xl"] {
+        padding: variables.$xlSize;
+        min-height: 40px;
+        width: 75px;
+
+        .toggle__item {
+            width: 34px;
+        }
+    }
+
+    &[data-c-size="lg"] {
+        padding: variables.$lgSize;
+        min-height: 36px;
+        width: 67px;
+
+        .toggle__item {
+            width: 30px;
+        }
+    }
+
+    &[data-c-size="mid"] {
+        padding: variables.$midSize;
+        min-height: 32px;
+        width: 59px;
+
+        .toggle__item {
+            width: 26px;
+        }
+    }
+
+    &[data-c-size="sm"] {
+        @include mixin.h6;
+        font-weight: 500;
+        padding: variables.$smSize;
+        min-height: 28px;
+        width: 51px;
+
+        .toggle__item {
+            width: 22px;
+        }
+    }
+
+    &[data-c-size="xs"] {
+        @include mixin.h6;
+        padding: variables.$smSize;
+        font-weight: 500;
+        min-height: 20px;
+        width: 34px;
+
+        .toggle__item {
+            width: 14px;
+        }
+    }
+}
+
+.toggle {
+    display: inline-flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    border: $border $borderColor;
+    height: max-content;
+    transition: variables.$transition;
+    gap: 4px;
+    @include mixin.h5;
+    font-weight: 500;
+    border-radius: 50px;
+    background: $backgroundColor;
+
+    @include toggleSize();
+
+    &[data-current="true"] {
+        border: $border $backgroundColor_selected;
+        background: $backgroundColor_selected;
+        box-shadow: $shadow_wrap;
+
+        .toggle__item {
+            box-shadow: $shadow;
+            background: $backgorundColor_item;
+            border: variables.$defaultBorder hsla(var(--any-white), 1);
+        }
+    }
+
+    &:disabled {
+        background: $backgroundColor_disabled;
+        border: $border $borderColor_disabled;
+
+        .toggle__item {
+            background: $backgroundColor_selected_disabled;
+            border: $border $backgroundColor_selected_disabled;
+        }
+    }
+
+    &[data-c-focus="true"] {
+        border: $border $backgroundColor_selected;
+        box-shadow: $shadow;
+    }
+
+    &[data-c-invalid="true"] {
+        border: $border $invalidColor_invalid;
+        box-shadow: $shadow_invalid;
+
+        &[data-current="true"] {
+            background: $invalidColor_invalid;
+        }
+    }
+
+    &[data-c-invalid="false"] {
+        border: $border $invalidColor_valid;
+        box-shadow: $shadow_valid;
+
+        &[data-current="true"] {
+            background: $invalidColor_valid;
+        }
+    }
+
+    .toggle__item {
+        position: absolute;
+        height: calc(100% - 2px);
+        background: $backgorundColor_item;
+        border: $border $backgorundColor_item;
+        border-radius: 50%;
+        transition: variables.$transition;
+        transform: translateX(-50%);
+
+        &.isActive {
+            transform: translateX(50%);
+        }
+    }
+}

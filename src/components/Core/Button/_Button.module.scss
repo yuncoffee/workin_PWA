@@ -1,0 +1,218 @@
+@charset "utf-8";
+
+@use "../../../../styles/mixin/mixin";
+@use "../../../../styles/mixin/mixinButton";
+@use "../../../../styles/Variables/variables";
+
+@mixin buttonSize($type: "button") {
+    @include mixin.lySize();
+
+    @each $size in variables.$sizeList {
+        &[data-c-size="#{$size}"] {
+            @if $size == "xl" {
+                $btnSize: 54px;
+                $minSize: 120px;
+                min-height: $btnSize;
+                @if $type == "icon" {
+                    min-width: $btnSize;
+                    max-width: $btnSize;
+                } @else {
+                    min-width: $minSize;
+                }
+            }
+            @if $size == "lg" {
+                $btnSize: 48px;
+                $minSize: 96px;
+                min-height: $btnSize;
+                @if $type == "icon" {
+                    min-width: $btnSize;
+                    max-width: $btnSize;
+                } @else {
+                    min-width: $minSize;
+                }
+            }
+            @if $size == "mid" {
+                $btnSize: 42px;
+                $minSize: 80px;
+                min-height: $btnSize;
+
+                @if $type == "icon" {
+                    min-width: $btnSize;
+                    max-width: $btnSize;
+                } @else {
+                    min-width: $minSize;
+                }
+            }
+            @if $size == "sm" {
+                $btnSize: 36px;
+                $minSize: 64px;
+                min-height: $btnSize;
+
+                @if $type == "icon" {
+                    min-width: $btnSize;
+                    max-width: $btnSize;
+                } @else {
+                    min-width: $minSize;
+                }
+            }
+            @if $size == "xs" {
+                $btnSize: 30px;
+                $minSize: 48px;
+                min-height: $btnSize;
+
+                @if $type == "icon" {
+                    min-width: $btnSize;
+                    max-width: $btnSize;
+                } @else {
+                    min-width: $minSize;
+                }
+            }
+        }
+    }
+}
+
+.button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: max-content;
+    border: variables.$defaultBorder;
+    cursor: pointer;
+    transition: variables.$transition;
+    background-color: hsla(var(--sy-gray-01), 1);
+
+    gap: 2px;
+
+    &:hover {
+        background-color: hsla(var(--sy-pri-dark), 1);
+
+
+
+    }
+
+    &:disabled[data-c-type][data-c-size] {
+        background-color: hsla(var(--sy-gray-03), 1);
+        border-color: hsla(var(--sy-gray-03), 1);
+        color: hsla(var(--sy-gray-05), 1);
+        cursor: auto;
+
+        &:hover {
+            background-color: hsla(var(--sy-gray-03), 1);
+            border-color: hsla(var(--sy-gray-03), 1);
+            color: hsla(var(--sy-gray-05), 1);
+        }
+    }
+
+    i {
+        font-size: 1.1em;
+    }
+
+    @include buttonSize();
+    @include mixinButton.buttonColor();
+
+    &[data-c-type="block-line"]{
+        [data-c-color=pri]::after{
+            border-color: hsla(var(--sy-pri-normal), 1);
+            border-top-color: hsla(var(--sy-pri-normal), 0);
+        }
+
+        &:hover{
+            [data-c-color=pri]::after{
+                border-color: hsla(var(--sy-white), 1);
+                border-top-color: hsla(var(--sy-white), 0);
+            }
+        }
+
+    }
+
+
+}
+
+.icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: max-content;
+    border: variables.$defaultBorder;
+    cursor: pointer;
+    transition: variables.$transition;
+    background-color: hsla(var(--sy-gray-01), 1);
+
+    &:hover {
+        background-color: hsla(var(--sy-pri-dark), 1);
+    }
+
+    i {
+        @include mixin.absoluteCenter();
+    }
+
+    @include buttonSize($type: "icon");
+    @include mixinButton.buttonColor();
+}
+
+// authIcon
+.auth {
+    &[data-c-type="round"] {
+        border: variables.$defaultBorder rgba(#ffffff, 0);
+        border-radius: 50px;
+        box-shadow: variables.$shadow-btm rgba(#000000, 0.2);
+    }
+    &[data-type="naver"] {
+        background: rgba(#03c75a, 1);
+    }
+
+    &[data-type="kakao"] {
+        background: rgba(#fee500, 1);
+    }
+    &[data-type="google"] {
+        background: rgba(#ffffff, 1);
+    }
+
+    .authIcon {
+        width: 20px;
+        height: 20px;
+        background: no-repeat center / contain;
+
+        &[data-type="kakao"] {
+            background-image: url("/images/icons/auth/kakao.svg");
+        }
+        &[data-type="naver"] {
+            background-image: url("/images/icons/auth/naver.svg");
+        }
+        &[data-type="google"] {
+            background-image: url("/images/icons/auth/google.svg");
+        }
+    }
+}
+
+.buttonGroup {
+    background: hsla(var(--sy-gray-04), 1);
+    display: flex;
+    padding: 4px;
+    gap: 4px;
+
+    .button {
+        width: 100%;
+        background: hsla(var(--sy-gray-05), 0);
+        border: variables.$defaultBorder;
+        border-color: hsla(var(--sy-gray-05), 0);
+        color: hsla(var(--sy-gray-07), 1);
+        min-width: auto;
+
+        &:hover,
+        &.isActive {
+            background: hsla(var(--sy-white), 1);
+        
+        }
+    }
+
+    &[data-c-type="block"] {
+        border-radius: variables.$borderRadius;
+
+        .button {
+            border-radius: variables.$borderRadius;
+        }
+    }
+}

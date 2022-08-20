@@ -1,0 +1,142 @@
+@charset "utf-8";
+
+@use "../../../../styles/Mixin/mixin";
+@use "../../../../styles/mixin/mixinButton";
+@use "../../../../styles/Variables/variables";
+
+$border: variables.$defaultBorder;
+$transition: variables.$transition;
+$borderRadius: variables.$borderRadius;
+$roundBorderRadius: variables.$roundBorderRadius;
+
+$tagContentColor: hsla(var(--sy-gray-06), 1);
+$tagBorderColor: hsla(var(--sy-gray-05), 1);
+$tagBackgroundColor: hsla(var(--sy-gray-03), 1);
+$tagBackgroundColor_none: hsla(var(--sy-gray-03), 0);
+
+.badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: $border;
+    padding: 0 8px;
+    width: fit-content;
+    min-height: 18px;
+    min-width: 18px;
+    transition: $transition;
+    gap: 4px;
+
+    @include mixin.h6;
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    @include mixinButton.buttonColor();
+
+    &[data-c-type="block"] {
+        border-radius: $borderRadius;
+    }
+    &[data-c-type="block-line"] {
+        border-radius: $borderRadius;
+        background: $tagBackgroundColor_none;
+    }
+    &[data-c-type="box-line"] {
+        background: $tagBackgroundColor_none;
+    }
+    &[data-c-type="round"] {
+        border-radius: $roundBorderRadius;
+    }
+    &[data-c-type="round-line"] {
+        border-radius: $roundBorderRadius;
+        background: $tagBackgroundColor_none;
+    }
+}
+
+.tag {
+    color: $tagContentColor;
+    border-color: $tagBorderColor;
+    background: $tagBackgroundColor;
+    text-align: center;
+    min-width: 75px;
+
+    &[data-c-type="block"] {
+        border-radius: $borderRadius;
+    }
+    &[data-c-type="block-line"] {
+        border-radius: $borderRadius;
+        background: $tagBackgroundColor_none;
+    }
+    &[data-c-type="box-line"] {
+        background: $tagBackgroundColor_none;
+    }
+    &[data-c-type="round"] {
+        border-radius: $roundBorderRadius;
+    }
+    &[data-c-type="round-line"] {
+        border-radius: $roundBorderRadius;
+        background: $tagBackgroundColor_none;
+    }
+
+    @include mixinButton.buttonColor();
+}
+
+.tag_canvasError {
+    max-width: 56px;
+    padding: 0.125em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &[data-type="group"] {
+        background: hsla(var(--sy-purple-normal), 0.2);
+        border: $border hsla(var(--sy-purple-normal), 1);
+        color: hsla(var(--sy-purple-normal), 1);
+    }
+    &[data-type="line"] {
+        background: hsla(var(--sy-lapis-normal), 0.2);
+        border: $border hsla(var(--sy-lapis-normal), 1);
+        color: hsla(var(--sy-lapis-normal), 1);
+    }
+    &[data-type="value"] {
+        background: hsla(var(--sy-cyan-normal), 0.2);
+        border: $border hsla(var(--sy-cyan-normal), 1);
+        color: hsla(var(--sy-cyan-normal), 1);
+    }
+}
+
+.envBadge{
+    &[data-type="before"]{
+        background: hsla(var(--sy-livid-normal), 0.2);
+        border: $border hsla(var(--sy-livid-normal), 0);
+        color: hsla(var(--sy-livid-normal), 1);
+    }
+    &[data-type="created"]{
+        background: hsla(var(--sy-purple-normal), 0.3);
+        border: $border hsla(var(--sy-purple-normal), 0);
+        color: hsla(var(--sy-purple-normal), 1);
+    }
+    &[data-type="planned"]{
+        background: hsla(var(--sy-cyan-normal), 0.25);
+        border: $border hsla(var(--sy-cyan-normal), 0);
+        color: hsla(var(--sy-cyan-normal), 1);
+    }
+    &[data-type="plan-errored"]{
+        background: hsla(var(--sy-red-normal), 0.2);
+        border: $border hsla(var(--sy-red-normal), 0);
+        color: hsla(var(--sy-red-normal), 1);
+    }
+    &[data-type="applied"]{
+        background: hsla(var(--sy-green-normal), 0.25);
+        border: $border hsla(var(--sy-green-normal), 0);
+        color: hsla(var(--sy-green-normal), 1);
+    }
+    &[data-type="apply-errored"]{
+        background: hsla(var(--sy-critical-light), 0.4);
+        border: $border hsla(var(--sy-critical-normal), 0);
+        color: hsla(var(--sy-critical-light), 1);
+    }
+    &[data-type="destroyed"]{
+        background: hsla(var(--sy-black), 0.3);
+        border: $border hsla(var(--sy-black), 0);
+        color: hsla(var(--sy-black), 1);
+    }
+}
