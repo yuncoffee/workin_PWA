@@ -1,8 +1,8 @@
 @charset "utf-8";
 
 @use "../../../../styles/variables/variables";
-@use "../../../../styles/Mixin/mixin";
-@use "../../../../styles/Mixin/mixinInput";
+@use "../../../../styles/mixin/mixin";
+@use "../../../../styles/mixin/mixinInput";
 
 @mixin selectStyle() {
     position: relative;
