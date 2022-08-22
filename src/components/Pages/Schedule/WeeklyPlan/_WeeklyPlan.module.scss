@@ -1,0 +1,63 @@
+@charset "utf-8";
+@use "../../../../../styles/mixin/mixin";
+@use "../../../../../styles/variables/variables";
+
+$containerBackgroundColor: hsla(var(--sy-gray-01), 1);
+
+.weeklyPlanContainer {
+    background: $containerBackgroundColor;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.weeklyCalendar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btnContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    h4 {
+        color: hsla(var(--sy-gray-09), 1);
+        display: flex;
+        gap: 4px;
+    }
+}
+
+.dayOfTheWeekContainer,
+.dateOfTheWeekContainer,
+.planOfTheWeekContainer {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 3px 16px;
+
+    h5,
+    h6 {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.dayOfTheWeekContainer {
+    background: hsla(var(--sy-gray-03), 1);
+    border-radius: 2px;
+}
+
+.planOfTheWeekContainer {
+    border-top: 1px solid hsla(var(--sy-gray-04), 1);
+    border-bottom: 1px solid hsla(var(--sy-gray-04), 1);
+
+    h6 {
+        display: flex;
+        flex-direction: column;
+        min-height: 64px;
+        justify-content: center;
+    }
+}

@@ -3,10 +3,9 @@
 @use "../../../../styles/variables/variables";
 
 .main {
-    // background: tomato;
-    height: calc(100% - 144px);
     position: relative;
-
+    height: calc(100% - 144px);
+    background: hsla(var(--sy-gray-03), 1);
     &[data-device="ios"] {
         height: calc(100% - 178px);
     }

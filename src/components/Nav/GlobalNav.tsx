@@ -15,7 +15,7 @@ function GlobalNav() {
         {
             name: "Scheduler",
             iconName: "ri-calendar-event-fill",
-            pathName: "/scheduler",
+            pathName: "/schedule",
         },
         { name: "Team", iconName: "ri-team-fill", pathName: "/team" },
         { name: "ID Card", iconName: "ri-user-3-fill", pathName: "/idcard" },
