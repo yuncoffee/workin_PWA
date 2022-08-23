@@ -1,7 +1,13 @@
 import React from "react"
 
+import WeekSelectorContainer from "../../src/components/Pages/Team/WeekSelectorContainer"
+
 function index() {
-    return <div>index</div>
+    return (
+        <>
+            <WeekSelectorContainer />
+        </>
+    )
 }
 
 export default index

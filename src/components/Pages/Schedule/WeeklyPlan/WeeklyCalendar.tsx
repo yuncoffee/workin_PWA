@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { ReactNode, useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import dayjs from "dayjs"
 import weekOfYear from "dayjs/plugin/weekOfYear"
@@ -8,7 +8,11 @@ import IconButton from "../../../Core/Button/IconButton"
 import styles from "./_WeeklyPlan.module.scss"
 import { WEEK_LIST } from "../../../../utils/DayjsUtils"
 
-function WeeklyCalendar() {
+interface iWeeklyCalendar {
+    children?: ReactNode
+}
+
+function WeeklyCalendar({ children }: iWeeklyCalendar) {
     dayjs.extend(weekOfYear)
     dayjs.extend(duration)
     // dayjs.extend(objectSupport)
@@ -89,16 +93,20 @@ function WeeklyCalendar() {
                         return <h6 key={index}>{item.date}</h6>
                     })}
                 </section>
-                <section className={styles.planOfTheWeekContainer}>
-                    {currentWeekDate.map((item, index) => {
-                        return (
-                            <h6 key={index}>
-                                <span>{item.date}</span>
-                                <span>{item.date}</span>
-                            </h6>
-                        )
-                    })}
-                </section>
+                {children ? (
+                    children
+                ) : (
+                    <section className={styles.planOfTheWeekContainer}>
+                        {currentWeekDate.map((item, index) => {
+                            return (
+                                <h6 key={index}>
+                                    <span>{item.date}</span>
+                                    <span>{item.date}</span>
+                                </h6>
+                            )
+                        })}
+                    </section>
+                )}
             </section>
         </article>
     )

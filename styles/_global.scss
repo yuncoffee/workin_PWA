@@ -23,6 +23,10 @@
     &[data-page="/home"] {
         top: 95px;
         height: calc(100% - 178px);
+
+        &:not([data-device="ios"]) {
+            height: calc(100% - 144px);
+        }
     }
 }
 

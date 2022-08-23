@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import React, { ReactElement, useEffect } from "react"
 import { useRecoilState } from "recoil"
 import { rcCurrentLocationAtom, rcDeviceAtom } from "../recoil/Common"
@@ -9,6 +10,8 @@ interface iLayout {
 }
 
 function Layout({ children }: iLayout) {
+    const router = useRouter()
+
     const [deviceAtom, setDeviceAtom] = useRecoilState(rcDeviceAtom)
     const [currentLocation, setCurrentLocation] = useRecoilState(
         rcCurrentLocationAtom,
@@ -59,7 +62,13 @@ function Layout({ children }: iLayout) {
     return (
         <>
             <GlobalHeader />
-            {children}
+            <main
+                className="main"
+                data-device={deviceAtom.device}
+                data-page={router.pathname}
+            >
+                {children}
+            </main>
             <GlobalNav />
         </>
     )

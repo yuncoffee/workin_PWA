@@ -43,7 +43,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                     type="text/javascript"
                     src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_MAP_CLIENT_ID}`}
                 />
-                <meta name="theme-color" content="#0052FF" />
+                <meta name="theme-color" content="#2b2b2b" />
             </Head>
             <Layout>
                 <Component {...pageProps} />
