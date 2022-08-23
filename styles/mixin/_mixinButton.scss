@@ -294,7 +294,11 @@ $buttonColorList: map-merge(
             @if $buttonType ==
                 "transparent" or
                 $buttonType ==
-                "transparent-line"
+                "transparent-line" or
+                $buttonType ==
+                "transparent-round" or
+                $buttonType ==
+                "transparent-round-line"
             {
                 border-radius: variables.$borderRadius;
                 background: hsla(var(--sy-gray-02), 0);
@@ -307,8 +311,18 @@ $buttonColorList: map-merge(
                     border-color: hsla(var(--sy-gray-02), 0);
                 }
             }
-
-            @if $buttonType == "transparent-line" {
+            @if $buttonType ==
+                "transparent-round" or
+                $buttonType ==
+                "transparent-round-line"
+            {
+                border-radius: variables.$roundBorderRadius;
+            }
+            @if $buttonType ==
+                "transparent-line" or
+                $buttonType ==
+                "transparent-round-line"
+            {
                 border-color: hsla(var(--sy-gray-04), 1);
             }
         }

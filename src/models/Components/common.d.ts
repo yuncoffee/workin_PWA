@@ -17,6 +17,8 @@ export type tButtonStyle =
     | "round-ghost"
     | "transparent"
     | "transparent-line"
+    | "transparent-round"
+    | "transparent-round-line"
 export type tInputStyle = tUiStyle | "underline"
 export type tBadgeStyle = tUiStyle | "circle" | "circle-line"
 export type tSelectStyle = "box" | "box-line" | "block" | "block-line"

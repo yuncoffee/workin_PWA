@@ -36,8 +36,9 @@ function IconButton(
         value,
         isLoading,
         color = "pri",
+        children,
     }: iIcon,
-    ref: React.ForwardedRef<HTMLButtonElement>
+    ref: React.ForwardedRef<HTMLButtonElement>,
 ) {
     return (
         <button
@@ -95,7 +96,7 @@ function IconButton(
                         }
                     />
                 ))}
-            {!isLoading && iconName && (
+            {!children && !isLoading && iconName && (
                 <i
                     className={iconName + " ri-xl"}
                     data-name={dataName}
@@ -104,6 +105,7 @@ function IconButton(
                     data-click={dataClick}
                 />
             )}
+            {children}
         </button>
     )
 }

@@ -9,9 +9,19 @@
 
 .main {
     position: relative;
-    height: calc(100% - 144px);
+    top: 42px;
+    height: calc(100% - 91px);
     background: hsla(var(--sy-gray-03), 1);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
     &[data-device="ios"] {
+        height: calc(100% - 125px);
+    }
+
+    &[data-page="/home"] {
+        top: 95px;
         height: calc(100% - 178px);
     }
 }

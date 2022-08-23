@@ -1,63 +1,53 @@
 import React, { useEffect, useState } from "react"
+import { useRecoilState } from "recoil"
 import dayjs from "dayjs"
 import weekOfYear from "dayjs/plugin/weekOfYear"
 import duration from "dayjs/plugin/duration"
-import objectSupport from "dayjs/plugin/objectSupport"
+import { rcCurrentDateAtom } from "../../../../recoil/Common"
 import IconButton from "../../../Core/Button/IconButton"
 import styles from "./_WeeklyPlan.module.scss"
+import { WEEK_LIST } from "../../../../utils/DayjsUtils"
 
 function WeeklyCalendar() {
     dayjs.extend(weekOfYear)
     dayjs.extend(duration)
     // dayjs.extend(objectSupport)
-    const [currentDay, setCurrentDay] = useState(dayjs())
+    const [currentDate, setCurrentDate] = useRecoilState(rcCurrentDateAtom)
     const [currentWeek, setCurrentWeek] = useState(0)
-    const [currentMonth, setCurrentMonth] = useState(0)
     const [currentYear, setCurrentYear] = useState(0)
-    const [week, setWeek] = useState([
-        "Sun",
-        "Mon",
-        "Tue",
-        "Wed",
-        "Thu",
-        "Fri",
-        "Sat",
-    ])
+    const [week, setWeek] = useState(WEEK_LIST)
     const [currentWeekDate, setCurrentWeekDate] = useState<any[]>([])
 
-    useEffect(() => {}, [])
+    useEffect(() => {
+        console.log("test", currentDate.day(4))
+    }, [])
 
     useEffect(() => {
-        console.log("주차", currentDay.week())
-        setCurrentWeek(currentDay.week())
-        setCurrentYear(currentDay.year())
-        console.log(currentDay)
-        // console.log(currentDay.week(3))
+        console.log("주차", currentDate.week())
+        setCurrentWeek(currentDate.week())
+        setCurrentYear(currentDate.year())
+        console.log(currentDate)
 
         const _currentWeek = week.map((date, index) => {
-            const dateInfo = currentDay.day(index)
-
+            const dateInfo = currentDate.day(index)
             const _date = dateInfo.date()
             const _day = week[index]
 
             date = { date: _date, day: _day } as any
 
             return date
-
-            // setCurrentWeekDate(dayjs().day(index))
         })
         setCurrentWeekDate(_currentWeek)
-        // console.log("what", dayjs().day())
-    }, [currentDay])
+    }, [currentDate])
 
     const handleCurrentDate = (type: number) => {
         if (type === 0) {
-            const _lastWeek = currentDay.subtract(1, "week")
-            setCurrentDay(_lastWeek)
+            const _lastWeek = currentDate.subtract(1, "week")
+            setCurrentDate(_lastWeek)
         }
         if (type === 1) {
-            const _nextWeek = currentDay.add(1, "week")
-            setCurrentDay(_nextWeek)
+            const _nextWeek = currentDate.add(1, "week")
+            setCurrentDate(_nextWeek)
         }
     }
 
@@ -77,7 +67,7 @@ function WeeklyCalendar() {
                 />
                 <h4>
                     <span>{currentYear}년</span>
-                    <span>{currentDay.format("MM")}월</span>
+                    <span>{currentDate.day(4).format("MM")}월</span>
                     {currentWeek}주차
                 </h4>
                 <IconButton

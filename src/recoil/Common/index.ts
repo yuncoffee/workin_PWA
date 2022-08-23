@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import { atom } from "recoil"
 
 export const rcDeviceAtom = atom({
@@ -16,4 +17,9 @@ export const rcCurrentLocationAtom = atom<{
         location: "",
         coordinate: [],
     },
+})
+
+export const rcCurrentDateAtom = atom({
+    key: "rcCurrentDateAtom",
+    default: dayjs(),
 })
