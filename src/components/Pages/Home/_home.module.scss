@@ -5,7 +5,6 @@
 .main {
     position: relative;
     height: calc(100% - 144px);
-    background: hsla(var(--sy-gray-03), 1);
     &[data-device="ios"] {
         height: calc(100% - 178px);
     }
@@ -86,7 +85,7 @@
     z-index: 100;
 
     @include mixin.isActive(true) {
-        max-height: 320px;
+        max-height: 328px;
         height: 100%;
     }
 
@@ -101,6 +100,10 @@
 
     &__body {
         border-top: variables.$defaultBorder hsla(var(--sy-gray-03), 1);
-        padding: 8px 16px;
+        padding: 8px 16px 16px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        overflow-y: scroll;
     }
 }

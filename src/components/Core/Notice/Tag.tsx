@@ -37,8 +37,8 @@ function Tag({
             }
             style={style ? style : length ? { width: `${length}` } : {}}
         >
-            {contents}
-            {children}
+            {!children && contents}
+            {!contents && children}
         </label>
     )
 }

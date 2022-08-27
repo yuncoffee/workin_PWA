@@ -2,14 +2,8 @@
 @use "../../../../../styles/mixin/mixin";
 @use "../../../../../styles/variables/variables";
 
-$containerBackgroundColor: hsla(var(--sy-gray-01), 1);
-
 .weeklyPlanContainer {
-    background: $containerBackgroundColor;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    @include mixin.containerStyle();
 }
 
 .weeklyCalendar {
@@ -42,6 +36,27 @@ $containerBackgroundColor: hsla(var(--sy-gray-01), 1);
     h6 {
         width: 100%;
         text-align: center;
+    }
+}
+
+.dateOfTheWeekContainer {
+    h6[data-today="true"] {
+        position: relative;
+        color: hsla(var(--sy-gray-09), 1);
+        font-weight: 700;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 40px;
+            border-radius: 50px;
+            height: 100%;
+            transform: translate3d(-50%, -50%, 0);
+            background: hsla(var(--sy-pri-normal), 0.2);
+            z-index: 0;
+        }
     }
 }
 

@@ -23,3 +23,8 @@ export const rcCurrentDateAtom = atom({
     key: "rcCurrentDateAtom",
     default: dayjs(),
 })
+
+export const rcToDayDateAtom = atom({
+    key: "rcToDayDateAtom",
+    default: dayjs(),
+})

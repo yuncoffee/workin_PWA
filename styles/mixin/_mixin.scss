@@ -236,4 +236,12 @@
     }
 }
 
+@mixin containerStyle {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    background: hsla(var(--sy-gray-01), 1);
+    gap: 16px;
+}
+
 @import "./mixinResponsive";

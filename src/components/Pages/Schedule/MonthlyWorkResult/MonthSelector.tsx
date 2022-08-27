@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { rcCurrentDateAtom } from "../../../../recoil/Common"
 import { MONTH_LIST } from "../../../../utils/DayjsUtils"
@@ -6,9 +6,23 @@ import IconButton from "../../../Core/Button/IconButton"
 import styles from "./_MonthlyWorkResult.module.scss"
 
 function MonthSelector() {
-    const [months, setMonths] = useState(MONTH_LIST)
     const currentDate = useRecoilValue(rcCurrentDateAtom)
+    const monthBtnContainerRef = useRef<HTMLElement>(null)
+    const [months, setMonths] = useState(MONTH_LIST)
     const [selected, setSelected] = useState(currentDate.format("MMM"))
+    const [isNeedScroll, setIsNeedScroll] = useState(false)
+
+    useEffect(() => {
+        const index = parseInt(currentDate.format("M"))
+        index > 6 && setIsNeedScroll(true)
+    }, [])
+
+    useEffect(() => {
+        const target = monthBtnContainerRef.current as HTMLElement
+        const targetScrollWidth = target.scrollWidth
+        isNeedScroll &&
+            target.scrollTo({ left: targetScrollWidth, behavior: "smooth" })
+    }, [isNeedScroll])
 
     const handleSelected = (month: string) => {
         setSelected(month)
@@ -16,7 +30,10 @@ function MonthSelector() {
 
     return (
         <article className={styles.monthSelector}>
-            <section className={styles.monthBtnContainer}>
+            <section
+                ref={monthBtnContainerRef}
+                className={styles.monthBtnContainer}
+            >
                 {months.map((month, index) => {
                     return (
                         <IconButton
@@ -28,6 +45,7 @@ function MonthSelector() {
                             onClick={() => {
                                 handleSelected(month)
                             }}
+                            id={month}
                             key={index}
                         >
                             {month}

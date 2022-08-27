@@ -1,12 +1,13 @@
 import React, { ReactNode, useEffect, useState } from "react"
-import { useRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import dayjs from "dayjs"
 import weekOfYear from "dayjs/plugin/weekOfYear"
 import duration from "dayjs/plugin/duration"
-import { rcCurrentDateAtom } from "../../../../recoil/Common"
+import { rcCurrentDateAtom, rcToDayDateAtom } from "../../../../recoil/Common"
 import IconButton from "../../../Core/Button/IconButton"
 import styles from "./_WeeklyPlan.module.scss"
 import { WEEK_LIST } from "../../../../utils/DayjsUtils"
+import WeeklyTimeContainer from "./WeeklyTimeContainer"
 
 interface iWeeklyCalendar {
     children?: ReactNode
@@ -17,20 +18,24 @@ function WeeklyCalendar({ children }: iWeeklyCalendar) {
     dayjs.extend(duration)
     // dayjs.extend(objectSupport)
     const [currentDate, setCurrentDate] = useRecoilState(rcCurrentDateAtom)
+    const todayDate = useRecoilValue(rcToDayDateAtom)
     const [currentWeek, setCurrentWeek] = useState(0)
     const [currentYear, setCurrentYear] = useState(0)
     const [week, setWeek] = useState(WEEK_LIST)
     const [currentWeekDate, setCurrentWeekDate] = useState<any[]>([])
+    const [weekPlanData, setWeekPlanData] = useState([
+        ["휴무"],
+        ["09:00", "18:00"],
+        ["미설정"],
+        ["10:00", "19:00"],
+        ["09:00", "18:00"],
+        ["08:30", "17:30"],
+        ["휴무"],
+    ])
 
     useEffect(() => {
-        console.log("test", currentDate.day(4))
-    }, [])
-
-    useEffect(() => {
-        console.log("주차", currentDate.week())
         setCurrentWeek(currentDate.week())
         setCurrentYear(currentDate.year())
-        console.log(currentDate)
 
         const _currentWeek = week.map((date, index) => {
             const dateInfo = currentDate.day(index)
@@ -90,22 +95,25 @@ function WeeklyCalendar({ children }: iWeeklyCalendar) {
                 </section>
                 <section className={styles.dateOfTheWeekContainer}>
                     {currentWeekDate.map((item, index) => {
-                        return <h6 key={index}>{item.date}</h6>
+                        return (
+                            <h6
+                                key={index}
+                                data-today={
+                                    currentDate.day(4).format("MM") ===
+                                        todayDate.format("MM") &&
+                                    parseInt(todayDate.format("DD")) ===
+                                        item.date
+                                }
+                            >
+                                {item.date}
+                            </h6>
+                        )
                     })}
                 </section>
                 {children ? (
                     children
                 ) : (
-                    <section className={styles.planOfTheWeekContainer}>
-                        {currentWeekDate.map((item, index) => {
-                            return (
-                                <h6 key={index}>
-                                    <span>{item.date}</span>
-                                    <span>{item.date}</span>
-                                </h6>
-                            )
-                        })}
-                    </section>
+                    <WeeklyTimeContainer weekData={weekPlanData} />
                 )}
             </section>
         </article>

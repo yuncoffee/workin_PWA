@@ -1,0 +1,21 @@
+@charset "utf-8";
+@use "../../../../../../styles/mixin/mixin";
+@use "../../../../../../styles/variables/variables";
+
+.memberInfo {
+    border-radius: variables.$borderRadius;
+    border: variables.$defaultBorder hsla(var(--sy-white), 1);
+
+    &__header {
+        padding: 4px;
+        gap: 4px;
+        background: hsla(var(--sy-white), 0.5);
+    }
+
+    &__body {
+        & > article {
+            border-top: none;
+            border-bottom: none;
+        }
+    }
+}

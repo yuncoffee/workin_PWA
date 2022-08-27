@@ -7,7 +7,6 @@ function index() {
     return (
         <>
             <NoticeContainer />
-            <div s-divider="line" />
             <NaverMap />
             <CheckContainer />
             <WorkDetailContainer />
