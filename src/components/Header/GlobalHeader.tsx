@@ -6,6 +6,7 @@ import styles from "./_Header.module.scss"
 
 function GlobalHeader() {
     const [toDay, setToDay] = useState("")
+    const [companyTitle, setCompanyTitle] = useState("Workin")
     const [isBtmShow, setIsBtmShow] = useState(false)
     const router = useRouter()
 
@@ -21,7 +22,7 @@ function GlobalHeader() {
 
     useEffect(() => {
         console.log(router.pathname)
-        if (router.pathname === "/home") {
+        if (router.pathname === "/home" || router.pathname === "/settings") {
             setIsBtmShow(true)
         } else {
             setIsBtmShow(false)
@@ -35,7 +36,11 @@ function GlobalHeader() {
             </section>
             {isBtmShow && (
                 <section className={styles.globalHeader__btm}>
-                    <h3>{toDay}</h3>
+                    {router.pathname === "/home" ? (
+                        <h3>{toDay}</h3>
+                    ) : (
+                        <h1>{companyTitle}</h1>
+                    )}
                 </section>
             )}
         </header>

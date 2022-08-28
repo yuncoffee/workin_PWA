@@ -2,10 +2,6 @@
 @use "../../../../../styles/mixin/mixin";
 @use "../../../../../styles/variables/variables";
 
-.weeklyPlanContainer {
-    @include mixin.containerStyle();
-}
-
 .weeklyCalendar {
     display: flex;
     flex-direction: column;

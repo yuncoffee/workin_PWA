@@ -16,3 +16,8 @@ export interface iProfileIcon extends iElements {
     editable?: number
     size?: tSize
 }
+
+export interface iProfile {
+    src?: string
+    size?: tSize
+}

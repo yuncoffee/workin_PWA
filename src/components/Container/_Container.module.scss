@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+@use "../../../styles/mixin/mixin";
+@use "../../../styles/variables/variables";
+
+.basicContainer {
+    @include mixin.containerStyle;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h3 {
+            color: hsla(var(--sy-gray-09), 1);
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+}

@@ -2,6 +2,7 @@ import React, { BaseSyntheticEvent } from "react"
 import { useResetRecoilState } from "recoil"
 import { iWeekSelectorContainer } from "../../../../models/Components/Pages/Team"
 import { rcCurrentDateAtom } from "../../../../recoil/Common"
+import BasicContainer from "../../../Container/BasicContainer"
 import ButtonGroup from "../../../Core/Button/ButtonGroup"
 import IconButton from "../../../Core/Button/IconButton"
 import WeeklyCalendar from "../../Schedule/WeeklyPlan/WeeklyCalendar"
@@ -19,20 +20,21 @@ function WeekSelectorContainer({ tab, setTab }: iWeekSelectorContainer) {
     }
 
     return (
-        <article className={styles.weekSelectorContainer}>
-            <ButtonGroup
-                selected={TAB_BUTTONS[tab]}
-                size="xs"
-                buttonNameList={TAB_BUTTONS}
-                onClick={(event: BaseSyntheticEvent) => {
-                    const index = event.target.dataset.index
-
-                    setTab && setTab(index)
-                }}
-            />
-            <section s-box="h-box" s-justify="space-between">
-                <h3>부서별 근무조회</h3>
-                <div s-box="h-box" s-gap="4px">
+        <BasicContainer
+            tab={
+                <ButtonGroup
+                    selected={TAB_BUTTONS[tab]}
+                    size="xs"
+                    buttonNameList={TAB_BUTTONS}
+                    onClick={(event: BaseSyntheticEvent) => {
+                        const index = event.target.dataset.index
+                        setTab && setTab(index)
+                    }}
+                />
+            }
+            title="부서별 근무조회"
+            headerChildren={
+                <>
                     <IconButton
                         iconName="ri-calendar-line"
                         variant="transparent"
@@ -43,10 +45,11 @@ function WeekSelectorContainer({ tab, setTab }: iWeekSelectorContainer) {
                         variant="transparent"
                         onClick={handleRefreshButton}
                     />
-                </div>
-            </section>
+                </>
+            }
+        >
             <WeeklyCalendar>{<div />}</WeeklyCalendar>
-        </article>
+        </BasicContainer>
     )
 }
 

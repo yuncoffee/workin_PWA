@@ -18,7 +18,11 @@ function GlobalNav() {
             pathName: "/schedule",
         },
         { name: "Team", iconName: "ri-team-fill", pathName: "/team" },
-        { name: "ID Card", iconName: "ri-user-3-fill", pathName: "/idcard" },
+        {
+            name: "Settings",
+            iconName: "ri-settings-3-fill",
+            pathName: "/settings",
+        },
     ]
 
     useEffect(() => {

@@ -1,7 +1,8 @@
 import dayjs from "dayjs"
 import React, { useEffect, useState } from "react"
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
+import { useRecoilValue, useResetRecoilState } from "recoil"
 import { rcCurrentDateAtom } from "../../../../recoil/Common"
+import BasicContainer from "../../../Container/BasicContainer"
 import Button from "../../../Core/Button/Button"
 import IconButton from "../../../Core/Button/IconButton"
 import WeeklyCalendar from "./WeeklyCalendar"
@@ -51,9 +52,9 @@ function WeeklyPlanContainer() {
     }, [currentDate])
 
     return (
-        <article className={styles.weeklyPlanContainer}>
-            <section s-box="h-box" s-justify="space-between">
-                <h3>내 주간 근무계획</h3>
+        <BasicContainer
+            title="내 주간 근무계획"
+            headerChildren={
                 <IconButton
                     iconName="ri-refresh-line"
                     variant="transparent"
@@ -61,32 +62,35 @@ function WeeklyPlanContainer() {
                         resetCurrentDate()
                     }}
                 />
-            </section>
-            <WeeklyCalendar />
-            {buttonState === 0 ? (
-                <Button
-                    buttonName="일정 변경하기"
-                    onClick={() => {}}
-                    size="mid"
-                    variant="transparent-line"
-                />
-            ) : buttonState === 1 ? (
-                <Button
-                    buttonName="계획 작성하기"
-                    onClick={() => {}}
-                    size="mid"
-                    variant="block"
-                />
-            ) : (
-                <Button
-                    buttonName="완료된 근무"
-                    onClick={() => {}}
-                    size="mid"
-                    variant="block"
-                    disabled
-                />
-            )}
-        </article>
+            }
+        >
+            <>
+                <WeeklyCalendar />
+                {buttonState === 0 ? (
+                    <Button
+                        buttonName="일정 변경하기"
+                        onClick={() => {}}
+                        size="mid"
+                        variant="transparent-line"
+                    />
+                ) : buttonState === 1 ? (
+                    <Button
+                        buttonName="계획 작성하기"
+                        onClick={() => {}}
+                        size="mid"
+                        variant="block"
+                    />
+                ) : (
+                    <Button
+                        buttonName="완료된 근무"
+                        onClick={() => {}}
+                        size="mid"
+                        variant="block"
+                        disabled
+                    />
+                )}
+            </>
+        </BasicContainer>
     )
 }
 

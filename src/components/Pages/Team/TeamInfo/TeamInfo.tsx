@@ -13,6 +13,7 @@ function TeamInfo({ teamInfo }: iTeamInfo) {
     return (
         <article className={styles.teamInfo}>
             <h4>{teamInfo.name}</h4>
+
             {memberInfo.map((member, index) => {
                 return <MemberInfo key={index} member={member} />
             })}

@@ -100,7 +100,7 @@ function WeeklyCalendar({ children }: iWeeklyCalendar) {
                                 key={index}
                                 data-today={
                                     currentDate.day(4).format("MM") ===
-                                        todayDate.format("MM") &&
+                                        todayDate.day(4).format("MM") &&
                                     parseInt(todayDate.format("DD")) ===
                                         item.date
                                 }
