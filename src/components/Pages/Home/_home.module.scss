@@ -20,7 +20,7 @@
     flex-direction: column;
     gap: 8px;
     border-radius: 12px;
-    border: 2px solid snow;
+    border: variables.$defaultBorder hsla(var(--any-white), 1);
     background: hsla(var(--sy-white), 0.5);
     backdrop-filter: blur(30px);
     transform: translate3d(-50%, 0, 0);
@@ -30,7 +30,7 @@
         width: 100%;
         background: hsla(var(--sy-black), 1);
         border-radius: 6px;
-        color: white;
+        color: hsla(var(--sy-gray-07), 1);
         @include mixin.h4;
     }
 

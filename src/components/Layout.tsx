@@ -1,18 +1,31 @@
 import { useRouter } from "next/router"
-import React, { ReactElement, useEffect } from "react"
+import {
+    cloneElement,
+    Dispatch,
+    ReactElement,
+    SetStateAction,
+    useEffect,
+} from "react"
 import { useRecoilState } from "recoil"
-import { rcCurrentLocationAtom, rcDeviceAtom } from "../recoil/Common"
+import {
+    rcCurrentLocationAtom,
+    rcDeviceAtom,
+    rcThemeAtom,
+} from "../recoil/Common"
+import { isDarkMode } from "../utils/DeviceUtils"
 import GlobalHeader from "./Header/GlobalHeader"
 import GlobalNav from "./Nav/GlobalNav"
 
 interface iLayout {
     children: ReactElement
+    setCustomLightColor: Dispatch<SetStateAction<string>>
 }
 
-function Layout({ children }: iLayout) {
+function Layout({ setCustomLightColor, children }: iLayout) {
     const router = useRouter()
 
     const [deviceAtom, setDeviceAtom] = useRecoilState(rcDeviceAtom)
+    const [themeAtom, setThemeAtom] = useRecoilState(rcThemeAtom)
     const [currentLocation, setCurrentLocation] = useRecoilState(
         rcCurrentLocationAtom,
     )
@@ -20,7 +33,17 @@ function Layout({ children }: iLayout) {
     useEffect(() => {
         checkDevice()
         checkUseGeolocation()
+
+        if (isDarkMode()) {
+            setThemeAtom({ ...themeAtom, theme: "dark" })
+        } else {
+            setThemeAtom({ ...themeAtom, theme: "light" })
+        }
     }, [])
+
+    useEffect(() => {
+        document.documentElement.setAttribute("data-theme", themeAtom.theme)
+    }, [themeAtom])
 
     const checkDevice = () => {
         const userAgent = navigator.userAgent.toLowerCase()
@@ -67,7 +90,8 @@ function Layout({ children }: iLayout) {
                 data-device={deviceAtom.device}
                 data-page={router.pathname}
             >
-                {children}
+                {cloneElement(children, { setCustomLightColor })}
+                {/* {children} */}
             </main>
             <GlobalNav />
         </>

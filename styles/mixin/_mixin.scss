@@ -244,4 +244,15 @@
     gap: 16px;
 }
 
+@mixin listItemStyle($minHeight: 44px) {
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: $minHeight;
+    background: hsla(var(--sy-white), 0.5);
+    border: variables.$defaultBorder hsla(var(--sy-white), 1);
+    border-radius: variables.$borderRadius;
+}
+
 @import "./mixinResponsive";

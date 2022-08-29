@@ -3,7 +3,7 @@
 .globalNav {
     max-height: 49px;
     min-height: 49px;
-    background: #ffffff;
+    background: hsla(var(--sy-white), 1);
     position: fixed;
     bottom: 0;
     padding: 2px 10px;
@@ -25,7 +25,6 @@
         padding: 1px 0;
         display: flex;
         align-items: center;
-        color: #c4c4c4;
 
         &[data-current="true"] {
             a,

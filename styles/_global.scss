@@ -21,7 +21,8 @@
         height: calc(100% - 125px);
     }
 
-    &[data-page="/home"] {
+    &[data-page="/home"],
+    &[data-page="/settings"] {
         top: 95px;
         height: calc(100% - 178px);
 
@@ -290,6 +291,23 @@ $font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
 
     --sy-shadow: 0, 0%, 17%;
     --any-white: 0, 0%, 100%;
+
+    &[data-theme="dark"] {
+        @each $name, $map in $colorSystemDark {
+            @each $mode, $color in $map {
+                --#{$name}-#{$mode}: #{$color};
+            }
+        }
+
+        @each $name, $map in $graySystemDark {
+            @each $color in $map {
+                --#{$name}: #{$color};
+            }
+        }
+
+        --any-white: 0, 0%, 100%;
+        --sy-shadow: 0, 0%, 38%;
+    }
 }
 
 .map_fin {

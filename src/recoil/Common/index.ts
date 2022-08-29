@@ -8,6 +8,13 @@ export const rcDeviceAtom = atom({
     },
 })
 
+export const rcThemeAtom = atom({
+    key: "rcThemeAtom",
+    default: {
+        theme: "light",
+    },
+})
+
 export const rcCurrentLocationAtom = atom<{
     location: string
     coordinate: number[]

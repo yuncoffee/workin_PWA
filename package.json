@@ -9,6 +9,7 @@
         "@types/navermaps": "^3.0.17",
         "axios": "^0.27.2",
         "dayjs": "^1.11.5",
+        "lodash": "^4.17.21",
         "next": "latest",
         "next-compose-plugins": "^2.2.1",
         "next-pwa": "5.5.4",

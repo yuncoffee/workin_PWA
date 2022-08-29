@@ -5,17 +5,11 @@
 .workListContainer {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
 }
 
 .workListItem {
-    border-radius: variables.$borderRadius;
-    border: variables.$defaultBorder hsla(var(--sy-white), 1);
-    background: hsla(var(--sy-white), 0.5);
-    min-height: 58px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include mixin.listItemStyle(58px);
     padding: 8px;
 }
 

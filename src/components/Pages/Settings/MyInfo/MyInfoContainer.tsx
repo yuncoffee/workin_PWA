@@ -3,6 +3,7 @@ import BasicContainer from "../../../Container/BasicContainer"
 import Button from "../../../Core/Button/Button"
 import Profile from "../../../Core/Profile/Profile"
 import styles from "./_MyInfo.module.scss"
+import loadsh from "lodash"
 
 function MyInfoContainer() {
     const [userName, setUserName] = useState("Coffee")
@@ -25,9 +26,11 @@ function MyInfoContainer() {
             </article>
             <article className={styles.detailContainer}>
                 {Object.entries(detailInfo).map((info, index) => {
+                    const _info = loadsh.upperFirst(info[0])
+
                     return (
                         <div className={styles.infoItem} key={index}>
-                            <h4>{info[0]}</h4>
+                            <h4>{_info}</h4>
                             <h4>{info[1]}</h4>
                         </div>
                     )

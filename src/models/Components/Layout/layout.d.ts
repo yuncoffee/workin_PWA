@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
 
 export interface iBasicContainer {
-    title: string
+    title?: string
     children?: ReactNode
     headerChildren?: ReactNode
     tab?: ReactNode
