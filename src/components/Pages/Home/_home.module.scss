@@ -28,9 +28,9 @@
     button {
         min-height: 64px;
         width: 100%;
-        background: hsla(var(--sy-black), 1);
+        background: hsla(var(--sy-pri-normal), 1);
         border-radius: 6px;
-        color: hsla(var(--sy-gray-07), 1);
+        color: hsla(var(--any-white), 1);
         @include mixin.h4;
     }
 
