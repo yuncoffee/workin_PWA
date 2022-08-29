@@ -2,7 +2,7 @@ export const isDarkMode = () =>
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
 
-export function rgbToHsl(r, g, b) {
+export function rgbToHsl(r: any, g: any, b: any) {
     var min,
         max,
         i,
@@ -35,12 +35,14 @@ export function rgbToHsl(r, g, b) {
     if (maxcolor == 2) {
         h = 4 + (rgb[0] - rgb[1]) / (max - min)
     }
-    if (isNaN(h)) {
+    if (isNaN(h as number)) {
         h = 0
     }
-    h = h * 60
-    if (h < 0) {
-        h = h + 360
+    if (h) {
+        h = h * 60
+        if (h < 0) {
+            h = h + 360
+        }
     }
     l = (min + max) / 2
     if (min == max) {
