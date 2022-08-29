@@ -18,6 +18,7 @@
         "recoil": "^0.7.5"
     },
     "devDependencies": {
+        "@types/lodash": "^4.14.184",
         "@types/node": "17.0.4",
         "@types/react": "17.0.38",
         "css-loader": "^6.7.1",
