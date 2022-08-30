@@ -59,7 +59,7 @@ function CustomFormContainer({ props }: any) {
                         </div>
                         <div s-box="v-box">
                             <h6>CI 컬러를 작성해주세요.</h6>
-                            <div s-box="h-box" s-gap="4px">
+                            <div s-box="h-box" s-gap="8px">
                                 <InputText
                                     size="lg"
                                     placeholder="200, 100%, 50%"
