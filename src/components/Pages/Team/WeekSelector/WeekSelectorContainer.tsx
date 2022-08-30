@@ -2,6 +2,7 @@ import React, { BaseSyntheticEvent } from "react"
 import { useResetRecoilState } from "recoil"
 import { iWeekSelectorContainer } from "../../../../models/Components/Pages/Team"
 import { rcCurrentDateAtom } from "../../../../recoil/Common"
+import { useModalActive } from "../../../../utils/ModalUtils"
 import BasicContainer from "../../../Container/BasicContainer"
 import ButtonGroup from "../../../Core/Button/ButtonGroup"
 import IconButton from "../../../Core/Button/IconButton"
@@ -11,9 +12,11 @@ import styles from "./_WeekSelector.module.scss"
 function WeekSelectorContainer({ tab, setTab }: iWeekSelectorContainer) {
     const TAB_BUTTONS = ["업무 계획", "업무 결과"]
     const resetCurrentDate = useResetRecoilState(rcCurrentDateAtom)
+    const { handleModalActive } = useModalActive()
 
     const handleCalendarButton = () => {
         console.log("hello")
+        handleModalActive("calendarModal")
     }
     const handleRefreshButton = () => {
         resetCurrentDate()

@@ -8,7 +8,7 @@ function TeamInfo({ teamInfo }: iTeamInfo) {
 
     useEffect(() => {
         setMemberInfo(teamInfo.member)
-    }, [])
+    }, [teamInfo])
 
     return (
         <article className={styles.teamInfo}>

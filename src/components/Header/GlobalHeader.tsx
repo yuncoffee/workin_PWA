@@ -2,11 +2,14 @@ import dayjs from "dayjs"
 import { useRouter } from "next/router"
 // import "dayjs/locale/ko"
 import { useEffect, useState } from "react"
+import { useRecoilValue } from "recoil"
+import { rcCustomInfoAtom } from "../../recoil/Common"
 import styles from "./_Header.module.scss"
 
 function GlobalHeader() {
+    const customInfoAtom = useRecoilValue(rcCustomInfoAtom)
     const [toDay, setToDay] = useState("")
-    const [companyTitle, setCompanyTitle] = useState("Workin")
+    const [companyTitle, setCompanyTitle] = useState(customInfoAtom.companyName)
     const [isBtmShow, setIsBtmShow] = useState(false)
     const router = useRouter()
 

@@ -4,14 +4,17 @@ import Button from "../../../Core/Button/Button"
 import Profile from "../../../Core/Profile/Profile"
 import styles from "./_MyInfo.module.scss"
 import loadsh from "lodash"
+import { useRecoilValue } from "recoil"
+import { rcCustomInfoAtom } from "../../../../recoil/Common"
 
 function MyInfoContainer() {
-    const [userName, setUserName] = useState("Coffee")
+    const customInfoAtom = useRecoilValue(rcCustomInfoAtom)
 
+    const [userName, setUserName] = useState(customInfoAtom.myName)
     const [detailInfo, setDetailInfo] = useState({
-        team: "UI/UX Design",
-        work: "Product Design",
-        email: "coffee@cloudraw.kr",
+        team: customInfoAtom.myOrg,
+        work: customInfoAtom.myWork,
+        email: customInfoAtom.myEmail,
     })
 
     const handleInfoChange = () => {

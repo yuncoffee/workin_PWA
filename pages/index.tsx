@@ -5,35 +5,9 @@ import styles from "../src/components/Pages/Home/_home.module.scss"
 import InputText from "../src/components/Core/Input/InputText"
 import Button from "../src/components/Core/Button/Button"
 import { useEffect, useRef } from "react"
+import BasicContainer from "../src/components/Container/BasicContainer"
+import CustomFormContainer from "../src/components/Container/CustomFormContainer"
 
 export default function Home(props: any) {
-    const deviceAtom = useRecoilValue(rcDeviceAtom)
-
-    useEffect(() => {
-        console.log(props.setCustomLightColor)
-    }, [])
-
-    const colorInputRef = useRef<HTMLInputElement>(null)
-    const handleCustomColor = () => {
-        const _value = colorInputRef!.current!.value
-        console.log(_value)
-        props.setCustomLightColor(_value)
-    }
-
-    return (
-        <>
-            <LinkButton
-                buttonType="button"
-                href="/home"
-                buttonName="to Home!"
-            />
-            <div>
-                <InputText placeholder="200, 100%, 50%" ref={colorInputRef} />
-                <Button
-                    buttonName="글로벌 색 변경"
-                    onClick={handleCustomColor}
-                />
-            </div>
-        </>
-    )
+    return <CustomFormContainer props={props} />
 }

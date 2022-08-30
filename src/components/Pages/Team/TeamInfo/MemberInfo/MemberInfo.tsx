@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { iMemberInfo } from "../../../../../models/Components/Pages/Team"
+import Profile from "../../../../Core/Profile/Profile"
 import WeeklyTimeContainer from "../../../Schedule/WeeklyPlan/WeeklyTimeContainer"
 import styles from "./_MemberInfo.module.scss"
 
@@ -17,7 +18,10 @@ function MemberInfo({ member }: iMemberInfo) {
     return (
         <article className={styles.memberInfo}>
             <section className={styles.memberInfo__header}>
-                <h4>{member}</h4>
+                <div s-box="h-box" s-align="center" s-gap="4px">
+                    <Profile size="xs" />
+                    <h4>{member}</h4>
+                </div>
             </section>
             <section className={styles.memberInfo__body}>
                 <WeeklyTimeContainer weekData={weekPlanData} />

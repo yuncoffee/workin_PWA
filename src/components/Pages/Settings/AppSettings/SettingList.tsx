@@ -11,8 +11,8 @@ import styles from "./_AppSettings.module.scss"
 
 function SettingList() {
     const SETTING_LINK_LIST = [
-        { name: "Notice", href: "/settings/notice" },
-        { name: "Account Info", href: "/settings/account" },
+        { name: "공지사항", href: "/settings/notice" },
+        { name: "계정정보", href: "/settings/account" },
     ]
     const VERSION_NUM = "0.0.1"
     const [themeAtom, setThemeAtom] = useRecoilState(rcThemeAtom)
@@ -41,17 +41,10 @@ function SettingList() {
 
     return (
         <article className={styles.settingList}>
-            <SettingListItem name="Theme">
+            <SettingListItem name={`다크모드 : ${isThemeDark ? "켬" : "끔"}`}>
                 <Toggle
                     toggleState={isThemeDark}
                     setToggleState={setIsThemeDark}
-                />
-            </SettingListItem>
-            <SettingListItem name="Coach Mark">
-                <IconButton
-                    iconName="ri-arrow-right-s-line"
-                    variant="transparent"
-                    onClick={handleCoachMarkButton}
                 />
             </SettingListItem>
             {SETTING_LINK_LIST.map((item, index) => {
@@ -66,7 +59,7 @@ function SettingList() {
                     </SettingListItem>
                 )
             })}
-            <SettingListItem name="Version">
+            <SettingListItem name="버전정보">
                 <h5>{VERSION_NUM}</h5>
             </SettingListItem>
         </article>

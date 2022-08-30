@@ -1,0 +1,47 @@
+@charset "utf-8";
+@use "../../../styles/mixin/mixin";
+@use "../../../styles/variables/variables";
+
+$gap: 16px;
+
+.modalHeader {
+    display: flex;
+    padding: 16px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modalBody {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px 16px 16px;
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+.modalContainer {
+    position: absolute;
+    width: 100%;
+    max-height: calc(100% - 49px - 42px - $gap);
+    bottom: 49px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px 16px 0 0;
+    background: hsla(var(--sy-gray-01), 1);
+    animation: showModalFromBtm 0.2s ease-out normal forwards;
+
+    &[data-device="ios"] {
+        max-height: calc(100% - 83px - 42px - $gap);
+        bottom: 83px;
+    }
+}
+
+@keyframes showModalFromBtm {
+    0% {
+        transform: translate3d(0, 100%, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}

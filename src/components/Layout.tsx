@@ -1,15 +1,13 @@
+import Head from "next/head"
 import { useRouter } from "next/router"
-import {
-    cloneElement,
-    Dispatch,
-    ReactElement,
-    SetStateAction,
-    useEffect,
-} from "react"
-import { useRecoilState } from "recoil"
+import { cloneElement, ReactElement, useEffect } from "react"
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
 import {
     rcCurrentLocationAtom,
+    rcCustomLightColor,
     rcDeviceAtom,
+    rcIsModalActiveAtom,
+    rcPrimaryColorAtom,
     rcThemeAtom,
 } from "../recoil/Common"
 import { isDarkMode } from "../utils/DeviceUtils"
@@ -18,18 +16,20 @@ import GlobalNav from "./Nav/GlobalNav"
 
 interface iLayout {
     children: ReactElement
-    setCustomLightColor: Dispatch<SetStateAction<string>>
 }
 
-function Layout({ setCustomLightColor, children }: iLayout) {
+function Layout({ children }: iLayout) {
     const router = useRouter()
-
+    const [customLightColor, setCustomLightColor] =
+        useRecoilState(rcCustomLightColor)
+    const [primaryColor, setPrimaryColor] = useRecoilState(rcPrimaryColorAtom)
     const [deviceAtom, setDeviceAtom] = useRecoilState(rcDeviceAtom)
     const [themeAtom, setThemeAtom] = useRecoilState(rcThemeAtom)
     const [currentLocation, setCurrentLocation] = useRecoilState(
         rcCurrentLocationAtom,
     )
-
+    const isModalActive = useRecoilValue(rcIsModalActiveAtom)
+    const closeModal = useResetRecoilState(rcIsModalActiveAtom)
     useEffect(() => {
         checkDevice()
         checkUseGeolocation()
@@ -39,11 +39,41 @@ function Layout({ setCustomLightColor, children }: iLayout) {
         } else {
             setThemeAtom({ ...themeAtom, theme: "light" })
         }
+
+        // return () => {
+        //     closeModal()
+        // }
     }, [])
 
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", themeAtom.theme)
     }, [themeAtom])
+
+    useEffect(() => {
+        const root = document.documentElement
+        const rootDark = document.querySelector(
+            `[data-theme="dark"]`,
+        ) as HTMLElement
+
+        const rootStyle = getComputedStyle(root)
+        console.log(rootStyle.getPropertyValue("--sy-pri-normal"))
+        const darkHue = (
+            parseInt(customLightColor.split(",")[2].split("%")[0]) - 10
+        )
+            .toString()
+            .concat("%")
+
+        const darkColor = customLightColor.split(", ")
+        darkColor[2] = darkHue
+        const darkColorResult = darkColor.join(",")
+
+        root.style.setProperty("--sy-pri-normal", `${customLightColor}`)
+        root.style.setProperty("--sy-pri-dark", `${darkColorResult}`)
+        rootDark?.style.setProperty("--sy-pri-normal", `${darkColorResult}`)
+        rootDark?.style.setProperty("--sy-pri-dark", `${darkColorResult}`)
+        const hslPrimaryColor = rootStyle.getPropertyValue("--sy-pri-normal")
+        setPrimaryColor(hslPrimaryColor)
+    }, [customLightColor])
 
     const checkDevice = () => {
         const userAgent = navigator.userAgent.toLowerCase()
@@ -84,6 +114,12 @@ function Layout({ setCustomLightColor, children }: iLayout) {
 
     return (
         <>
+            <Head>
+                <meta
+                    name="theme-color"
+                    content={`hsla(${customLightColor}, 1)`}
+                />
+            </Head>
             <GlobalHeader />
             <main
                 className="main"
@@ -93,6 +129,7 @@ function Layout({ setCustomLightColor, children }: iLayout) {
                 {cloneElement(children, { setCustomLightColor })}
                 {/* {children} */}
             </main>
+            <div id="modal-root" data-current={isModalActive.isModalOpen} />
             <GlobalNav />
         </>
     )

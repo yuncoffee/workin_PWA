@@ -1,3 +1,4 @@
+import dayjs from "dayjs"
 import { ReactNode } from "react"
 
 export interface iBasicContainer {
@@ -6,4 +7,9 @@ export interface iBasicContainer {
     headerChildren?: ReactNode
     tab?: ReactNode
     className?: string
+}
+
+export interface iCalendar {
+    selectDate: dayjs.Dayjs
+    setSelectDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>
 }
