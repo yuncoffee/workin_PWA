@@ -65,11 +65,12 @@ function CustomFormContainer({ props }: any) {
                                     placeholder="200, 100%, 50%"
                                     ref={colorInputRef}
                                     defaultValue={"200, 100%, 50%"}
-                                    length={"calc(100% - 96px)"}
+                                    length={"calc(100% - 100px)"}
                                 />
                                 <Button
                                     size="lg"
                                     buttonName="색 변경확인"
+                                    length="96px"
                                     onClick={handleCustomColor}
                                 />
                             </div>

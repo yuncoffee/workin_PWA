@@ -6,6 +6,7 @@ import styles from "./_MyInfo.module.scss"
 import loadsh from "lodash"
 import { useRecoilValue } from "recoil"
 import { rcCustomInfoAtom } from "../../../../recoil/Common"
+import LinkButton from "../../../Core/Button/LinkButton"
 
 function MyInfoContainer() {
     const customInfoAtom = useRecoilValue(rcCustomInfoAtom)
@@ -39,11 +40,14 @@ function MyInfoContainer() {
                     )
                 })}
             </article>
-            <Button
+            <LinkButton
+                buttonType="button"
                 buttonName="정보 변경요청"
                 variant="transparent-line"
                 size="mid"
                 onClick={handleInfoChange}
+                length={"100%"}
+                href={"/"}
             />
         </BasicContainer>
     )
