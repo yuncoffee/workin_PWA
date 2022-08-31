@@ -25,18 +25,17 @@ function GlobalNav() {
         },
     ]
 
-    useEffect(() => {
-        console.log(deviceAtom)
-    }, [])
-
     return (
         <article className={styles.globalNav} data-device={deviceAtom.device}>
             {NAV_LIST.map((navItem, index) => {
+                const _path = navItem.pathName.slice(1)
+                const _regExp = new RegExp(`/${_path}`)
+
                 return (
                     <section
                         className={styles.globalNav__item}
                         key={index}
-                        data-current={router.pathname === navItem.pathName}
+                        data-current={_regExp.test(router.pathname)}
                     >
                         <Link href={navItem.pathName}>
                             <a>

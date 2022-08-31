@@ -4,6 +4,7 @@ import { cloneElement, ReactElement, useEffect } from "react"
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
 import {
     rcCurrentLocationAtom,
+    rcCustomInfoAtom,
     rcCustomLightColor,
     rcDeviceAtom,
     rcIsModalActiveAtom,
@@ -20,6 +21,7 @@ interface iLayout {
 
 function Layout({ children }: iLayout) {
     const router = useRouter()
+    const [customInfo, setCustomInfo] = useRecoilState(rcCustomInfoAtom)
     const [customLightColor, setCustomLightColor] =
         useRecoilState(rcCustomLightColor)
     const [primaryColor, setPrimaryColor] = useRecoilState(rcPrimaryColorAtom)
@@ -39,7 +41,23 @@ function Layout({ children }: iLayout) {
         } else {
             setThemeAtom({ ...themeAtom, theme: "light" })
         }
-
+        if (localStorage.getItem("customcolor")) {
+            const _initColor = localStorage.getItem("customcolor")
+            setCustomLightColor(_initColor!)
+        }
+        if (localStorage.getItem("userinfo")) {
+            const _data = JSON.parse(localStorage.getItem("userinfo")!)
+            console.log(_data)
+            const _newInfo = {
+                ...customInfo,
+                companyName: _data.companyName,
+                myName: _data.myName,
+                myOrg: _data.myOrg,
+                myWork: _data.myWork,
+                myEmail: _data.myEmail,
+            }
+            setCustomInfo(_newInfo)
+        }
         // return () => {
         //     closeModal()
         // }
@@ -125,6 +143,7 @@ function Layout({ children }: iLayout) {
                 className="main"
                 data-device={deviceAtom.device}
                 data-page={router.pathname}
+                data-current={isModalActive.isModalOpen}
             >
                 {cloneElement(children, { setCustomLightColor })}
                 {/* {children} */}

@@ -11,7 +11,6 @@ function index() {
     const [tab, setTab] = useState(0)
 
     const isModalActive = useRecoilValue(rcIsModalActiveAtom)
-
     const closeModal = useResetRecoilState(rcIsModalActiveAtom)
 
     useEffect(() => {

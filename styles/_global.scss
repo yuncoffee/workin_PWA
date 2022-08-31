@@ -30,6 +30,11 @@
             height: calc(100% - 144px);
         }
     }
+
+    &[data-current="true"] {
+        position: fixed;
+        width: 100%;
+    }
 }
 
 input,

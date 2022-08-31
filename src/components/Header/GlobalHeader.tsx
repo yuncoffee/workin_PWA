@@ -24,6 +24,10 @@ function GlobalHeader() {
     }, [])
 
     useEffect(() => {
+        setCompanyTitle(customInfoAtom.companyName)
+    }, [customInfoAtom])
+
+    useEffect(() => {
         console.log(router.pathname)
         if (router.pathname === "/home" || router.pathname === "/settings") {
             setIsBtmShow(true)

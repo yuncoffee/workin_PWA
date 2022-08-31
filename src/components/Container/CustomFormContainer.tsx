@@ -1,23 +1,27 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
-import { rcCustomInfoAtom, rcDeviceAtom } from "../../recoil/Common"
+import {
+    rcCustomInfoAtom,
+    rcCustomLightColor,
+    rcDeviceAtom,
+} from "../../recoil/Common"
 import Button from "../Core/Button/Button"
 import LinkButton from "../Core/Button/LinkButton"
 import InputText from "../Core/Input/InputText"
 import BasicContainer from "./BasicContainer"
 
-function CustomFormContainer({ props }: any) {
+function CustomFormContainer({ props, defaultValue }: any) {
     const [customInfo, setCustomInfo] = useRecoilState(rcCustomInfoAtom)
     const infoRef = useRef<null | HTMLInputElement[]>([])
     const colorInputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        console.log(props.setCustomLightColor)
+        localStorage.setItem("userinfo", JSON.stringify({ ...customInfo }))
     }, [customInfo])
 
     const handleCustomColor = () => {
         const _value = colorInputRef!.current!.value
-        console.log(_value)
+        localStorage.setItem("customcolor", _value)
         props.setCustomLightColor(_value)
     }
 
@@ -30,7 +34,7 @@ function CustomFormContainer({ props }: any) {
 
         const _newInfo = {
             ...customInfo,
-            companName: _myCompany,
+            companyName: _myCompany,
             myName: _myName,
             myOrg: _myOrg,
             myWork: _myWork,
@@ -51,7 +55,9 @@ function CustomFormContainer({ props }: any) {
                             <InputText
                                 size="lg"
                                 placeholder="회사명을 작성해주세요"
-                                defaultValue={"Coffee House"}
+                                defaultValue={
+                                    defaultValue && defaultValue.companyName
+                                }
                                 ref={(el: HTMLInputElement) => {
                                     infoRef.current![0] = el
                                 }}
@@ -62,9 +68,11 @@ function CustomFormContainer({ props }: any) {
                             <div s-box="h-box" s-gap="8px">
                                 <InputText
                                     size="lg"
-                                    placeholder="200, 100%, 50%"
+                                    placeholder="test"
                                     ref={colorInputRef}
-                                    defaultValue={"200, 100%, 50%"}
+                                    defaultValue={
+                                        defaultValue && defaultValue.color
+                                    }
                                     length={"calc(100% - 128px)"}
                                 />
                                 <Button
@@ -86,7 +94,9 @@ function CustomFormContainer({ props }: any) {
                             <InputText
                                 size="lg"
                                 placeholder="내 이름을 작성해주세요"
-                                defaultValue={"Coffee"}
+                                defaultValue={
+                                    defaultValue && defaultValue.myName
+                                }
                                 ref={(el: HTMLInputElement) => {
                                     infoRef.current![1] = el
                                 }}
@@ -97,7 +107,9 @@ function CustomFormContainer({ props }: any) {
                             <InputText
                                 size="lg"
                                 placeholder="UI/UX Desgin"
-                                defaultValue={"UI/UX Desgin"}
+                                defaultValue={
+                                    defaultValue && defaultValue.myOrg
+                                }
                                 ref={(el: HTMLInputElement) => {
                                     infoRef.current![2] = el
                                 }}
@@ -108,7 +120,9 @@ function CustomFormContainer({ props }: any) {
                             <InputText
                                 size="lg"
                                 placeholder="Product Desgin"
-                                defaultValue={"Product Desgin"}
+                                defaultValue={
+                                    defaultValue && defaultValue.myWork
+                                }
                                 ref={(el: HTMLInputElement) => {
                                     infoRef.current![3] = el
                                 }}
@@ -119,7 +133,9 @@ function CustomFormContainer({ props }: any) {
                             <InputText
                                 size="lg"
                                 placeholder="dong072815@gmail.com"
-                                defaultValue={"dong072815@gmail.com"}
+                                defaultValue={
+                                    defaultValue && defaultValue.myEmail
+                                }
                                 ref={(el: HTMLInputElement) => {
                                     infoRef.current![4] = el
                                 }}

@@ -52,6 +52,7 @@ export const rcIsModalActiveAtom = atom<iModal>({
     default: {
         isModalOpen: false,
         calendarModal: false,
+        planWorkModal: false,
     },
 })
 

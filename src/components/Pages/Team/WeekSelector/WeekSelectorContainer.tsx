@@ -15,7 +15,6 @@ function WeekSelectorContainer({ tab, setTab }: iWeekSelectorContainer) {
     const { handleModalActive } = useModalActive()
 
     const handleCalendarButton = () => {
-        console.log("hello")
         handleModalActive("calendarModal")
     }
     const handleRefreshButton = () => {

@@ -2,12 +2,14 @@ import dayjs from "dayjs"
 import React, { useEffect, useState } from "react"
 import { useRecoilValue, useResetRecoilState } from "recoil"
 import { rcCurrentDateAtom } from "../../../../recoil/Common"
+import { useModalActive } from "../../../../utils/ModalUtils"
 import BasicContainer from "../../../Container/BasicContainer"
 import Button from "../../../Core/Button/Button"
 import IconButton from "../../../Core/Button/IconButton"
 import WeeklyCalendar from "./WeeklyCalendar"
 import styles from "./_WeeklyPlan.module.scss"
 function WeeklyPlanContainer() {
+    const { handleModalActive } = useModalActive()
     const resetCurrentDate = useResetRecoilState(rcCurrentDateAtom)
     const currentDate = useRecoilValue(rcCurrentDateAtom)
     const [buttonState, setButtonState] = useState(0)
@@ -51,6 +53,23 @@ function WeeklyPlanContainer() {
         }
     }, [currentDate])
 
+    const handleMakePaln = (type: number) => {
+        switch (type) {
+            case 0:
+                console.log("신규")
+                handleModalActive("planWorkModal")
+                break
+
+            case 1:
+                console.log("변경")
+                handleModalActive("planWorkModal")
+                break
+
+            default:
+                break
+        }
+    }
+
     return (
         <BasicContainer
             title="내 주간 근무계획"
@@ -69,14 +88,18 @@ function WeeklyPlanContainer() {
                 {buttonState === 0 ? (
                     <Button
                         buttonName="일정 변경하기"
-                        onClick={() => {}}
+                        onClick={() => {
+                            handleMakePaln(1)
+                        }}
                         size="mid"
                         variant="transparent-line"
                     />
                 ) : buttonState === 1 ? (
                     <Button
                         buttonName="계획 작성하기"
-                        onClick={() => {}}
+                        onClick={() => {
+                            handleMakePaln(0)
+                        }}
                         size="mid"
                         variant="block"
                     />

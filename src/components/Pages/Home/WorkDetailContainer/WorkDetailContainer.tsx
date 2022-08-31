@@ -13,7 +13,12 @@ function WorkDetailContainer() {
 
     return (
         <article className={styles.workDetailContainer} data-click={isOpen}>
-            <section className={styles.workDetailContainer__header}>
+            <section
+                className={styles.workDetailContainer__header}
+                onClick={() => {
+                    handleToggleContainer()
+                }}
+            >
                 <h6>Today work details</h6>
                 <IconButton
                     iconName="ri-arrow-up-s-line"
