@@ -1,6 +1,14 @@
+import { useModalActive } from "../../../../utils/ModalUtils"
+import Button from "../../../Core/Button/Button"
 import styles from "../_home.module.scss"
 
 function CheckContainer() {
+    const { handleModalActive } = useModalActive()
+
+    const handleCheckTime = () => {
+        handleModalActive("recordTimeModal")
+    }
+
     return (
         <article className={styles.checkContainer}>
             <section className={styles.checkContainer__timeInfo}>
@@ -13,7 +21,7 @@ function CheckContainer() {
                     <h2>19:00</h2>
                 </div>
             </section>
-            <button>working!!</button>
+            <Button buttonName="기록하기" size="xl" onClick={handleCheckTime} />
         </article>
     )
 }

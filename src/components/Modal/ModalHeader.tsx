@@ -1,16 +1,16 @@
-import React from "react"
+import React, { forwardRef, Ref, RefObject, useEffect } from "react"
 import { useResetRecoilState } from "recoil"
 import { iModalHeader } from "../../models/Components/Layout/modal"
 import { rcIsModalActiveAtom } from "../../recoil/Common"
+import { useModalActive } from "../../utils/ModalUtils"
 import IconButton from "../Core/Button/IconButton"
 import styles from "./_Modal.module.scss"
 
-function ModalHeader({ name }: iModalHeader) {
-    const closeModal = useResetRecoilState(rcIsModalActiveAtom)
-
-    const handleCloseModal = () => {
-        closeModal()
-    }
+function ModalHeader(
+    { name }: iModalHeader,
+    ref: React.ForwardedRef<HTMLElement>,
+) {
+    const { handleCloseModal } = useModalActive()
 
     return (
         <section className={styles.modalHeader}>
@@ -18,10 +18,12 @@ function ModalHeader({ name }: iModalHeader) {
             <IconButton
                 iconName="ri-close-line"
                 color="gray"
-                onClick={handleCloseModal}
+                onClick={() => {
+                    handleCloseModal(ref as RefObject<HTMLElement>)
+                }}
             />
         </section>
     )
 }
 
-export default ModalHeader
+export default forwardRef(ModalHeader)

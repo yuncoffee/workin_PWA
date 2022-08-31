@@ -8,6 +8,7 @@ import IconButton from "../../../Core/Button/IconButton"
 import styles from "./_WeeklyPlan.module.scss"
 import { WEEK_LIST } from "../../../../utils/DayjsUtils"
 import WeeklyTimeContainer from "./WeeklyTimeContainer"
+import { INIT_PLAN_MOCK } from "../MonthlyWorkResult/WorkList/workDataMock"
 
 interface iWeeklyCalendar {
     children?: ReactNode
@@ -23,17 +24,22 @@ function WeeklyCalendar({ children }: iWeeklyCalendar) {
     const [currentYear, setCurrentYear] = useState(0)
     const [week, setWeek] = useState(WEEK_LIST)
     const [currentWeekDate, setCurrentWeekDate] = useState<any[]>([])
-    const [weekPlanData, setWeekPlanData] = useState([
-        ["휴무"],
-        ["09:00", "18:00"],
-        ["미설정"],
-        ["10:00", "19:00"],
-        ["09:00", "18:00"],
-        ["08:30", "17:30"],
-        ["휴무"],
-    ])
+
+    const [weekPlanData, setWeekPlanData] = useState(INIT_PLAN_MOCK)
 
     useEffect(() => {
+        setWeekPlanData(
+            JSON.parse(localStorage.getItem("plandata")!)[currentWeek],
+        )
+    }, [currentWeek])
+
+    useEffect(() => {
+        console.log(weekPlanData)
+    }, [weekPlanData])
+
+    useEffect(() => {
+        console.log(currentDate.week())
+
         setCurrentWeek(currentDate.week())
         setCurrentYear(currentDate.year())
 

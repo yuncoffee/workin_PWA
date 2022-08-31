@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRecoilValue, useResetRecoilState } from "recoil"
 import PlanWorkModal from "../../src/components/Modal/PlanWorkModal/PlanWorkModal"
 import MonthlyWorkResultContainer from "../../src/components/Pages/Schedule/MonthlyWorkResult/MonthlyWorkResultContainer"
@@ -8,18 +8,28 @@ import { rcIsModalActiveAtom } from "../../src/recoil/Common"
 function index() {
     const isModalActive = useRecoilValue(rcIsModalActiveAtom)
     const closeModal = useResetRecoilState(rcIsModalActiveAtom)
-
+    const [render, setRender] = useState(false)
     useEffect(() => {
         return () => {
             closeModal()
         }
     }, [])
 
+    useEffect(() => {
+        if (render) {
+            setTimeout(() => {
+                setRender(false)
+            }, 100)
+        }
+    }, [render])
+
     return (
         <>
-            <WeeklyPlanContainer />
+            {!render && <WeeklyPlanContainer />}
             <MonthlyWorkResultContainer />
-            {isModalActive.planWorkModal && <PlanWorkModal />}
+            {isModalActive.planWorkModal && (
+                <PlanWorkModal setRender={setRender} />
+            )}
         </>
     )
 }

@@ -12,6 +12,7 @@ import {
     rcThemeAtom,
 } from "../recoil/Common"
 import { isDarkMode } from "../utils/DeviceUtils"
+import { useModalActive } from "../utils/ModalUtils"
 import GlobalHeader from "./Header/GlobalHeader"
 import GlobalNav from "./Nav/GlobalNav"
 
@@ -21,6 +22,7 @@ interface iLayout {
 
 function Layout({ children }: iLayout) {
     const router = useRouter()
+    const { handleCloseModal } = useModalActive()
     const [customInfo, setCustomInfo] = useRecoilState(rcCustomInfoAtom)
     const [customLightColor, setCustomLightColor] =
         useRecoilState(rcCustomLightColor)
@@ -148,7 +150,13 @@ function Layout({ children }: iLayout) {
                 {cloneElement(children, { setCustomLightColor })}
                 {/* {children} */}
             </main>
-            <div id="modal-root" data-current={isModalActive.isModalOpen} />
+            <div
+                id="modal-root"
+                onClick={() => {
+                    handleCloseModal()
+                }}
+                data-current={isModalActive.isModalOpen}
+            />
             <GlobalNav />
         </>
     )

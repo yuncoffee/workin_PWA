@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import React from "react"
+import React, { forwardRef, useEffect, useRef } from "react"
 import { useRecoilValue } from "recoil"
 import { iModalContainer } from "../../models/Components/Layout/modal"
 import { rcDeviceAtom } from "../../recoil/Common"
@@ -8,9 +8,20 @@ import ModalHeader from "./ModalHeader"
 import ModalPortal from "./ModalPortal"
 import styles from "./_Modal.module.scss"
 
-function ModalContainer({ name, children, className }: iModalContainer) {
+function ModalContainer(
+    { name, type = "btmsheet", children, className }: iModalContainer,
+    ref: React.ForwardedRef<HTMLElement>,
+) {
     const router = useRouter()
     const deviceAtom = useRecoilValue(rcDeviceAtom)
+
+    const _ref = useRef<HTMLElement>(null)
+
+    useEffect(() => {
+        console.log(ref)
+        console.log(_ref)
+    }, [])
+
     return (
         <ModalPortal selector="#modal-root">
             <article
@@ -20,13 +31,16 @@ function ModalContainer({ name, children, className }: iModalContainer) {
                         : `${styles.modalContainer}`
                 }
                 data-page={router.pathname}
+                data-type={type}
                 data-device={deviceAtom.device}
+                ref={ref ? ref : _ref}
+                data-close="false"
             >
-                <ModalHeader name={name} />
+                <ModalHeader name={name} ref={ref ? ref : _ref} />
                 <ModalBody>{children}</ModalBody>
             </article>
         </ModalPortal>
     )
 }
 
-export default ModalContainer
+export default forwardRef(ModalContainer)

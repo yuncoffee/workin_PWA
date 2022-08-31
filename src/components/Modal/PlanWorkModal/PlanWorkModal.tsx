@@ -1,29 +1,138 @@
 import React, { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
+import { iModalPlanWorkModal } from "../../../models/Components/Layout/modal"
 import { rcCurrentDateAtom } from "../../../recoil/Common"
 import { WEEK_LIST } from "../../../utils/DayjsUtils"
+import { useModalActive } from "../../../utils/ModalUtils"
 import Button from "../../Core/Button/Button"
 import IconButton from "../../Core/Button/IconButton"
+import { INIT_PLAN_MOCK } from "../../Pages/Schedule/MonthlyWorkResult/WorkList/workDataMock"
 import ModalContainer from "../ModalContainer"
 import TimeSwiper from "./TimeSwiper"
 import styles from "./_PlanWorkModal.module.scss"
 
-function PlanWorkModal() {
+function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
+    const { handleCloseModal } = useModalActive()
     const [selectedPlan, setSelectedPlan] = useState<string[]>([])
     const [swiperList, setSwiperList] = useState<any[]>([])
     const currentDateAtom = useRecoilValue(rcCurrentDateAtom)
+    const [initData, setInitData] = useState<any>()
+    useEffect(() => {
+        console.log(currentDateAtom.day(4).week())
+        console.log(localStorage.getItem("plandata"))
+        console.log(
+            JSON.parse(localStorage.getItem("plandata")!)[
+                currentDateAtom.day(4).week()
+            ],
+        )
+        if (
+            JSON.parse(localStorage.getItem("plandata")!)[
+                currentDateAtom.day(4).week()
+            ]
+        ) {
+            setInitData(
+                JSON.parse(localStorage.getItem("plandata")!)[
+                    currentDateAtom.day(4).week()
+                ],
+            )
+        } else {
+            setInitData(INIT_PLAN_MOCK)
+        }
+        console.log(initData)
+    }, [])
 
     useEffect(() => {
-        console.log(selectedPlan)
-        console.log(currentDateAtom)
-    }, [selectedPlan])
-
-    useEffect(() => {
-        console.log(swiperList)
-    }, [swiperList])
+        console.log(initData)
+        if (initData) {
+            initSwiper()
+        }
+    }, [initData])
 
     const handleSetPlan = () => {
-        console.log("hh")
+        const prevData = JSON.parse(localStorage.getItem("plandata")!)
+        const _key = currentDateAtom.day(4).week().toString()
+        const newData = { ...prevData, [_key]: parsePlanData(selectedPlan) }
+        localStorage.setItem("plandata", JSON.stringify(newData))
+
+        handleCloseModal()
+        setRender(true)
+    }
+
+    const parsePlanData = (selectedPlan: string[]) => {
+        const _result = selectedPlan.map((plan: string) => {
+            switch (plan) {
+                case "미설정":
+                    return ["미설정"]
+                    break
+                case "08:00":
+                    return ["08:00", "17:00"]
+                    break
+                case "08:30":
+                    return ["08:30", "17:30"]
+                    break
+                case "09:00":
+                    return ["09:00", "18:00"]
+                    break
+                case "09:30":
+                    return ["09:30", "18:30"]
+                    break
+                case "10:00":
+                    return ["10:00", "19:00"]
+                    break
+                case "오전 반차":
+                    return ["오전 반차"]
+                    break
+                case "오후 반차":
+                    return ["오후 반차"]
+                    break
+                case "휴무":
+                    return ["휴무"]
+                    break
+            }
+        })
+
+        return _result
+    }
+
+    const initSwiper = () => {
+        const _num =
+            initData &&
+            initData.map((item: string[]) => {
+                const startData = item && item[0]
+                switch (startData) {
+                    case "미설정":
+                        return 0
+                        break
+                    case "08:00":
+                        return 1
+                        break
+                    case "08:30":
+                        return 2
+                        break
+                    case "09:00":
+                        return 3
+                        break
+                    case "09:30":
+                        return 4
+                        break
+                    case "10:00":
+                        return 5
+                        break
+                    case "오전 반차":
+                        return 6
+                        break
+                    case "오후 반차":
+                        return 7
+                        break
+                    case "휴무":
+                        return 8
+                        break
+                }
+            })
+
+        swiperList.forEach((swiper, index) => {
+            swiper.slideTo(_num[index])
+        })
     }
 
     const handleResetPlan = () => {

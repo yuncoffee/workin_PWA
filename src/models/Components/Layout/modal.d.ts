@@ -1,4 +1,6 @@
-import { Dispatch, ReactNode, SetStateAction } from "react"
+import { Dispatch, ReactNode, RefObject, SetStateAction } from "react"
+
+export type tModalStyle = "btmsheet" | "dialog"
 
 export interface iModalPortal {
     children: ReactNode
@@ -7,6 +9,7 @@ export interface iModalPortal {
 
 export interface iModalHeader {
     name: string
+    ref?: RefObject<HTMLElement>
 }
 
 export interface iModalBody {
@@ -15,6 +18,7 @@ export interface iModalBody {
 
 export interface iModalContainer extends iModalHeader, iModalBody {
     className: string
+    type?: tModalStyle
 }
 
 export interface iTimeSwiper {
@@ -23,4 +27,8 @@ export interface iTimeSwiper {
     index: number
     setSwiperList: any
     swiperList: any[]
+}
+
+export interface iModalPlanWorkModal {
+    setRender: Dispatch<SetStateAction<boolean>>
 }

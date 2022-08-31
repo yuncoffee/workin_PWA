@@ -1,4 +1,5 @@
-import { useRecoilState } from "recoil"
+import { RefObject } from "react"
+import { useRecoilState, useResetRecoilState } from "recoil"
 import { tModalName } from "../../models/Data/Modal/modal"
 
 import { rcIsModalActiveAtom } from "../../recoil/Common"
@@ -6,6 +7,7 @@ import { rcIsModalActiveAtom } from "../../recoil/Common"
 export const useModalActive = () => {
     const [isModalActive, setIsModalActive] =
         useRecoilState(rcIsModalActiveAtom)
+    const closeModal = useResetRecoilState(rcIsModalActiveAtom)
 
     function handleModalActive(modalName: tModalName, props?: any) {
         if (modalName in isModalActive) {
@@ -18,5 +20,24 @@ export const useModalActive = () => {
         }
     }
 
-    return { handleModalActive }
+    function handleCloseModal(
+        ref?: RefObject<HTMLElement>,
+        second: number = 150,
+    ) {
+        if (ref) {
+            ref.current!.dataset.close = "true"
+        } else {
+            const _target = document.querySelector(
+                "#modal-root > article",
+            ) as HTMLElement
+
+            _target!.dataset.close = "true"
+        }
+
+        setTimeout(() => {
+            closeModal()
+        }, second)
+    }
+
+    return { handleModalActive, handleCloseModal }
 }

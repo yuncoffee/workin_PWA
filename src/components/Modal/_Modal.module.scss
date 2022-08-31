@@ -21,18 +21,37 @@ $gap: 16px;
 
 .modalContainer {
     position: absolute;
-    width: 100%;
-    max-height: calc(100% - 49px - 42px - $gap);
-    bottom: 49px;
     display: flex;
     flex-direction: column;
-    border-radius: 16px 16px 0 0;
     background: hsla(var(--sy-gray-01), 1);
-    animation: showModalFromBtm 0.2s ease-out normal forwards;
 
-    &[data-device="ios"] {
-        max-height: calc(100% - 83px - 42px - $gap);
-        bottom: 83px;
+    &[data-type="btmsheet"] {
+        border-radius: 16px 16px 0 0;
+        animation: showModalFromBtm 0.2s ease-out normal forwards;
+        width: 100%;
+        max-height: calc(100% - 49px - 42px - $gap);
+        bottom: 49px;
+
+        &[data-close="true"] {
+            animation: closeModalFromBtm 0.2s ease-out normal forwards;
+        }
+
+        &[data-device="ios"] {
+            max-height: calc(100% - 83px - 42px - $gap);
+            bottom: 83px;
+        }
+    }
+
+    &[data-type="dialog"] {
+        left: 16px;
+        width: calc(100% - 32px);
+        border-radius: 16px;
+        top: 50%;
+        animation: showModalFromCenter 0.2s ease-out normal forwards;
+
+        &[data-close="true"] {
+            animation: closeModalFromCenter 0.2s ease-out normal forwards;
+        }
     }
 }
 
@@ -43,5 +62,43 @@ $gap: 16px;
 
     100% {
         transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes closeModalFromBtm {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 100%, 0);
+    }
+}
+
+@keyframes showModalFromCenter {
+    0% {
+        transform: scale(0.5) translate3d(0, -50%, 0);
+    }
+
+    80% {
+        transform: scale(1.05) translate3d(0, -50%, 0);
+    }
+
+    100% {
+        transform: scale(1) translate3d(0, -50%, 0);
+    }
+}
+
+@keyframes closeModalFromCenter {
+    0% {
+        transform: scale(1) translate3d(0, -50%, 0);
+    }
+
+    20% {
+        transform: scale(1.05) translate3d(0, -50%, 0);
+    }
+
+    100% {
+        transform: scale(0.5) translate3d(0, -50%, 0);
     }
 }

@@ -36,8 +36,25 @@ function WeeklyPlanContainer() {
                     parseInt(currentDate.day(4).format("DD")) >
                     parseInt(dayjs().day(4).format("DD"))
                 ) {
-                    setButtonState(1)
+                    console.log("윗 날")
+                    console.log(
+                        JSON.parse(localStorage.getItem("plandata")!)[
+                            currentDate.day(4).week()
+                        ],
+                    )
+
+                    if (
+                        JSON.parse(localStorage.getItem("plandata")!)[
+                            currentDate.day(4).week()
+                        ]
+                    ) {
+                        console.log(currentDate.day(4).week())
+                        setButtonState(0)
+                    } else {
+                        setButtonState(1)
+                    }
                 } else {
+                    console.log("아랫 날")
                     setButtonState(2)
                 }
             }
@@ -45,8 +62,17 @@ function WeeklyPlanContainer() {
             parseInt(currentDate.day(4).format("MM")) >
             parseInt(dayjs().day(4).format("MM"))
         ) {
-            setButtonState(1)
             console.log("다음 달!")
+            if (
+                JSON.parse(localStorage.getItem("plandata")!)[
+                    currentDate.day(4).week()
+                ]
+            ) {
+                console.log(currentDate.day(4).week())
+                setButtonState(0)
+            } else {
+                setButtonState(1)
+            }
         } else {
             console.log("지난 달!")
             setButtonState(2)

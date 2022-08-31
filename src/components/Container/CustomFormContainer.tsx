@@ -8,6 +8,7 @@ import {
 import Button from "../Core/Button/Button"
 import LinkButton from "../Core/Button/LinkButton"
 import InputText from "../Core/Input/InputText"
+import { PLAN_MOCK } from "../Pages/Schedule/MonthlyWorkResult/WorkList/workDataMock"
 import BasicContainer from "./BasicContainer"
 
 function CustomFormContainer({ props, defaultValue }: any) {
@@ -23,6 +24,10 @@ function CustomFormContainer({ props, defaultValue }: any) {
         const _value = colorInputRef!.current!.value
         localStorage.setItem("customcolor", _value)
         props.setCustomLightColor(_value)
+    }
+
+    const setPlanMockData = () => {
+        localStorage.setItem("plandata", JSON.stringify({ ...PLAN_MOCK }))
     }
 
     const handleSubmitInfo = () => {
@@ -42,6 +47,7 @@ function CustomFormContainer({ props, defaultValue }: any) {
         }
         setCustomInfo(_newInfo)
         handleCustomColor()
+        setPlanMockData()
     }
 
     return (
