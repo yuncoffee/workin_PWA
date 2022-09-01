@@ -14,7 +14,6 @@ function GlobalHeader() {
     const router = useRouter()
 
     useEffect(() => {
-        // dayjs.locale("ko")
         const date = dayjs().format("YY-MM-DD").split("-").join(".")
         const day = dayjs().format("ddd")
 

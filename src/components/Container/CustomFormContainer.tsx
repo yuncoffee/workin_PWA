@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from "react"
-import { useRecoilState, useRecoilValue } from "recoil"
+import React, { useEffect, useRef } from "react"
+import { useRecoilState } from "recoil"
+import { rcCustomInfoAtom } from "../../recoil/Common"
 import {
-    rcCustomInfoAtom,
-    rcCustomLightColor,
-    rcDeviceAtom,
-} from "../../recoil/Common"
+    PLAN_MOCK,
+    RESULT_MOCK,
+} from "../Pages/Schedule/MonthlyWorkResult/WorkList/workDataMock"
 import Button from "../Core/Button/Button"
 import LinkButton from "../Core/Button/LinkButton"
 import InputText from "../Core/Input/InputText"
-import { PLAN_MOCK } from "../Pages/Schedule/MonthlyWorkResult/WorkList/workDataMock"
 import BasicContainer from "./BasicContainer"
 
 function CustomFormContainer({ props, defaultValue }: any) {
@@ -30,6 +29,10 @@ function CustomFormContainer({ props, defaultValue }: any) {
         localStorage.setItem("plandata", JSON.stringify({ ...PLAN_MOCK }))
     }
 
+    const setWorkMockData = () => {
+        localStorage.setItem("workrecord", JSON.stringify({ ...RESULT_MOCK }))
+    }
+
     const handleSubmitInfo = () => {
         const _myCompany = infoRef.current![0].value
         const _myName = infoRef.current![1].value
@@ -48,6 +51,7 @@ function CustomFormContainer({ props, defaultValue }: any) {
         setCustomInfo(_newInfo)
         handleCustomColor()
         setPlanMockData()
+        setWorkMockData()
     }
 
     return (

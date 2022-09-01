@@ -5,7 +5,7 @@ import IconButton from "../../../Core/Button/IconButton"
 import styles from "./_WeeklyPlan.module.scss"
 import { WEEK_LIST } from "../../../../utils/DayjsUtils"
 import WeeklyTimeContainer from "./WeeklyTimeContainer"
-import { INIT_PLAN_MOCK } from "../MonthlyWorkResult/WorkList/workDataMock"
+import { INIT_PLAN_MOCK } from "../../../../utils/WorkUtils"
 
 interface iWeeklyCalendar {
     children?: ReactNode

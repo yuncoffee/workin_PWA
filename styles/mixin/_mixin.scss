@@ -203,7 +203,7 @@
     &[data-click="true"] {
         @content;
         @if $dropdown == true {
-            i {
+            i[class^="ri-arrow-up-s-line"] {
                 transform: translate3d(-50%, -50%, 0) rotate(180deg);
             }
         }

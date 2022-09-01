@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react"
 import dayjs from "dayjs"
-import styles from "./_Calendar.module.scss"
-import IconButton from "../Core/Button/IconButton"
 import { WEEK_LIST } from "../../utils/DayjsUtils"
 import { iCalendar } from "../../models/Components/Layout/layout"
+import IconButton from "../Core/Button/IconButton"
+import styles from "./_Calendar.module.scss"
 
 function Calendar({ selectDate, setSelectDate }: iCalendar) {
     const today = dayjs()
     const [viewDate, setViewDate] = useState(dayjs())
-
-    useEffect(() => {
-        // console.log(selectDate)
-    }, [selectDate])
 
     const createCalendar = () => {
         const startWeek = viewDate.startOf("month").week()

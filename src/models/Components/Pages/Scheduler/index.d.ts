@@ -7,7 +7,7 @@ type workData = {
 }
 
 export interface iWorkList {
-    workResult: workData
+    workResult: any
 }
 
 export interface iWeeklyTimeContainer {

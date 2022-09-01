@@ -24,16 +24,6 @@ export const workDataList = [
     },
 ]
 
-export const INIT_PLAN_MOCK = [
-    ["휴무"],
-    ["미설정"],
-    ["미설정"],
-    ["미설정"],
-    ["미설정"],
-    ["미설정"],
-    ["휴무"],
-]
-
 export const PLAN_MOCK = {
     30: [
         ["휴무"],
@@ -134,4 +124,95 @@ export const PLAN_MOCK = {
         ["미설정"],
         ["휴무"],
     ],
+}
+
+export const RESULT_MOCK = {
+    "2022-08-17": {
+        starttime: "09:05",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "18:15",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-18": {
+        starttime: "10:15",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "21:25",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-19": {
+        starttime: "09:04",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "21:15",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-22": {
+        starttime: "09:04",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "21:15",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-23": {
+        starttime: "21:15",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "21:15",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-24": {
+        starttime: "09:04",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "21:15",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-25": {
+        starttime: "09:04",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "18:05",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-26": {
+        starttime: "09:34",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "21:15",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-29": {
+        starttime: "09:45",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "18:20",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-30": {
+        starttime: "09:01",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "21:15",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
+    "2022-08-31": {
+        starttime: "08:32",
+        startworkplace: "서울특별시관악구 남현동",
+        endtime: "21:15",
+        endworkplace: "서울특별시관악구 남현동",
+        work: "목업 데이터입니다.",
+        workstatus: 2,
+    },
 }

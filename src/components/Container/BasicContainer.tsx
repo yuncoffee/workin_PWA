@@ -1,4 +1,3 @@
-import React from "react"
 import { iBasicContainer } from "../../models/Components/Layout/layout"
 import styles from "./_Container.module.scss"
 

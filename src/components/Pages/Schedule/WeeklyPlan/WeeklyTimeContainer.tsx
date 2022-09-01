@@ -1,6 +1,6 @@
 import React from "react"
 import { iWeeklyTimeContainer } from "../../../../models/Components/Pages/Scheduler"
-import { INIT_PLAN_MOCK } from "../MonthlyWorkResult/WorkList/workDataMock"
+import { INIT_PLAN_MOCK } from "../../../../utils/WorkUtils"
 import styles from "./_WeeklyPlan.module.scss"
 
 function WeeklyTimeContainer({ weekData }: iWeeklyTimeContainer) {

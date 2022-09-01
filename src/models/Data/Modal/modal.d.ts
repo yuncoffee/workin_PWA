@@ -7,3 +7,5 @@ export type tModalName =
     | "calendarModal"
     | "planWorkModal"
     | "recordTimeModal"
+    | "changeWorkPlanModal"
+    | "addWorkTimeModal"

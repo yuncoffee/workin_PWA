@@ -5,25 +5,36 @@ import Tag from "../../../../Core/Notice/Tag"
 import styles from "./_WorkList.module.scss"
 
 function WorkList({ workResult }: iWorkList) {
-    const [date, setDate] = useState("loading...")
-
-    useEffect(() => {
-        setDate(setResultToDate(workResult))
-    }, [workResult])
-
-    const setResultToDate = (workResult: any) => {
-        const _day = workResult.date.split(",")[0]
-        const _date = workResult.date.split(",")[1].split(" ")[2]
-        const _result = _date.concat(" ", _day)
-        return _result
-    }
-
     return (
         <article className={styles.workListItem}>
-            <h4>{date}</h4>
+            <h4>{workResult[0]}</h4>
             <section className={styles.workListItem__contents}>
                 <div s-box="h-box" s-gap="4px">
-                    {workResult.record.map((item, index) => {
+                    {workResult[1].starttime && (
+                        <Tag
+                            variant="block"
+                            className={styles.status}
+                            dataType={"punch in"}
+                        >
+                            <>
+                                <span>punch in</span>
+                                <h6>{workResult[1].starttime}</h6>
+                            </>
+                        </Tag>
+                    )}
+                    {workResult[1].endtime && (
+                        <Tag
+                            variant="block"
+                            className={styles.status}
+                            dataType={"punch out"}
+                        >
+                            <>
+                                <span>punch out</span>
+                                <h6>{workResult[1].endtime}</h6>
+                            </>
+                        </Tag>
+                    )}
+                    {/* {workResult.record.map((item, index) => {
                         return (
                             <Tag
                                 className={styles.status}
@@ -37,7 +48,7 @@ function WorkList({ workResult }: iWorkList) {
                                 </>
                             </Tag>
                         )
-                    })}
+                    })} */}
                 </div>
                 <IconButton
                     variant="text"

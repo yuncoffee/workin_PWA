@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react"
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react"
+import { useEffect, useState } from "react"
+import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/css"
-import styles from "./_PlanWorkModal.module.scss"
+import { WORK_TIME_LIST } from "../../../utils/WorkUtils"
 import { iTimeSwiper } from "../../../models/Components/Layout/modal"
+import styles from "./_PlanWorkModal.module.scss"
 
 function TimeSwiper({
     selectedPlan,
@@ -12,17 +13,6 @@ function TimeSwiper({
     swiperList,
 }: iTimeSwiper) {
     const [selected, setSelected] = useState<number>()
-    const WORK_TIME_LIST = [
-        "미설정",
-        "08:00",
-        "08:30",
-        "09:00",
-        "09:30",
-        "10:00",
-        "오전 반차",
-        "오후 반차",
-        "휴무",
-    ]
 
     useEffect(() => {
         const _changed = WORK_TIME_LIST[selected!]

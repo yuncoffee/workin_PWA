@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import React, { useState } from "react"
+import { useState } from "react"
 import { useResetRecoilState, useSetRecoilState } from "recoil"
 import { rcCurrentDateAtom, rcIsModalActiveAtom } from "../../../recoil/Common"
 import Calendar from "../../Calendar/Calendar"
@@ -8,9 +8,10 @@ import ModalContainer from "../ModalContainer"
 import styles from "./_CalendarModal.module.scss"
 
 function CalendarModal() {
-    const [selectDate, setSelectDate] = useState(dayjs())
     const setCurrentDateAtom = useSetRecoilState(rcCurrentDateAtom)
     const clseModal = useResetRecoilState(rcIsModalActiveAtom)
+    const [selectDate, setSelectDate] = useState(dayjs())
+
     const handleSelectDateButton = () => {
         setCurrentDateAtom(selectDate)
         clseModal()

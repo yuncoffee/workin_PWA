@@ -1,11 +1,12 @@
+import dayjs from "dayjs"
 import { useEffect, useRef, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { rcCurrentDateAtom } from "../../../../recoil/Common"
-import { MONTH_LIST } from "../../../../utils/DayjsUtils"
+import { MONTH_LIST, parseMonthToNum } from "../../../../utils/DayjsUtils"
 import IconButton from "../../../Core/Button/IconButton"
 import styles from "./_MonthlyWorkResult.module.scss"
 
-function MonthSelector() {
+function MonthSelector({ workResultObj, setFilteredObj, filteredObj }: any) {
     const currentDate = useRecoilValue(rcCurrentDateAtom)
     const monthBtnContainerRef = useRef<HTMLElement>(null)
     const [months, setMonths] = useState(MONTH_LIST)
@@ -18,6 +19,17 @@ function MonthSelector() {
     }, [])
 
     useEffect(() => {
+        if (workResultObj) {
+            const num = parseMonthToNum(dayjs().format("MMM"))
+            handleSelected(MONTH_LIST[num! - 1])
+        }
+    }, [workResultObj])
+
+    useEffect(() => {
+        console.log(filteredObj)
+    }, [filteredObj])
+
+    useEffect(() => {
         const target = monthBtnContainerRef.current as HTMLElement
         const targetScrollWidth = target.scrollWidth
         isNeedScroll &&
@@ -26,6 +38,12 @@ function MonthSelector() {
 
     const handleSelected = (month: string) => {
         setSelected(month)
+        const num = parseMonthToNum(month)
+        const _result = workResultObj.filter((item: any) => {
+            return parseInt(item[0].split("-")[1]) === num
+        })
+        setFilteredObj(_result)
+        console.log("실행됨")
     }
 
     return (
