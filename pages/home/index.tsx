@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRecoilValue, useResetRecoilState } from "recoil"
 import NaverMap from "../../src/components/Map/NaverMap"
 import RecordTimeModal from "../../src/components/Modal/RecordTimeModal/RecordTimeModal"
@@ -10,20 +10,30 @@ import { rcIsModalActiveAtom } from "../../src/recoil/Common"
 function index() {
     const isModalActive = useRecoilValue(rcIsModalActiveAtom)
     const closeModal = useResetRecoilState(rcIsModalActiveAtom)
-
+    const [render, setRender] = useState(false)
     useEffect(() => {
         return () => {
             closeModal()
         }
     }, [])
 
+    useEffect(() => {
+        if (render) {
+            setTimeout(() => {
+                setRender(false)
+            }, 100)
+        }
+    }, [render])
+
     return (
         <>
             <NoticeContainer />
             <NaverMap />
-            <CheckContainer />
+            {!render && <CheckContainer />}
             <WorkDetailContainer />
-            {isModalActive.recordTimeModal && <RecordTimeModal />}
+            {isModalActive.recordTimeModal && (
+                <RecordTimeModal setRender={setRender} />
+            )}
         </>
     )
 }

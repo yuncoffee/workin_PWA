@@ -29,6 +29,10 @@ export interface iTimeSwiper {
     swiperList: any[]
 }
 
-export interface iModalPlanWorkModal {
+export interface iModalBase {
     setRender: Dispatch<SetStateAction<boolean>>
 }
+
+export interface iModalPlanWorkModal extends iModalBase {}
+
+export interface iRecordTimeModal extends iModalBase {}

@@ -1,8 +1,5 @@
 import React, { ReactNode, useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
-import dayjs from "dayjs"
-import weekOfYear from "dayjs/plugin/weekOfYear"
-import duration from "dayjs/plugin/duration"
 import { rcCurrentDateAtom, rcToDayDateAtom } from "../../../../recoil/Common"
 import IconButton from "../../../Core/Button/IconButton"
 import styles from "./_WeeklyPlan.module.scss"
@@ -15,8 +12,6 @@ interface iWeeklyCalendar {
 }
 
 function WeeklyCalendar({ children }: iWeeklyCalendar) {
-    dayjs.extend(weekOfYear)
-    dayjs.extend(duration)
     // dayjs.extend(objectSupport)
     const [currentDate, setCurrentDate] = useRecoilState(rcCurrentDateAtom)
     const todayDate = useRecoilValue(rcToDayDateAtom)

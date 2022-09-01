@@ -17,6 +17,19 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
     const [swiperList, setSwiperList] = useState<any[]>([])
     const currentDateAtom = useRecoilValue(rcCurrentDateAtom)
     const [initData, setInitData] = useState<any>()
+
+    const WORK_TIME_LIST = [
+        "미설정",
+        "08:00",
+        "08:30",
+        "09:00",
+        "09:30",
+        "10:00",
+        "오전 반차",
+        "오후 반차",
+        "휴무",
+    ]
+
     useEffect(() => {
         console.log(currentDateAtom.day(4).week())
         console.log(localStorage.getItem("plandata"))
@@ -47,6 +60,10 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
             initSwiper()
         }
     }, [initData])
+
+    useEffect(() => {
+        console.log(selectedPlan)
+    }, [selectedPlan])
 
     const handleSetPlan = () => {
         const prevData = JSON.parse(localStorage.getItem("plandata")!)
@@ -130,13 +147,22 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
                 }
             })
 
+        const _newArr = _num.map((number: number) => {
+            return WORK_TIME_LIST[number]
+        })
+
+        setSelectedPlan(_newArr)
         swiperList.forEach((swiper, index) => {
             swiper.slideTo(_num[index])
         })
     }
 
     const handleResetPlan = () => {
-        // setSelectedPlan()
+        const _resetArr = [0, 0, 0, 0, 0, 0, 0].map((number: number) => {
+            return WORK_TIME_LIST[number]
+        })
+
+        setSelectedPlan(_resetArr)
         swiperList.forEach((swiper) => {
             swiper.slideTo(0)
         })

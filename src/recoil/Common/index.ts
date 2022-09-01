@@ -67,3 +67,8 @@ export const rcCustomInfoAtom = atom({
         myEmail: "dong072815@gmail.com",
     },
 })
+
+export const rcWorkStatusAtom = atom({
+    key: "rcWorkStatusAtom",
+    default: 0,
+})

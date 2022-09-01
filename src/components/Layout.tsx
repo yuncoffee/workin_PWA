@@ -2,6 +2,9 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { cloneElement, ReactElement, useEffect } from "react"
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
+import dayjs from "dayjs"
+import weekOfYear from "dayjs/plugin/weekOfYear"
+import duration from "dayjs/plugin/duration"
 import {
     rcCurrentLocationAtom,
     rcCustomInfoAtom,
@@ -21,6 +24,8 @@ interface iLayout {
 }
 
 function Layout({ children }: iLayout) {
+    dayjs.extend(weekOfYear)
+    dayjs.extend(duration)
     const router = useRouter()
     const { handleCloseModal } = useModalActive()
     const [customInfo, setCustomInfo] = useRecoilState(rcCustomInfoAtom)

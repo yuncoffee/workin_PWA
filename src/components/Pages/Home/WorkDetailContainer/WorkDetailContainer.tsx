@@ -19,7 +19,7 @@ function WorkDetailContainer() {
                     handleToggleContainer()
                 }}
             >
-                <h6>Today work details</h6>
+                <h6>오늘의 업무 상세</h6>
                 <IconButton
                     iconName="ri-arrow-up-s-line"
                     variant="transparent"
