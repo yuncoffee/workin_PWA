@@ -4,7 +4,7 @@ import WarningButton from "../../../Core/Button/WarningButton"
 
 function DeleteAccount() {
     const handleDeleteAccount = () => {
-        console.log("삭제!")
+        localStorage.clear()
     }
 
     return (
