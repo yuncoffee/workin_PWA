@@ -62,11 +62,13 @@ export const rcIsModalActiveAtom = atom<iModal>({
 export const rcCustomInfoAtom = atom({
     key: "rcCustomInfoAtom",
     default: {
-        companyName: "Coffee House",
-        myName: "Coffee",
-        myOrg: "UI/UX Design",
-        myWork: "Product Design",
-        myEmail: "dong072815@gmail.com",
+        email: "",
+        name: "",
+        org: "",
+        part: "",
+        role: "",
+        color: "",
+        updateat: new Date(),
     },
 })
 

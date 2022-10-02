@@ -1,6 +1,6 @@
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { cloneElement, ReactElement, useEffect } from "react"
+import { cloneElement, ReactElement, useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
 import dayjs from "dayjs"
 import weekOfYear from "dayjs/plugin/weekOfYear"
@@ -39,6 +39,7 @@ function Layout({ children }: iLayout) {
     )
     const isModalActive = useRecoilValue(rcIsModalActiveAtom)
     const closeModal = useResetRecoilState(rcIsModalActiveAtom)
+    const [viewOnly, setViewOnly] = useState(false)
     useEffect(() => {
         checkDevice()
         checkUseGeolocation()
@@ -57,11 +58,13 @@ function Layout({ children }: iLayout) {
             console.log(_data)
             const _newInfo = {
                 ...customInfo,
-                companyName: _data.companyName,
-                myName: _data.myName,
-                myOrg: _data.myOrg,
-                myWork: _data.myWork,
-                myEmail: _data.myEmail,
+                org: _data.org,
+                name: _data.name,
+                part: _data.part,
+                role: _data.role,
+                email: _data.email,
+                color: _data.color,
+                updateat: _data.updateat,
             }
             setCustomInfo(_newInfo)
         }
@@ -69,6 +72,15 @@ function Layout({ children }: iLayout) {
         //     closeModal()
         // }
     }, [])
+
+    useEffect(() => {
+        const exceptPath = ["/", "/signup", "/appsettings"]
+        if (exceptPath.includes(router.pathname)) {
+            setViewOnly(true)
+        } else {
+            setViewOnly(false)
+        }
+    }, [router])
 
     useEffect(() => {
         document.documentElement.setAttribute("data-theme", themeAtom.theme)
@@ -120,10 +132,8 @@ function Layout({ children }: iLayout) {
 
     const checkUseGeolocation = () => {
         if (navigator.geolocation) {
-            console.log("yes!")
             navigator.geolocation.getCurrentPosition((position) => {
                 console.log(position)
-
                 const latitude = position.coords.latitude
                 const longitude = position.coords.longitude
 
@@ -145,12 +155,13 @@ function Layout({ children }: iLayout) {
                     content={`hsla(${customLightColor}, 1)`}
                 />
             </Head>
-            <GlobalHeader />
+            {!viewOnly && <GlobalHeader />}
             <main
                 className="main"
                 data-device={deviceAtom.device}
                 data-page={router.pathname}
                 data-current={isModalActive.isModalOpen}
+                data-viewonly={viewOnly}
             >
                 {cloneElement(children, { setCustomLightColor })}
                 {/* {children} */}
@@ -162,7 +173,7 @@ function Layout({ children }: iLayout) {
                 }}
                 data-current={isModalActive.isModalOpen}
             />
-            <GlobalNav />
+            {!viewOnly && <GlobalNav />}
         </>
     )
 }

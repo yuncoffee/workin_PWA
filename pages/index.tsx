@@ -9,23 +9,26 @@ import BasicContainer from "../src/components/Container/BasicContainer"
 import CustomFormContainer from "../src/components/Container/CustomFormContainer"
 import { useRouter } from "next/router"
 
-import { db, getWork } from "../src/utils/Firebase/firebase"
+import { auth, db, getWork } from "../src/utils/Firebase/firebase"
+import SignInContainer from "../src/components/Pages/Auth/SignIn/SignInContainer"
+import { onAuthStateChanged } from "firebase/auth"
 
 export default function Home(props: any) {
     const router = useRouter()
+    // 로컬 스토리지에 uid가 있는지 여부 체크 ,uid는 로그아웃 전 까지 localstorage에 보관
     const [isHasLocalData, setIsHasLocalData] = useState(false)
     const [defaultValue, setDefaultValue] = useState({})
 
     useEffect(() => {
-        checkLocalStorage()
-        setIsHasLocalData(true)
-        getWork(db)
-
-        
-
-        return () => {
-            setIsHasLocalData(false)
+        if (localStorage.getItem("user")) {
+            router.push("/home")
         }
+
+        // checkLocalStorage()
+        // setIsHasLocalData(true)
+        // return () => {
+        //     setIsHasLocalData(false)
+        // }
     }, [])
 
     const checkFisrtUse = () => {
@@ -59,8 +62,11 @@ export default function Home(props: any) {
     }
 
     return (
-        isHasLocalData && (
+        <>
+            {/* isHasLocalData && (
             <CustomFormContainer props={props} defaultValue={defaultValue} />
-        )
+            ) */}
+            <SignInContainer />
+        </>
     )
 }

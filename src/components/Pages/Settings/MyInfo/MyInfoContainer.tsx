@@ -7,19 +7,32 @@ import loadsh from "lodash"
 import { useRecoilValue } from "recoil"
 import { rcCustomInfoAtom } from "../../../../recoil/Common"
 import LinkButton from "../../../Core/Button/LinkButton"
+import { auth } from "../../../../utils/Firebase/firebase"
+import { useRouter } from "next/router"
 
 function MyInfoContainer() {
+    const router = useRouter()
     const customInfoAtom = useRecoilValue(rcCustomInfoAtom)
-
-    const [userName, setUserName] = useState(customInfoAtom.myName)
+    const [userName, setUserName] = useState(customInfoAtom.name)
     const [detailInfo, setDetailInfo] = useState({
-        team: customInfoAtom.myOrg,
-        work: customInfoAtom.myWork,
-        email: customInfoAtom.myEmail,
+        team: customInfoAtom.part,
+        work: customInfoAtom.role,
+        email: customInfoAtom.email,
     })
 
     const handleInfoChange = () => {
         console.log("change!")
+    }
+
+    const handleLogout = () => {
+        auth.signOut()
+            .then((res) => {
+                localStorage.removeItem("user")
+                router.push("/")
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (
@@ -47,7 +60,13 @@ function MyInfoContainer() {
                 size="mid"
                 onClick={handleInfoChange}
                 length={"100%"}
-                href={"/"}
+                href={"/appsettings"}
+            />
+            <Button
+                buttonName="로그아웃"
+                variant="transparent-line"
+                size="mid"
+                onClick={handleLogout}
             />
         </BasicContainer>
     )

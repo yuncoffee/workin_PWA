@@ -25,19 +25,21 @@ function WorkDetailContainer() {
         const todayPlan = JSON.parse(localStorage.getItem("plandata")!)
 
         const _plan =
+            todayPlan &&
             todayPlan[_planKey] &&
             todayPlan[_planKey].map((timeInfo: string[]) => {
                 return parseStartTimeOnlyToList(timeInfo)
             })
         setPlanInfo(_plan)
-        const _startTime = todayWork[_key] && todayWork[_key].starttime
-        const _endTime = todayWork[_key] && todayWork[_key].endtime
+        const _startTime =
+            todayWork && todayWork[_key] && todayWork[_key].starttime
+        const _endTime = todayWork && todayWork[_key] && todayWork[_key].endtime
 
         const _workResult = [_startTime, _endTime]
 
         setResultInfo(_workResult)
         setWorkDescription(
-            todayWork[_key] && todayWork[_key].work
+            todayWork && todayWork[_key] && todayWork[_key].work
                 ? todayWork[_key].work
                 : undefined,
         )

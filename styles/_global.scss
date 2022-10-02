@@ -21,6 +21,11 @@
         height: calc(100% - 125px);
     }
 
+    &[data-viewonly="true"] {
+        top: 0;
+        height: 100%;
+    }
+
     &[data-page="/home"],
     &[data-page="/settings"] {
         top: 95px;

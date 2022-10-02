@@ -1,0 +1,18 @@
+@charset "utf-8";
+@use "../../../../../styles/mixin/mixin";
+@use "../../../../../styles/variables/variables";
+
+.signInContainer {
+    width: calc(100% - 32px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    position: absolute;
+    @include mixin.absoluteCenter();
+
+    & > input,
+    & > button {
+        width: 100%;
+    }
+}

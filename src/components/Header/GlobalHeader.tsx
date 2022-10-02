@@ -9,7 +9,7 @@ import styles from "./_Header.module.scss"
 function GlobalHeader() {
     const customInfoAtom = useRecoilValue(rcCustomInfoAtom)
     const [toDay, setToDay] = useState("")
-    const [companyTitle, setCompanyTitle] = useState(customInfoAtom.companyName)
+    const [companyTitle, setCompanyTitle] = useState(customInfoAtom.org)
     const [isBtmShow, setIsBtmShow] = useState(false)
     const router = useRouter()
 
@@ -23,7 +23,7 @@ function GlobalHeader() {
     }, [])
 
     useEffect(() => {
-        setCompanyTitle(customInfoAtom.companyName)
+        setCompanyTitle(customInfoAtom.org)
     }, [customInfoAtom])
 
     useEffect(() => {

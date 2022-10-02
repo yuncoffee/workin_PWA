@@ -23,9 +23,11 @@ function WeeklyCalendar({ children }: iWeeklyCalendar) {
     const [weekPlanData, setWeekPlanData] = useState(INIT_PLAN_MOCK)
 
     useEffect(() => {
-        setWeekPlanData(
-            JSON.parse(localStorage.getItem("plandata")!)[currentWeek],
-        )
+        if (localStorage.getItem("plandata")) {
+            setWeekPlanData(
+                JSON.parse(localStorage.getItem("plandata")!)[currentWeek],
+            )
+        }
     }, [currentWeek])
 
     useEffect(() => {

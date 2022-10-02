@@ -8,12 +8,14 @@ import {
 } from "firebase/firestore/lite"
 import { firebaseConfig } from "../../config/firebase"
 import { getStorage } from "firebase/storage"
+import { getAuth } from "firebase/auth"
 
 export const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 export const storage = getStorage(app)
+export const auth = getAuth(app)
 
-// Get a list of cities from your database
+// DB정보 가져옴
 export async function getWork(db: any) {
     const workResultRef = collection(db, "workresult")
 
