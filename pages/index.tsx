@@ -9,6 +9,8 @@ import BasicContainer from "../src/components/Container/BasicContainer"
 import CustomFormContainer from "../src/components/Container/CustomFormContainer"
 import { useRouter } from "next/router"
 
+import { db, getWork } from "../src/utils/Firebase/firebase"
+
 export default function Home(props: any) {
     const router = useRouter()
     const [isHasLocalData, setIsHasLocalData] = useState(false)
@@ -17,6 +19,9 @@ export default function Home(props: any) {
     useEffect(() => {
         checkLocalStorage()
         setIsHasLocalData(true)
+        getWork(db)
+
+        
 
         return () => {
             setIsHasLocalData(false)

@@ -17,7 +17,7 @@ function CheckContainer() {
             const _week = todayDateAtom.day(4).week() // 주차
             const _dayOfWeek = todayDateAtom.day() // 날짜 index
             const _plan = JSON.parse(localStorage.getItem("plandata")!) //plan list object
-            const _planResult = _plan[_week][_dayOfWeek]
+            const _planResult = _plan[_week] && _plan[_week][_dayOfWeek]
             setWorkPlanTime(_planResult)
 
             const _record = JSON.parse(localStorage.getItem("workrecord")!)

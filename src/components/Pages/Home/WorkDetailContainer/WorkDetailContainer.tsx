@@ -24,9 +24,11 @@ function WorkDetailContainer() {
         const _planKey = dayjs().week()
         const todayPlan = JSON.parse(localStorage.getItem("plandata")!)
 
-        const _plan = todayPlan[_planKey].map((timeInfo: string[]) => {
-            return parseStartTimeOnlyToList(timeInfo)
-        })
+        const _plan =
+            todayPlan[_planKey] &&
+            todayPlan[_planKey].map((timeInfo: string[]) => {
+                return parseStartTimeOnlyToList(timeInfo)
+            })
         setPlanInfo(_plan)
         const _startTime = todayWork[_key] && todayWork[_key].starttime
         const _endTime = todayWork[_key] && todayWork[_key].endtime
