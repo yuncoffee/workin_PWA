@@ -20,10 +20,10 @@ function TeamInfoContainer({ isMyTeam }: iTeamInfoContainer) {
     const customInfoAtom = useRecoilValue(rcCustomInfoAtom)
 
     useEffect(() => {
-        const _mockMember = [customInfoAtom.myName, "김두한", "구마적"]
+        const _mockMember = [customInfoAtom.name, "김두한", "구마적"]
         const _newInfo = {
             ...teamInfo,
-            name: customInfoAtom.myOrg,
+            name: customInfoAtom.part,
             member: _mockMember,
         }
         setTeamInfo(_newInfo)

@@ -155,12 +155,12 @@ function CustomFormContainer({ props, defaultValue }: any) {
                                     id={info.id}
                                     size="lg"
                                     placeholder={info.placeholder}
-                                    defaultValue={
-                                        !isFirst &&
-                                        JSON.parse(
-                                            localStorage.getItem("userinfo")!,
-                                        )[info.tag]
-                                    }
+                                    // defaultValue={
+                                    //     !isFirst &&
+                                    //     JSON.parse(
+                                    //         localStorage.getItem("userinfo")!,
+                                    //     )[info.tag]
+                                    // }
                                     ref={(el: HTMLInputElement) => {
                                         infoRef.current![index] = el
                                     }}
@@ -179,10 +179,10 @@ function CustomFormContainer({ props, defaultValue }: any) {
                                 size="lg"
                                 placeholder="메인 색상를 작성해주세요."
                                 ref={colorInputRef}
-                                defaultValue={
-                                    !isFirst &&
-                                    localStorage.getItem("customcolor")
-                                }
+                                // defaultValue={
+                                //     !isFirst &&
+                                //     localStorage.getItem("customcolor")
+                                // }
                                 length={"calc(100% - 128px)"}
                             />
                             <Button
