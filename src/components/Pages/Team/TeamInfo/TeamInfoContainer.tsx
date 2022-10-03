@@ -29,10 +29,6 @@ function TeamInfoContainer({ isMyTeam }: iTeamInfoContainer) {
         setTeamInfo(_newInfo)
     }, [])
 
-    useEffect(() => {
-        console.log(teamInfo)
-    }, [teamInfo])
-
     return (
         <BasicContainer
             title={isMyTeam ? "내 부서정보" : "타 부서정보"}

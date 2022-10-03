@@ -1,7 +1,12 @@
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth"
+import {
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    User,
+} from "firebase/auth"
+import { doc, getDoc } from "firebase/firestore/lite"
 import { useRouter } from "next/router"
 import React, { useRef } from "react"
-import { auth } from "../../../../utils/Firebase/firebase"
+import { auth, db } from "../../../../utils/Firebase/firebase"
 import Button from "../../../Core/Button/Button"
 import LinkButton from "../../../Core/Button/LinkButton"
 import InputText from "../../../Core/Input/InputText"
@@ -12,6 +17,7 @@ function SignInContainer() {
     const passwordRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
 
+    // 로그인 시
     const handleSignIn = (email: string, password: string) => {
         // 유효성 체크
         if (email.length <= 0 || password.length <= 0) {
@@ -25,7 +31,7 @@ function SignInContainer() {
                     if (checkFisrtUse()) {
                         router.push("/appsettings")
                     } else {
-                        router.push("/home")
+                        setUserInfo(user)
                     }
                 })
                 .catch((error) => {
@@ -47,20 +53,17 @@ function SignInContainer() {
         }
     }
 
-    const checkAuthStatus = () => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                const uid = user.uid
-                console.log(uid)
-                // ...
-            } else {
-                // User is signed out
-                // ...
-                console.log("signout!")
-            }
-        })
+    // 로컬 스토리지에 정보 세팅
+    const setUserInfo = async (user: User) => {
+        const docRef = doc(db, "users", user.uid)
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+            localStorage.setItem("userinfo", JSON.stringify(docSnap.data()))
+            router.push("/home")
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!")
+        }
     }
 
     return (
@@ -94,21 +97,6 @@ function SignInContainer() {
                     buttonName="회원가입"
                     variant="text"
                     href={"/signup"}
-                />
-
-                <Button
-                    size="xl"
-                    buttonName="로그아웃"
-                    variant="text"
-                    onClick={() => {
-                        auth.signOut()
-                            .then((res) => {
-                                console.log(res)
-                            })
-                            .catch((error) => {
-                                console.log(error)
-                            })
-                    }}
                 />
             </div>
         </article>

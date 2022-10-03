@@ -22,7 +22,9 @@ function WorkDetailContainer() {
         const todayWork = JSON.parse(localStorage.getItem("workrecord")!)
 
         const _planKey = dayjs().week()
-        const todayPlan = JSON.parse(localStorage.getItem("plandata")!)
+        const todayPlan: any[] = Object.values(
+            JSON.parse(localStorage.getItem("plandata")!),
+        )
 
         const _plan =
             todayPlan &&

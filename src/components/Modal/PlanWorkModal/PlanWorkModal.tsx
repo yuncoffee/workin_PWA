@@ -1,8 +1,17 @@
+import {
+    arrayUnion,
+    doc,
+    getDoc,
+    getDocs,
+    setDoc,
+    updateDoc,
+} from "firebase/firestore/lite"
 import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { iModalPlanWorkModal } from "../../../models/Components/Layout/modal"
 import { rcCurrentDateAtom } from "../../../recoil/Common"
 import { WEEK_LIST } from "../../../utils/DayjsUtils"
+import { db } from "../../../utils/Firebase/firebase"
 import { useModalActive } from "../../../utils/ModalUtils"
 import {
     INIT_PLAN_MOCK,
@@ -24,19 +33,7 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
     const [initData, setInitData] = useState<any>()
 
     useEffect(() => {
-        if (
-            JSON.parse(localStorage.getItem("plandata")!)[
-                currentDateAtom.day(4).week()
-            ]
-        ) {
-            setInitData(
-                JSON.parse(localStorage.getItem("plandata")!)[
-                    currentDateAtom.day(4).week()
-                ],
-            )
-        } else {
-            setInitData(INIT_PLAN_MOCK)
-        }
+        getPlanData()
     }, [])
 
     useEffect(() => {
@@ -45,15 +42,63 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
         }
     }, [initData])
 
-    const handleSetPlan = () => {
-        const prevData = JSON.parse(localStorage.getItem("plandata")!)
-        const _key = currentDateAtom.day(4).week().toString()
-        const newData = {
-            ...prevData,
-            [_key]: parseStartTimeToPlanTime(selectedPlan),
+    const isDbHasData = async () => {
+        const uid = JSON.parse(localStorage.getItem("user")!).uid
+        const currentSnap = await getDoc(doc(db, "plandata", uid))
+        const key = currentDateAtom.day(4).week()
+        if (currentSnap.data()![key]) {
+            return true
+        } else {
+            return false
         }
-        localStorage.setItem("plandata", JSON.stringify(newData))
+    }
 
+    const getPlanData = async () => {
+        const uid = JSON.parse(localStorage.getItem("user")!).uid
+        const currentSnap = await getDoc(doc(db, "plandata", uid))
+        const key = currentDateAtom.day(4).week()
+
+        if (currentSnap.exists()) {
+            if (currentSnap.data()[key]) {
+                setInitData(Object.values(currentSnap.data()![key]))
+            } else {
+                setInitData(INIT_PLAN_MOCK)
+            }
+        } else {
+            setInitData(INIT_PLAN_MOCK)
+        }
+    }
+
+    const handleSetPlan = async () => {
+        // const prevData = JSON.parse(localStorage.getItem("plandata")!)
+        const _key = currentDateAtom.day(4).week().toString()
+        // const newData = {
+        //     ...prevData,
+        //     [_key]: parseStartTimeToPlanTime(selectedPlan),
+        // }
+        const uid = JSON.parse(localStorage.getItem("user")!).uid
+        // localStorage.setItem("plandata", JSON.stringify(newData))
+
+        const planDataRef = doc(db, "plandata", uid)
+        const currentSnap = await getDoc(doc(db, "plandata", uid))
+        console.log(currentSnap.data())
+        // 데이터 추가
+        if (currentSnap.exists()) {
+            console.log("update!")
+            await updateDoc(planDataRef, {
+                [_key]: {
+                    ...parseStartTimeToPlanTime(selectedPlan),
+                },
+            })
+        } else {
+            console.log("add!")
+            await setDoc(planDataRef, {
+                [_key]: {
+                    ...parseStartTimeToPlanTime(selectedPlan),
+                },
+            })
+        }
+        localStorage.setItem("plandata", JSON.stringify(currentSnap.data()))
         handleCloseModal()
         setRender(true)
     }
@@ -111,7 +156,7 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
             <article className={styles.timeSwiperListContainer}>
                 {WEEK_LIST.map((day, index) => {
                     return (
-                        <div className={styles.timeSwiperListItem}>
+                        <div className={styles.timeSwiperListItem} key={index}>
                             <h4 s-box="h-box" s-gap="8px">
                                 <span>{day}</span>
                                 <span>

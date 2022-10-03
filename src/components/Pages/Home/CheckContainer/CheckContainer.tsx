@@ -23,7 +23,6 @@ function CheckContainer() {
             const _record = JSON.parse(localStorage.getItem("workrecord")!)
             if (_record) {
                 const _key = todayDateAtom.format("YYYY-MM-DD")
-
                 const _recordResult = [
                     _record[_key] &&
                         _record[_key].starttime &&
@@ -50,8 +49,9 @@ function CheckContainer() {
                         <h2 data-type="default">{workResultTime[0]}</h2>
                     ) : (
                         <h2>
-                            {workPlanTime &&
-                                parseStartTimeOnlyToList(workPlanTime)[0]}
+                            {workPlanTime
+                                ? parseStartTimeOnlyToList(workPlanTime)[0]
+                                : "미설정"}
                         </h2>
                     )}
                 </div>
@@ -61,8 +61,9 @@ function CheckContainer() {
                         <h2 data-type="default">{workResultTime[1]}</h2>
                     ) : (
                         <h2>
-                            {workPlanTime &&
-                                parseStartTimeOnlyToList(workPlanTime)[1]}
+                            {workPlanTime
+                                ? parseStartTimeOnlyToList(workPlanTime)[1]
+                                : "미설정"}
                         </h2>
                     )}
                 </div>

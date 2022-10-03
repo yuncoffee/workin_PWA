@@ -26,10 +26,6 @@ function MonthSelector({ workResultObj, setFilteredObj, filteredObj }: any) {
     }, [workResultObj])
 
     useEffect(() => {
-        console.log(filteredObj)
-    }, [filteredObj])
-
-    useEffect(() => {
         const target = monthBtnContainerRef.current as HTMLElement
         const targetScrollWidth = target.scrollWidth
         isNeedScroll &&

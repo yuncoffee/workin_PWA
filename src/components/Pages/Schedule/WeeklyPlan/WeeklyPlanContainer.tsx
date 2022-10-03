@@ -16,9 +16,6 @@ function WeeklyPlanContainer() {
 
     useEffect(() => {
         const todaysMonth = dayjs().format("M")
-
-        console.log(todaysMonth)
-
         if (
             parseInt(currentDate.day(4).format("MM")) ===
             parseInt(dayjs().day(4).format("MM"))
@@ -37,18 +34,12 @@ function WeeklyPlanContainer() {
                     parseInt(dayjs().day(4).format("DD"))
                 ) {
                     console.log("윗 날")
-                    console.log(
-                        JSON.parse(localStorage.getItem("plandata")!)[
-                            currentDate.day(4).week()
-                        ],
-                    )
-
                     if (
+                        localStorage.getItem("plandata") &&
                         JSON.parse(localStorage.getItem("plandata")!)[
                             currentDate.day(4).week()
                         ]
                     ) {
-                        console.log(currentDate.day(4).week())
                         setButtonState(0)
                     } else {
                         setButtonState(1)
@@ -64,6 +55,7 @@ function WeeklyPlanContainer() {
         ) {
             console.log("다음 달!")
             if (
+                localStorage.getItem("plandata") &&
                 JSON.parse(localStorage.getItem("plandata")!)[
                     currentDate.day(4).week()
                 ]

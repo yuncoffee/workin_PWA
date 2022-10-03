@@ -40,6 +40,8 @@ function index() {
                     setDoc(doc(db, "users", _user.uid), _userInfo).then(() => {
                         localStorage.setItem("isfirst", "true")
                         router.push("/")
+                        setDoc(doc(db, "plandata", _user.uid), {})
+                        setDoc(doc(db, "workdata", _user.uid), {})
                     })
                     console.log("success!")
                 })

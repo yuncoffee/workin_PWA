@@ -23,43 +23,7 @@ export default function Home(props: any) {
         if (localStorage.getItem("user")) {
             router.push("/home")
         }
-
-        // checkLocalStorage()
-        // setIsHasLocalData(true)
-        // return () => {
-        //     setIsHasLocalData(false)
-        // }
     }, [])
-
-    const checkFisrtUse = () => {
-        if (localStorage.getItem("isfirst")) {
-            return false
-        } else {
-            return true
-        }
-    }
-
-    const checkLocalStorage = () => {
-        if (checkFisrtUse()) {
-            localStorage.setItem("isfirst", JSON.stringify(false))
-            return
-        } else {
-            if (localStorage.getItem("userinfo")) {
-                const _info = JSON.parse(localStorage.getItem("userinfo")!)
-                const _color = localStorage.getItem("customcolor")
-                setDefaultValue({
-                    companyName: _info.companyName,
-                    myName: _info.myName,
-                    myOrg: _info.myOrg,
-                    myWork: _info.myWork,
-                    myEmail: _info.myEmail,
-                    color: _color,
-                })
-            } else {
-                return
-            }
-        }
-    }
 
     return (
         <>

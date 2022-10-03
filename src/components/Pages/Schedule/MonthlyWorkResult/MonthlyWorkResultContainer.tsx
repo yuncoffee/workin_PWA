@@ -17,10 +17,6 @@ function MonthlyWorkResultContainer() {
         }
     }, [])
 
-    useEffect(() => {
-        console.log(filteredObj)
-    }, [filteredObj])
-
     return (
         <BasicContainer
             className={styles.monthlyWorkResultContainer}

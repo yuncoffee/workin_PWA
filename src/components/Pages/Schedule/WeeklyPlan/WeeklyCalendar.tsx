@@ -15,7 +15,7 @@ function WeeklyCalendar({ children }: iWeeklyCalendar) {
     // dayjs.extend(objectSupport)
     const [currentDate, setCurrentDate] = useRecoilState(rcCurrentDateAtom)
     const todayDate = useRecoilValue(rcToDayDateAtom)
-    const [currentWeek, setCurrentWeek] = useState(0)
+    const [currentWeek, setCurrentWeek] = useState(-1)
     const [currentYear, setCurrentYear] = useState(0)
     const [week, setWeek] = useState(WEEK_LIST)
     const [currentWeekDate, setCurrentWeekDate] = useState<any[]>([])
@@ -23,20 +23,19 @@ function WeeklyCalendar({ children }: iWeeklyCalendar) {
     const [weekPlanData, setWeekPlanData] = useState(INIT_PLAN_MOCK)
 
     useEffect(() => {
-        if (localStorage.getItem("plandata")) {
-            setWeekPlanData(
-                JSON.parse(localStorage.getItem("plandata")!)[currentWeek],
-            )
+        if (currentWeek > 0 && localStorage.getItem("plandata")) {
+            const _planData = JSON.parse(localStorage.getItem("plandata")!)
+            if (_planData && _planData[currentWeek]) {
+                setWeekPlanData(Object.values(_planData[currentWeek]))
+            } else {
+                setWeekPlanData(INIT_PLAN_MOCK)
+            }
+        } else {
+            setWeekPlanData(INIT_PLAN_MOCK)
         }
     }, [currentWeek])
 
     useEffect(() => {
-        console.log(weekPlanData)
-    }, [weekPlanData])
-
-    useEffect(() => {
-        console.log(currentDate.week())
-
         setCurrentWeek(currentDate.week())
         setCurrentYear(currentDate.year())
 
