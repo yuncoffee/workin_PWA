@@ -32,6 +32,8 @@ function CheckContainer() {
                         _record[_key].endtime,
                 ]
                 setWorkResultTime(_recordResult)
+            } else {
+                setWorkPlanTime(["미설정"])
             }
         } else {
             setWorkPlanTime(["미설정"])

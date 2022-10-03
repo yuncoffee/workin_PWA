@@ -20,19 +20,21 @@ function WorkDetailContainer() {
     useEffect(() => {
         const _key = dayjs().format("YYYY-MM-DD")
         const todayWork = JSON.parse(localStorage.getItem("workrecord")!)
-
         const _planKey = dayjs().week()
-        const todayPlan: any[] = Object.values(
-            JSON.parse(localStorage.getItem("plandata")!),
-        )
 
-        const _plan =
-            todayPlan &&
-            todayPlan[_planKey] &&
-            todayPlan[_planKey].map((timeInfo: string[]) => {
-                return parseStartTimeOnlyToList(timeInfo)
-            })
-        setPlanInfo(_plan)
+        if (localStorage.getItem("plandata")) {
+            const todayPlan: any[] = Object.values(
+                JSON.parse(localStorage.getItem("plandata")!),
+            )
+            const _plan =
+                todayPlan &&
+                todayPlan[_planKey] &&
+                todayPlan[_planKey].map((timeInfo: string[]) => {
+                    return parseStartTimeOnlyToList(timeInfo)
+                })
+            setPlanInfo(_plan)
+        }
+
         const _startTime =
             todayWork && todayWork[_key] && todayWork[_key].starttime
         const _endTime = todayWork && todayWork[_key] && todayWork[_key].endtime
