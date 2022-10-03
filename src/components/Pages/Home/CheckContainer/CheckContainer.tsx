@@ -9,7 +9,7 @@ import styles from "../_home.module.scss"
 function CheckContainer() {
     const { handleModalActive } = useModalActive()
     const todayDateAtom = useRecoilValue(rcToDayDateAtom)
-    const [workPlanTime, setWorkPlanTime] = useState([])
+    const [workPlanTime, setWorkPlanTime] = useState<any[]>([])
     const [workResultTime, setWorkResultTime] = useState<any[]>([])
 
     useEffect(() => {
@@ -33,6 +33,8 @@ function CheckContainer() {
                 ]
                 setWorkResultTime(_recordResult)
             }
+        } else {
+            setWorkPlanTime(["미설정"])
         }
     }, [])
 
@@ -49,9 +51,8 @@ function CheckContainer() {
                         <h2 data-type="default">{workResultTime[0]}</h2>
                     ) : (
                         <h2>
-                            {workPlanTime
-                                ? parseStartTimeOnlyToList(workPlanTime)[0]
-                                : "미설정"}
+                            {workPlanTime &&
+                                parseStartTimeOnlyToList(workPlanTime)[0]}
                         </h2>
                     )}
                 </div>
@@ -61,9 +62,8 @@ function CheckContainer() {
                         <h2 data-type="default">{workResultTime[1]}</h2>
                     ) : (
                         <h2>
-                            {workPlanTime
-                                ? parseStartTimeOnlyToList(workPlanTime)[1]
-                                : "미설정"}
+                            {workPlanTime &&
+                                parseStartTimeOnlyToList(workPlanTime)[1]}
                         </h2>
                     )}
                 </div>
