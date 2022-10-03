@@ -1,24 +1,15 @@
-import {
-    arrayUnion,
-    doc,
-    getDoc,
-    getDocs,
-    setDoc,
-    updateDoc,
-} from "firebase/firestore/lite"
 import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { iModalPlanWorkModal } from "../../../models/Components/Layout/modal"
 import { rcCurrentDateAtom } from "../../../recoil/Common"
 import { WEEK_LIST } from "../../../utils/DayjsUtils"
-import { db } from "../../../utils/Firebase/firebase"
-import { useModalActive } from "../../../utils/ModalUtils"
 import {
-    INIT_PLAN_MOCK,
-    parseStartTimeToNum,
-    parseStartTimeToPlanTime,
-    WORK_TIME_LIST,
-} from "../../../utils/WorkUtils"
+    reqCurrentWeekPlanData,
+    reqUpdatePlanData,
+    setLocalPlanData,
+} from "../../../utils/Firebase/plandata"
+import { useModalActive } from "../../../utils/ModalUtils"
+import { parseStartTimeToNum, WORK_TIME_LIST } from "../../../utils/WorkUtils"
 import Button from "../../Core/Button/Button"
 import IconButton from "../../Core/Button/IconButton"
 import ModalContainer from "../ModalContainer"
@@ -33,7 +24,7 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
     const [initData, setInitData] = useState<any>()
 
     useEffect(() => {
-        getPlanData()
+        reqCurrentWeekPlanData(currentDateAtom, setInitData)
     }, [])
 
     useEffect(() => {
@@ -42,65 +33,12 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
         }
     }, [initData])
 
-    const isDbHasData = async () => {
-        const uid = JSON.parse(localStorage.getItem("user")!).uid
-        const currentSnap = await getDoc(doc(db, "plandata", uid))
-        const key = currentDateAtom.day(4).week()
-        if (currentSnap.data()![key]) {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    const getPlanData = async () => {
-        const uid = JSON.parse(localStorage.getItem("user")!).uid
-        const currentSnap = await getDoc(doc(db, "plandata", uid))
-        const key = currentDateAtom.day(4).week()
-
-        if (currentSnap.exists()) {
-            if (currentSnap.data()[key]) {
-                setInitData(Object.values(currentSnap.data()![key]))
-            } else {
-                setInitData(INIT_PLAN_MOCK)
-            }
-        } else {
-            setInitData(INIT_PLAN_MOCK)
-        }
-    }
-
     const handleSetPlan = async () => {
-        // const prevData = JSON.parse(localStorage.getItem("plandata")!)
-        const _key = currentDateAtom.day(4).week().toString()
-        // const newData = {
-        //     ...prevData,
-        //     [_key]: parseStartTimeToPlanTime(selectedPlan),
-        // }
-        const uid = JSON.parse(localStorage.getItem("user")!).uid
-        // localStorage.setItem("plandata", JSON.stringify(newData))
-
-        const planDataRef = doc(db, "plandata", uid)
-        const currentSnap = await getDoc(doc(db, "plandata", uid))
-        console.log(currentSnap.data())
-        // 데이터 추가
-        if (currentSnap.exists()) {
-            console.log("update!")
-            await updateDoc(planDataRef, {
-                [_key]: {
-                    ...parseStartTimeToPlanTime(selectedPlan),
-                },
-            })
-        } else {
-            console.log("add!")
-            await setDoc(planDataRef, {
-                [_key]: {
-                    ...parseStartTimeToPlanTime(selectedPlan),
-                },
-            })
-        }
-        localStorage.setItem("plandata", JSON.stringify(currentSnap.data()))
-        handleCloseModal()
-        setRender(true)
+        reqUpdatePlanData(currentDateAtom, selectedPlan).then(() => {
+            setLocalPlanData()
+            handleCloseModal()
+            setRender(true)
+        })
     }
 
     const initSwiper = () => {

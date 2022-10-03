@@ -7,6 +7,7 @@ import Button from "../../src/components/Core/Button/Button"
 import LinkButton from "../../src/components/Core/Button/LinkButton"
 import InputText from "../../src/components/Core/Input/InputText"
 import { auth, db } from "../../src/utils/Firebase/firebase"
+import { reqCreateUser } from "../../src/utils/Firebase/users"
 
 function index() {
     const AUTH_INFO_TEMPLATE = [
@@ -28,41 +29,7 @@ function index() {
     const handleSubit = async () => {
         const _email = authRef.current![0].value
         const _password = authRef.current![1].value
-
-        if (_email && _password) {
-            createUserWithEmailAndPassword(auth, _email, _password)
-                .then((userCredential) => {
-                    const _user = userCredential.user
-                    const _userInfo = {
-                        email: _user.email,
-                        initDate: new Date(),
-                    }
-                    setDoc(doc(db, "users", _user.uid), _userInfo).then(() => {
-                        localStorage.setItem("isfirst", "true")
-                        router.push("/")
-                        setDoc(doc(db, "plandata", _user.uid), {})
-                        setDoc(doc(db, "workdata", _user.uid), {})
-                    })
-                    console.log("success!")
-                })
-                .catch(function (error) {
-                    console.error("이메일 가입시 에러 : ", error)
-                    switch (error.code) {
-                        case "auth/email-already-in-use":
-                            alert("이미 사용중인 이메일 입니다.")
-                            break
-                        case "auth/invalid-email":
-                            alert("유효하지 않은 메일입니다")
-                            break
-                        case "auth/operation-not-allowed":
-                            alert("이메일 가입이 중지되었습니다.")
-                            break
-                        case "auth/weak-password":
-                            alert("비밀번호를 6자리 이상 필요합니다")
-                            break
-                    }
-                })
-        }
+        await reqCreateUser(router, _email, _password)
     }
 
     return (
