@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { rcToDayDateAtom } from "../../../../recoil/Common"
@@ -6,8 +7,13 @@ import { parseStartTimeOnlyToList } from "../../../../utils/WorkUtils"
 import Button from "../../../Core/Button/Button"
 import styles from "../_home.module.scss"
 
-function CheckContainer() {
+interface iCheckContainer {
+    render: boolean
+}
+
+function CheckContainer({ render }: iCheckContainer) {
     const { handleModalActive } = useModalActive()
+    const router = useRouter()
     const todayDateAtom = useRecoilValue(rcToDayDateAtom)
     const [workPlanTime, setWorkPlanTime] = useState<any[]>([])
     const [workResultTime, setWorkResultTime] = useState<any[]>([])
@@ -18,10 +24,13 @@ function CheckContainer() {
             const _dayOfWeek = todayDateAtom.day() // 날짜 index
             const _plan = JSON.parse(localStorage.getItem("plandata")!) //plan list object
             const _planResult = _plan[_week] && _plan[_week][_dayOfWeek]
+            console.log(_planResult)
             setWorkPlanTime(_planResult)
 
-            const _record = JSON.parse(localStorage.getItem("workrecord")!)
+            const _record = JSON.parse(localStorage.getItem("workdata")!)
+
             if (_record) {
+                // 기록이 있는 경우
                 const _key = todayDateAtom.format("YYYY-MM-DD")
                 const _recordResult = [
                     _record[_key] &&
@@ -33,14 +42,22 @@ function CheckContainer() {
                 ]
                 setWorkResultTime(_recordResult)
             } else {
-                setWorkPlanTime(["미설정"])
+                // 기록이 없을 떄
+                console.log("플랜은 있고 기록은 없을 떄")
+                setWorkPlanTime(_planResult)
             }
         } else {
+            console.log("플랜도 기록도 없을 떄 ")
             setWorkPlanTime(["미설정"])
         }
-    }, [])
+    }, [render])
 
     const handleCheckTime = () => {
+        const _plan = localStorage.getItem("plandata")
+        if (!_plan) {
+            router.push("/schedule")
+            return
+        }
         handleModalActive("recordTimeModal")
     }
 

@@ -1,68 +1,98 @@
-import { useRecoilValue } from "recoil"
+import dayjs from "dayjs"
+import { useEffect } from "react"
+import { useRecoilState, useRecoilValue } from "recoil"
 import { iRecordTimeModal } from "../../../models/Components/Layout/modal"
-import { rcToDayDateAtom, rcWorkStatusAtom } from "../../../recoil/Common"
+import { iWorkdata } from "../../../models/Data/FireBase/workData"
+import {
+    rcCurrentLocationAtom,
+    rcToDayDateAtom,
+    rcWorkStatusAtom,
+} from "../../../recoil/Common"
+import {
+    INIT_WORK_DATA,
+    reqUpdateWorkData,
+    setLocalWorkdata,
+} from "../../../utils/Firebase/workdata"
 import { useModalActive } from "../../../utils/ModalUtils"
 import Button from "../../Core/Button/Button"
 import ModalContainer from "../ModalContainer"
 import styles from "./_RecordTimeModal.module.scss"
 
 function RecordTimeModal({ setRender }: iRecordTimeModal) {
-    const todayDateAtom = useRecoilValue(rcToDayDateAtom)
+    const [todayDateAtom, setTodayDateAtom] = useRecoilState(rcToDayDateAtom)
     const workStatusAtom = useRecoilValue(rcWorkStatusAtom)
+    const currentLocation = useRecoilValue(rcCurrentLocationAtom)
     const { handleCloseModal } = useModalActive()
+    useEffect(() => {
+        console.log(dayjs())
+        setTodayDateAtom(dayjs())
+    }, [])
 
     const handleRecordTime = () => {
         const _key = todayDateAtom.format("YYYY-MM-DD")
-        const _prev = JSON.parse(localStorage.getItem("workrecord")!)
+        const _prev = JSON.parse(localStorage.getItem("workdata")!)
 
-        if (workStatusAtom === 0) {
+        if (workStatusAtom < 1) {
             // 출근 전
             if (_prev && _prev[_key]) {
-                localStorage.setItem(
-                    "workrecord",
-                    JSON.stringify({
-                        ..._prev,
-                        [_key]: {
-                            ..._prev[_key],
-                            starttime: todayDateAtom.format("HH:mm"),
-                            startworkplace: "test2",
-                            workstatus: 1,
-                        },
-                    }),
-                )
+                console.log("출근은 안찍고 근무정보만 바꾸었구나")
+                const _data = {
+                    ..._prev[_key],
+                    starttime: todayDateAtom.format("HH : mm"),
+                    startworkplace: currentLocation.coordinate,
+                    workstatus: 1,
+                }
+                reqUpdateWorkData(_key, _data).then(() => {
+                    setLocalWorkdata()
+                    setRender(true)
+                    handleCloseModal()
+                })
+                return
             } else {
                 // 맨 처음
-                localStorage.setItem(
-                    "workrecord",
-                    JSON.stringify({
-                        ..._prev,
-                        [_key]: {
-                            starttime: todayDateAtom.format("HH:mm"),
-                            startworkplace: "test",
-                            workstatus: 1,
-                        },
-                    }),
-                )
+                const _data = {
+                    ...INIT_WORK_DATA,
+                    starttime: todayDateAtom.format("HH : mm"),
+                    startworkplace: currentLocation.coordinate,
+                    workstatus: 1,
+                }
+                reqUpdateWorkData(_key, _data).then(() => {
+                    setLocalWorkdata()
+                    setRender(true)
+                    handleCloseModal()
+                })
             }
         } else if (workStatusAtom === 1) {
             // 출근 후
-            localStorage.setItem(
-                "workrecord",
-                JSON.stringify({
-                    ..._prev,
-                    [_key]: {
-                        ..._prev[_key],
-                        endtime: todayDateAtom.format("HH:mm"),
-                        endworkplace: "test",
-                        workstatus: 2,
-                    },
-                }),
-            )
+            const _data = {
+                ..._prev[_key],
+                endtime: todayDateAtom.format("HH : mm"),
+                endworkplace: currentLocation.coordinate,
+                workstatus: 2,
+            }
+            console.log(_data)
+            reqUpdateWorkData(_key, _data).then(() => {
+                setLocalWorkdata()
+                setRender(true)
+                handleCloseModal()
+            })
         } else {
             // 퇴근 후
+            console.log(workStatusAtom)
+            console.log("더 이상 찍을 수 없어!")
+            setRender(true)
+            handleCloseModal()
         }
-        setRender(true)
-        handleCloseModal()
+    }
+
+    const testFunc = () => {
+        const _key = todayDateAtom.format("YYYY-MM-DD")
+        const _data = {
+            ...INIT_WORK_DATA,
+            starttime: todayDateAtom.format("HH:mm"),
+        }
+        console.log(_data)
+        reqUpdateWorkData(_key, _data)
     }
 
     return (
@@ -71,12 +101,27 @@ function RecordTimeModal({ setRender }: iRecordTimeModal) {
             name="기록하기"
             type="dialog"
         >
-            <article>
-                <h3>기록하시겠습니까?</h3>
-                <h2>{todayDateAtom.format("YYYYMMDD")}</h2>
-                <h2>{`현재 시간 ${todayDateAtom.format("HH : mm")}`}</h2>
+            <div s-divider="line" />
+            <h4 s-text-align="center">{"현재 시간을 기록하시렵니까?"}</h4>
+            <article className={styles.modalContents}>
+                <div s-divider="line" />
+                <h3>{todayDateAtom.format("YYYY.MM.DD")}</h3>
+                <div className={styles.modalContents__item}>
+                    <div s-divider="line" />
+                    <h2>{todayDateAtom.format("HH : mm")}</h2>
+                    <div s-divider="line" />
+                </div>
             </article>
-            <Button buttonName="확인" size="xl" onClick={handleRecordTime} />
+
+            <Button
+                className={styles.button}
+                buttonName="확인"
+                size="xl"
+                onClick={() => {
+                    // testFunc()
+                    handleRecordTime()
+                }}
+            />
         </ModalContainer>
     )
 }

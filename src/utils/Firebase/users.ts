@@ -7,6 +7,8 @@ import { doc, getDoc, setDoc } from "firebase/firestore/lite"
 import { NextRouter, useRouter } from "next/router"
 import { checkFisrtUse } from "../../components/Pages/Auth/SignIn/signUtils"
 import { auth, db } from "./firebase"
+import { setLocalPlanData } from "./plandata"
+import { setLocalWorkdata } from "./workdata"
 
 /**
  *
@@ -90,7 +92,11 @@ export const reqSignIn = (
             if (checkFisrtUse()) {
                 router.push("/appsettings")
             } else {
-                setUserInfo(router, user)
+                setLocalPlanData().then(() => {
+                    setLocalWorkdata().then(() => {
+                        setUserInfo(router, user)
+                    })
+                })
             }
         })
         .catch((error) => {

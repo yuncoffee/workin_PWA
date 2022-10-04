@@ -91,7 +91,7 @@ function CustomFormContainer({ props, defaultValue }: any) {
     }
 
     const setWorkMockData = () => {
-        localStorage.setItem("workrecord", JSON.stringify({ ...RESULT_MOCK }))
+        localStorage.setItem("workdata", JSON.stringify({ ...RESULT_MOCK }))
     }
 
     const handleSubmitInfo = async (type: number) => {

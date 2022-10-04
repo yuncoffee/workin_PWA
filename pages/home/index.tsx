@@ -18,7 +18,7 @@ function index() {
     const isModalActive = useRecoilValue(rcIsModalActiveAtom)
     const todayDateAtom = useRecoilValue(rcToDayDateAtom)
     const setWorkStatusAtom = useSetRecoilState(rcWorkStatusAtom)
-    const [render, setRender] = useState(false)
+    const [render, setRender] = useState(true)
 
     useEffect(() => {
         return () => {
@@ -32,14 +32,14 @@ function index() {
                 setRender(false)
             }, 100)
         }
-        if (todayDateAtom && localStorage.getItem("workrecord")) {
+        if (todayDateAtom && localStorage.getItem("workdata")) {
             const _key = todayDateAtom.format("YYYY-MM-DD")
             if (
-                JSON.parse(localStorage.getItem("workrecord")!)[_key] &&
-                JSON.parse(localStorage.getItem("workrecord")!)[_key].workstatus
+                JSON.parse(localStorage.getItem("workdata")!)[_key] &&
+                JSON.parse(localStorage.getItem("workdata")!)[_key].workstatus
             ) {
                 setWorkStatusAtom(
-                    JSON.parse(localStorage.getItem("workrecord")!)[_key]
+                    JSON.parse(localStorage.getItem("workdata")!)[_key]
                         .workstatus,
                 )
             } else {
@@ -52,7 +52,7 @@ function index() {
         <>
             <NoticeContainer />
             <NaverMap />
-            {!render && <CheckContainer />}
+            {<CheckContainer render={render} />}
             <WorkDetailContainer />
             {isModalActive.recordTimeModal && (
                 <RecordTimeModal setRender={setRender} />

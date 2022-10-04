@@ -2,6 +2,11 @@ import dayjs from "dayjs"
 import { useEffect, useRef, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { rcWorkStatusAtom } from "../../../../recoil/Common"
+import {
+    INIT_WORK_DATA,
+    reqUpdateWorkData,
+    setLocalWorkdata,
+} from "../../../../utils/Firebase/workdata"
 import { useModalActive } from "../../../../utils/ModalUtils"
 import { parseStartTimeOnlyToList } from "../../../../utils/WorkUtils"
 import Button from "../../../Core/Button/Button"
@@ -15,24 +20,21 @@ function WorkDetailContainer() {
     const workStatusAtom = useRecoilValue(rcWorkStatusAtom)
     const [isOpen, setIsOpen] = useState(false)
     const [workDescritpion, setWorkDescription] = useState<string>()
-    const [planInfo, setPlanInfo] = useState()
+    const [planInfo, setPlanInfo] = useState<string[]>()
     const [resultInfo, setResultInfo] = useState<any[]>([])
     useEffect(() => {
         const _key = dayjs().format("YYYY-MM-DD")
-        const todayWork = JSON.parse(localStorage.getItem("workrecord")!)
+        const todayWork = JSON.parse(localStorage.getItem("workdata")!)
+        const planData = localStorage.getItem("plandata")
         const _planKey = dayjs().week()
 
-        if (localStorage.getItem("plandata")) {
-            const todayPlan: any[] = Object.values(
-                JSON.parse(localStorage.getItem("plandata")!),
-            )
-            const _plan =
-                todayPlan &&
-                todayPlan[_planKey] &&
-                todayPlan[_planKey].map((timeInfo: string[]) => {
-                    return parseStartTimeOnlyToList(timeInfo)
-                })
-            setPlanInfo(_plan)
+        if (planData) {
+            if (JSON.parse(planData)[_planKey]) {
+                const _plan = parseStartTimeOnlyToList(
+                    JSON.parse(planData)[_planKey][dayjs().day()],
+                )
+                setPlanInfo(_plan)
+            }
         }
 
         const _startTime =
@@ -47,11 +49,14 @@ function WorkDetailContainer() {
                 ? todayWork[_key].work
                 : undefined,
         )
-    }, [])
+    }, [workStatusAtom])
 
     useEffect(() => {
-        console.log(workDescritpion)
-        descriptionRef.current!.value = workDescritpion as string
+        if (workDescritpion) {
+            descriptionRef.current!.value = workDescritpion as string
+        } else {
+            descriptionRef.current!.value = ""
+        }
     }, [workDescritpion])
 
     const handleToggleContainer = () => {
@@ -60,20 +65,40 @@ function WorkDetailContainer() {
 
     const handleSaveDescription = () => {
         const _key = dayjs().format("YYYY-MM-DD")
-        const _prev = JSON.parse(localStorage.getItem("workrecord")!)
+        const _prev = JSON.parse(localStorage.getItem("workdata")!)
 
         const _desc = descriptionRef.current!.value
-        localStorage.setItem(
-            "workrecord",
-            JSON.stringify({
-                ..._prev,
-                [_key]: {
+
+        if (_prev) {
+            // 정보를 변경한 적 있음
+            if (_prev[_key]) {
+                const _data = {
                     ..._prev[_key],
                     work: _desc,
-                },
-            }),
-        )
-        console.log("save!")
+                }
+                reqUpdateWorkData(_key, _data).then(() => {
+                    setLocalWorkdata()
+                })
+            } else {
+                console.log("없는디요?")
+                const _data = {
+                    ...INIT_WORK_DATA,
+                    work: _desc,
+                }
+                reqUpdateWorkData(_key, _data).then(() => {
+                    setLocalWorkdata()
+                })
+            }
+        } else {
+            // 맨 처음
+            const _data = {
+                ...INIT_WORK_DATA,
+                work: _desc,
+            }
+            reqUpdateWorkData(_key, _data).then(() => {
+                setLocalWorkdata()
+            })
+        }
     }
 
     const handleChangeWork = (type: number) => {
@@ -140,7 +165,7 @@ function WorkDetailContainer() {
                         <div s-box="h-box" s-justify="space-between">
                             <h5>근무 시작시간</h5>
                             <h5 s-color="sy-gray-09">
-                                {planInfo && planInfo[dayjs().day()][0]}/
+                                {planInfo && planInfo[0]}/
                                 <span>
                                     {resultInfo[0] ? resultInfo[0] : "없음"}
                                 </span>
@@ -149,7 +174,7 @@ function WorkDetailContainer() {
                         <div s-box="h-box" s-justify="space-between">
                             <h5>근무 종료시간</h5>
                             <h5 s-color="sy-gray-09">
-                                {planInfo && planInfo[dayjs().day()][1]}/
+                                {planInfo && planInfo[1]}/
                                 <span>
                                     {resultInfo[1] ? resultInfo[1] : "없음"}
                                 </span>
@@ -158,7 +183,7 @@ function WorkDetailContainer() {
                         <div s-box="h-box" s-justify="space-between">
                             <h5>근무상태</h5>
                             <h5 s-color="sy-gray-09">
-                                {workStatusAtom === 0
+                                {workStatusAtom < 1
                                     ? "근무전"
                                     : workStatusAtom === 1
                                     ? "근무중"

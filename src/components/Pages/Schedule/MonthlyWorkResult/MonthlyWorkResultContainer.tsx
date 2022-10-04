@@ -10,9 +10,9 @@ function MonthlyWorkResultContainer() {
     const [filteredObj, setFilteredObj] = useState()
 
     useEffect(() => {
-        if (localStorage.getItem("workrecord")) {
+        if (localStorage.getItem("workdata")) {
             setWorkResultObj(
-                Object.entries(JSON.parse(localStorage.getItem("workrecord")!)),
+                Object.entries(JSON.parse(localStorage.getItem("workdata")!)),
             )
         }
     }, [])
