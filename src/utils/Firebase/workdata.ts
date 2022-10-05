@@ -5,10 +5,13 @@ import { db } from "./firebase"
 export const INIT_WORK_DATA: iWorkdata = {
     starttime: "",
     startworkplace: [],
+    workaddress: [],
     endtime: "",
     endworkplace: [],
     work: "",
     workstatus: -1,
+    planstarttime: "",
+    planendtime: "",
 }
 
 export const reqUpdateWorkData = async (key: string, data: any) => {
@@ -44,8 +47,8 @@ export const reqUpdateWorkData = async (key: string, data: any) => {
         const workDataRef = doc(db, "workdata", uid)
         const currentSnap = await getDoc(workDataRef)
         if (currentSnap.exists()) {
+            console.log(currentSnap.data())
             console.log("근무를 찍은 적이 있구나")
-            console.log("update!")
             if (currentSnap.data()[key]) {
                 console.log("오늘 데이터가 있는데?")
                 console.log("왜 업데이트가 되니?")
@@ -55,7 +58,6 @@ export const reqUpdateWorkData = async (key: string, data: any) => {
                     },
                 })
             } else {
-                console.log("오늘 처음 근무를 시작했구나?")
                 await updateDoc(workDataRef, {
                     [key]: {
                         ...data,

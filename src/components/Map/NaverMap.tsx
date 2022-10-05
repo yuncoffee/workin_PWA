@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import { reqCurrentAddress } from "../../api/NaverMap"
-import { rcCurrentLocationAtom } from "../../recoil/Common"
+import {
+    rcCurrentAddressAtom,
+    rcCurrentLocationAtom,
+} from "../../recoil/Common"
 import MapInfoContainer from "./MapInfoContainer/MapInfoContainer"
 import styles from "./_Map.module.scss"
 
@@ -10,12 +13,11 @@ function NaverMap() {
     let map: any = null
     let marker: any = null
     const [currentAddress, setCurrentAddress] =
-        useState("주소를 불러오는 중입니다..")
+        useRecoilState(rcCurrentAddressAtom)
     const [addressData, setAddressData] = useState<any>()
     const [naverMap, setNaverMap] = useState<any>(null)
     const [naverMapMarker, setNaverMapMarker] = useState(null)
     const [naverMapService, setNaverMapService] = useState(null)
-
     useEffect(() => {
         console.log(currentLocation.coordinate)
 

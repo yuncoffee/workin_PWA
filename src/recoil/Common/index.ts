@@ -76,3 +76,8 @@ export const rcWorkStatusAtom = atom({
     key: "rcWorkStatusAtom",
     default: 0,
 })
+
+export const rcCurrentAddressAtom = atom({
+    key: "rcCurrentAddressAtom",
+    default: "주소를 불러오는 중입니다..",
+})

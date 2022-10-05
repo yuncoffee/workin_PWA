@@ -1,8 +1,11 @@
 export interface iWorkdata {
     starttime: string
-    startworkplace: number[]
+    startworkplace: number[][]
     endtime: string
-    endworkplace: number[]
+    endworkplace: number[][]
     work: string
     workstatus: number
+    planstarttime: string
+    planendtime: string
+    workaddress: string[]
 }

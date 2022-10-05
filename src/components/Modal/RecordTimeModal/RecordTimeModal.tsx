@@ -1,9 +1,11 @@
 import dayjs from "dayjs"
 import { useEffect } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
+import { reqCurrentAddress } from "../../../api/NaverMap"
 import { iRecordTimeModal } from "../../../models/Components/Layout/modal"
 import { iWorkdata } from "../../../models/Data/FireBase/workData"
 import {
+    rcCurrentAddressAtom,
     rcCurrentLocationAtom,
     rcToDayDateAtom,
     rcWorkStatusAtom,
@@ -22,6 +24,7 @@ function RecordTimeModal({ setRender }: iRecordTimeModal) {
     const [todayDateAtom, setTodayDateAtom] = useRecoilState(rcToDayDateAtom)
     const workStatusAtom = useRecoilValue(rcWorkStatusAtom)
     const currentLocation = useRecoilValue(rcCurrentLocationAtom)
+    const currentAddress = useRecoilValue(rcCurrentAddressAtom)
     const { handleCloseModal } = useModalActive()
     useEffect(() => {
         console.log(dayjs())
@@ -32,15 +35,22 @@ function RecordTimeModal({ setRender }: iRecordTimeModal) {
         const _key = todayDateAtom.format("YYYY-MM-DD")
         const _prev = JSON.parse(localStorage.getItem("workdata")!)
 
+        const _plan = JSON.parse(localStorage.getItem("plandata")!)[
+            todayDateAtom.day(4).week()
+        ][todayDateAtom.day()]
+
         if (workStatusAtom < 1) {
             // 출근 전
             if (_prev && _prev[_key]) {
                 console.log("출근은 안찍고 근무정보만 바꾸었구나")
                 const _data = {
                     ..._prev[_key],
-                    starttime: todayDateAtom.format("HH : mm"),
+                    starttime: todayDateAtom.format("HH:mm"),
                     startworkplace: currentLocation.coordinate,
                     workstatus: 1,
+                    planstarttime: _plan[0],
+                    planendtime: _plan[1],
+                    workaddress: [currentAddress],
                 }
                 reqUpdateWorkData(_key, _data).then(() => {
                     setLocalWorkdata()
@@ -52,9 +62,12 @@ function RecordTimeModal({ setRender }: iRecordTimeModal) {
                 // 맨 처음
                 const _data = {
                     ...INIT_WORK_DATA,
-                    starttime: todayDateAtom.format("HH : mm"),
+                    starttime: todayDateAtom.format("HH:mm"),
                     startworkplace: currentLocation.coordinate,
                     workstatus: 1,
+                    planstarttime: _plan[0],
+                    planendtime: _plan[1],
+                    workaddress: [currentAddress],
                 }
                 reqUpdateWorkData(_key, _data).then(() => {
                     setLocalWorkdata()
@@ -66,9 +79,10 @@ function RecordTimeModal({ setRender }: iRecordTimeModal) {
             // 출근 후
             const _data = {
                 ..._prev[_key],
-                endtime: todayDateAtom.format("HH : mm"),
+                endtime: todayDateAtom.format("HH:mm"),
                 endworkplace: currentLocation.coordinate,
                 workstatus: 2,
+                workaddress: [..._prev[_key].workaddress, currentAddress],
             }
             console.log(_data)
             reqUpdateWorkData(_key, _data).then(() => {
@@ -108,7 +122,7 @@ function RecordTimeModal({ setRender }: iRecordTimeModal) {
                 <h3>{todayDateAtom.format("YYYY.MM.DD")}</h3>
                 <div className={styles.modalContents__item}>
                     <div s-divider="line" />
-                    <h2>{todayDateAtom.format("HH : mm")}</h2>
+                    <h2>{todayDateAtom.format("HH:mm")}</h2>
                     <div s-divider="line" />
                 </div>
             </article>

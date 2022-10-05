@@ -11,15 +11,15 @@ function GlobalNav() {
     const deviceAtom = useRecoilValue(rcDeviceAtom)
 
     const NAV_LIST = [
-        { name: "Home", iconName: "ri-home-6-fill", pathName: "/home" },
+        { name: "홈", iconName: "ri-home-6-fill", pathName: "/home" },
         {
-            name: "Scheduler",
+            name: "내 근무정보",
             iconName: "ri-calendar-event-fill",
             pathName: "/schedule",
         },
-        { name: "Team", iconName: "ri-team-fill", pathName: "/team" },
+        { name: "팀 근무정보", iconName: "ri-team-fill", pathName: "/team" },
         {
-            name: "Settings",
+            name: "설정",
             iconName: "ri-settings-3-fill",
             pathName: "/settings",
         },

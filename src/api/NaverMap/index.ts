@@ -1,4 +1,5 @@
 import axios from "axios"
+axios.defaults.withCredentials = true
 
 export const reqCurrentAddress = (longitude: number, latitude: number) => {
     const path = `naver/map-reversegeocode/v2/gc?request=coordsToaddr&coords=${longitude},${latitude}&sourcecrs=epsg:4326&output=json&orders=addr`

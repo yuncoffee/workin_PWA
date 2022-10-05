@@ -65,7 +65,7 @@ function CheckContainer({ render }: iCheckContainer) {
         <article className={styles.checkContainer}>
             <section className={styles.checkContainer__timeInfo}>
                 <div className={styles.checkContainer__timeInfoItem}>
-                    <h5>punch in</h5>
+                    <h5>출근시간</h5>
                     {workResultTime[0] ? (
                         <h2 data-type="default">{workResultTime[0]}</h2>
                     ) : (
@@ -76,7 +76,7 @@ function CheckContainer({ render }: iCheckContainer) {
                     )}
                 </div>
                 <div className={styles.checkContainer__timeInfoItem}>
-                    <h5>punch out</h5>
+                    <h5>퇴근시간</h5>
                     {workResultTime[1] ? (
                         <h2 data-type="default">{workResultTime[1]}</h2>
                     ) : (

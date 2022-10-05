@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRecoilValue, useResetRecoilState } from "recoil"
+import { reqCurrentAddress } from "../../src/api/NaverMap"
 import PlanWorkModal from "../../src/components/Modal/PlanWorkModal/PlanWorkModal"
 import MonthlyWorkResultContainer from "../../src/components/Pages/Schedule/MonthlyWorkResult/MonthlyWorkResultContainer"
 import WeeklyPlanContainer from "../../src/components/Pages/Schedule/WeeklyPlan/WeeklyPlanContainer"

@@ -32,7 +32,7 @@ export const parseStartTimeOnlyToList = (timeList: string[]) => {
             return ["오전 반차", "18:00"]
             break
         case "오후 반차":
-            return ["09: 00", "오후 반차"]
+            return ["09:00", "오후 반차"]
             break
         default:
             return timeList
