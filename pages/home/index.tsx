@@ -52,7 +52,7 @@ function index() {
         <>
             <NoticeContainer />
             <NaverMap />
-            {<CheckContainer render={render} />}
+            {!render && <CheckContainer render={render} />}
             <WorkDetailContainer />
             {isModalActive.recordTimeModal && (
                 <RecordTimeModal setRender={setRender} />

@@ -56,7 +56,7 @@ export const reqUpdateWorkData = async (key: string, data: any) => {
                 })
             } else {
                 console.log("오늘 처음 근무를 시작했구나?")
-                await setDoc(workDataRef, {
+                await updateDoc(workDataRef, {
                     [key]: {
                         ...data,
                     },
