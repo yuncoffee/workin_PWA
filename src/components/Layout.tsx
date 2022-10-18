@@ -49,7 +49,7 @@ function Layout({ children }: iLayout) {
         requestPermission()
 
         getFcmToken()
-        receiveFcm()
+        // receiveFcm()
         checkDevice()
         checkUseGeolocation()
 
