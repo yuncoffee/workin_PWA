@@ -30,31 +30,40 @@ import { app } from "./firebase"
 
 export const getFcmToken = () => {
     const messaging = getMessaging(app)
-    getToken(messaging, { vapidKey: vapidKey }).then((currentToken) => {
-        if (currentToken) {
-            // Send the token to your server and update the UI if necessary
+    getToken(messaging, { vapidKey: vapidKey })
+        .then((currentToken) => {
+            if (currentToken) {
+                // Send the token to your server and update the UI if necessary
+                // ...
+                console.log("success")
+                localStorage.setItem("fcmtoken", currentToken)
+            } else {
+                // Show permission request UI
+                console.log(
+                    "No registration token available. Request permission to generate one.",
+                )
+                // ...
+            }
+        })
+        .catch((error) => {
+            console.log("An error occurred while retrieving token. ", error)
             // ...
-            console.log("success")
-            localStorage.setItem("fcmtoken", currentToken)
-        } else {
-            // Show permission request UI
-            console.log(
-                "No registration token available. Request permission to generate one.",
-            )
-            // ...
-        }
-    })
+        })
 }
 
 export function requestPermission() {
     console.log("Requesting permission...")
-    Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-            console.log("Notification permission granted.")
-        } else {
-            console.log("!")
-        }
-    })
+    if (window) {
+        Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+                console.log("Notification permission granted.")
+            } else {
+                console.log("!")
+            }
+        })
+    } else {
+        console.log("fail")
+    }
 }
 
 export const receiveFcm = () => {
