@@ -41,6 +41,7 @@ function Layout({ children }: iLayout) {
     const closeModal = useResetRecoilState(rcIsModalActiveAtom)
     const [viewOnly, setViewOnly] = useState(false)
     useEffect(() => {
+        console.log("!")
         checkDevice()
         checkUseGeolocation()
 
