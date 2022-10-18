@@ -47,9 +47,8 @@ function Layout({ children }: iLayout) {
     const [viewOnly, setViewOnly] = useState(false)
     useEffect(() => {
         requestPermission()
-
         getFcmToken()
-        // receiveFcm()
+        receiveFcm()
         checkDevice()
         checkUseGeolocation()
 
