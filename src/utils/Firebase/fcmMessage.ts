@@ -52,8 +52,12 @@ export const getFcmToken = () => {
 }
 
 export function requestPermission() {
+    const isSupported = () =>
+        "Notification" in window &&
+        "serviceWorker" in navigator &&
+        "PushManager" in window
     console.log("Requesting permission...")
-    if (window) {
+    if (isSupported()) {
         Notification.requestPermission().then((permission) => {
             if (permission === "granted") {
                 console.log("Notification permission granted.")
