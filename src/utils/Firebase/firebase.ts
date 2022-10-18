@@ -15,7 +15,7 @@ export const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 export const storage = getStorage(app)
 export const auth = getAuth(app)
-export const fcmMessage = getMessaging(app)
+// export const fcm = getMessaging(app)
 
 // DB정보 가져옴
 export async function getWork(db: any) {

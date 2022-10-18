@@ -1,4 +1,7 @@
-export const firebaseConfig = {
+importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js")
+importScripts("https://www.gstatic.com/firebasejs/8.8.0/firebase-messaging.js")
+
+const firebaseConfig = {
     apiKey: "AIzaSyBPxIFSIHnoHsidFbEgyHuTW2_Lx8MJ2jI",
     authDomain: "workin-46df7.firebaseapp.com",
     projectId: "workin-46df7",
@@ -8,5 +11,5 @@ export const firebaseConfig = {
     measurementId: "G-9LECMBT1H8",
 }
 
-export const vapidKey =
-    "BEyPgXfJZuEe1g2nA6O-ADl0xZhx3SQIKUOjkWXcUTo0ZhucYScXdlSFy5m50XvSlII6CQcswuz-GGUtsq4zN5I"
+firebase.initializeApp(firebaseConfig)
+const messaging = firebase.messaging()

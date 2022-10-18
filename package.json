@@ -11,6 +11,7 @@
         "dayjs": "^1.11.5",
         "firebase": "^9.10.0",
         "lodash": "^4.17.21",
+        "mkcert": "^1.5.1",
         "next": "latest",
         "next-compose-plugins": "^2.2.1",
         "next-pwa": "5.5.4",

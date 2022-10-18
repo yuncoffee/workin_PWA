@@ -18,6 +18,11 @@ import { isDarkMode } from "../utils/DeviceUtils"
 import { useModalActive } from "../utils/ModalUtils"
 import GlobalHeader from "./Header/GlobalHeader"
 import GlobalNav from "./Nav/GlobalNav"
+import {
+    getFcmToken,
+    receiveFcm,
+    requestPermission,
+} from "../utils/Firebase/fcmMessage"
 
 interface iLayout {
     children: ReactElement
@@ -41,7 +46,10 @@ function Layout({ children }: iLayout) {
     const closeModal = useResetRecoilState(rcIsModalActiveAtom)
     const [viewOnly, setViewOnly] = useState(false)
     useEffect(() => {
-        console.log("!")
+        requestPermission()
+
+        getFcmToken()
+        receiveFcm()
         checkDevice()
         checkUseGeolocation()
 
