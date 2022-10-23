@@ -193,7 +193,7 @@ function CustomFormContainer({ props, defaultValue }: any) {
                     buttonName={isFirst ? "다음에 설정하기" : "변경취소"}
                     onClick={() => {
                         isFirst && handleSubmitInfo(0)
-                        localStorage.setItem("customcolor", prevColor)
+                        // localStorage.setItem("customcolor", prevColor)
                         setCustomLightColor(prevColor)
                     }}
                     length="100%"

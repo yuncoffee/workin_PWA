@@ -1,8 +1,16 @@
+import dynamic from "next/dynamic"
 import React from "react"
-import CustomFormContainer from "../../src/components/Container/CustomFormContainer"
 
 function index() {
-    return <CustomFormContainer />
+    const CSRComponent = dynamic(
+        import("../../src/components/Container/CustomFormContainer"),
+
+        {
+            ssr: false,
+        },
+    )
+
+    return <CSRComponent />
 }
 
 export default index

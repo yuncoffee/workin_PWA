@@ -1,22 +1,15 @@
-import dayjs from "dayjs"
 import { useCallback, useState } from "react"
 import { ChromePicker, ColorResult } from "react-color"
 import { useResetRecoilState, useSetRecoilState } from "recoil"
-import {
-    rcCurrentDateAtom,
-    rcCustomLightColor,
-    rcIsModalActiveAtom,
-} from "../../../recoil/Common"
-import Calendar from "../../Calendar/Calendar"
+import { rcCustomLightColor, rcIsModalActiveAtom } from "../../../recoil/Common"
+import hexToHsl from "hex-to-hsl"
 import Button from "../../Core/Button/Button"
 import ModalContainer from "../ModalContainer"
 import styles from "./_ColorPickerModal.module.scss"
-import hexToHsl from "hex-to-hsl"
+
 function ColorPickerModal() {
-    const setCurrentDateAtom = useSetRecoilState(rcCurrentDateAtom)
     const setCustomLightColor = useSetRecoilState(rcCustomLightColor)
     const clseModal = useResetRecoilState(rcIsModalActiveAtom)
-    const [selectDate, setSelectDate] = useState(dayjs())
     const [color, setColor] = useState<ColorResult | null>(null)
 
     const handleSelectDateButton = () => {
