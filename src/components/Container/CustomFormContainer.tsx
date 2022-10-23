@@ -144,12 +144,12 @@ function CustomFormContainer({ props, defaultValue }: any) {
                                     id={info.id}
                                     size="lg"
                                     placeholder={info.placeholder}
-                                    // defaultValue={
-                                    //     !isFirst &&
-                                    //     JSON.parse(
-                                    //         localStorage.getItem("userinfo")!,
-                                    //     )[info.tag]
-                                    // }
+                                    defaultValue={
+                                        !isFirst &&
+                                        JSON.parse(
+                                            localStorage.getItem("userinfo")!,
+                                        )[info.tag]
+                                    }
                                     ref={(el: HTMLInputElement) => {
                                         infoRef.current![index] = el
                                     }}
@@ -194,7 +194,6 @@ function CustomFormContainer({ props, defaultValue }: any) {
                     onClick={() => {
                         isFirst && handleSubmitInfo(0)
                         localStorage.setItem("customcolor", prevColor)
-
                         setCustomLightColor(prevColor)
                     }}
                     length="100%"

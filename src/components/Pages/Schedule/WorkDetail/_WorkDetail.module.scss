@@ -16,6 +16,7 @@
 
 .workDetailSummaryContainer {
     height: 100%;
+
     .detailContainer {
         display: flex;
         flex-direction: column;
@@ -51,6 +52,11 @@
         // max-height: 38px;
         height: 38px;
         overflow: hidden;
+
+        .workPinList__body {
+            // display: none;
+            opacity: 0;
+        }
     }
 
     &__header {
@@ -72,5 +78,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        opacity: 1;
+        transition: variables.$transition;
     }
 }

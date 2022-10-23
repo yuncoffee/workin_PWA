@@ -69,7 +69,7 @@
         .today {
             @include mixin.h6;
             font-weight: 600;
-            color: hsla(var(--sy-pri), 1);
+            color: hsla(var(--sy-pri-normal), 1);
         }
     }
 }
@@ -85,6 +85,7 @@
         text-align: center;
         min-width: 40px;
     }
+
     background: hsla(var(--sy-gray-03), 1);
     border-radius: 2px;
 }
