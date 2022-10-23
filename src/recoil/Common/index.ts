@@ -56,6 +56,7 @@ export const rcIsModalActiveAtom = atom<iModal>({
         recordTimeModal: false,
         changeWorkPlanModal: false,
         addWorkTimeModal: false,
+        colorPickerModal: false,
     },
 })
 

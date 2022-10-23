@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useRecoilValue, useResetRecoilState } from "recoil"
-import CalendarModal from "../../src/components/Modal/CalendarModal.tsx/CalendarModal"
+import CalendarModal from "../../src/components/Modal/CalendarModal/CalendarModal"
 import TeamInfoContainer from "../../src/components/Pages/Team/TeamInfo/TeamInfoContainer"
 import { MY_TEAM_INFO_MOCK } from "../../src/components/Pages/Team/TeamInfo/teamInfoMock"
 

@@ -1,0 +1,43 @@
+@charset "utf-8";
+@use "../../../../styles/mixin/mixin";
+@use "../../../../styles/variables/variables";
+
+.colorPickerModal {
+    &>section:nth-child(2) {
+        gap: 16px;
+    }
+
+
+
+
+    &[data-device="ios"] {
+
+        &::after {
+            bottom: -90px;
+            height: 91px;
+        }
+    }
+
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: -48px;
+        width: 100%;
+        height: 49px;
+        background: hsla(var(--sy-gray-01), 1);
+    }
+}
+
+.colorPicker {
+    width: 100% !important;
+    box-shadow: none !important;
+    border-radius: variables.$borderRadius !important;
+    overflow: hidden;
+    font-family: pretendard !important;
+    background: hsla(var(--sy-white), 0) !important;
+
+    input {
+        height: 32px !important;
+    }
+}

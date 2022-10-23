@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useRecoilState, useSetRecoilState } from "recoil"
-import { rcCustomInfoAtom, rcCustomLightColor } from "../../recoil/Common"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import {
-    PLAN_MOCK,
-    RESULT_MOCK,
-} from "../Pages/Schedule/MonthlyWorkResult/WorkList/workDataMock"
+    rcCustomInfoAtom,
+    rcCustomLightColor,
+    rcIsModalActiveAtom,
+} from "../../recoil/Common"
 import Button from "../Core/Button/Button"
 import LinkButton from "../Core/Button/LinkButton"
 import InputText from "../Core/Input/InputText"
 import BasicContainer from "./BasicContainer"
 import { doc, updateDoc } from "firebase/firestore/lite"
 import { db } from "../../utils/Firebase/firebase"
+import ColorPickerModal from "../Modal/ColorPickerModal/ColorPickerModal"
+import { useModalActive } from "../../utils/ModalUtils"
 
 type changeableInfo = {
     [key: string]: string | Date | undefined
@@ -50,9 +52,11 @@ function CustomFormContainer({ props, defaultValue }: any) {
             placeholder: "조직에서의 내 역할을 작성해주세요",
         },
     ]
+    const isModalActive = useRecoilValue(rcIsModalActiveAtom)
+    const { handleModalActive } = useModalActive()
 
     const infoRef = useRef<null | HTMLInputElement[]>([])
-    const colorInputRef = useRef<HTMLInputElement>(null)
+
     const setCustomLightColor = useSetRecoilState(rcCustomLightColor)
     const [customInfo, setCustomInfo] = useRecoilState(rcCustomInfoAtom)
     const [changeableInfo, setChangeableInfo] = useState<changeableInfo | null>(
@@ -60,8 +64,17 @@ function CustomFormContainer({ props, defaultValue }: any) {
     )
     const [isFirst, setIsFirst] = useState(false)
 
+    const [prevColor, setPrevColor] = useState("")
+
     useEffect(() => {
-        console.log(customInfo)
+        if (isFirst) {
+            setPrevColor("0, 0%, 0%")
+        } else {
+            setPrevColor(localStorage.getItem("customcolor")!)
+        }
+    }, [])
+
+    useEffect(() => {
         localStorage.setItem("userinfo", JSON.stringify({ ...customInfo }))
         const _changeableInfo: changeableInfo = { ...customInfo }
 
@@ -75,36 +88,16 @@ function CustomFormContainer({ props, defaultValue }: any) {
         }
     }, [customInfo])
 
-    useEffect(() => {
-        console.log(changeableInfo)
-    }, [changeableInfo])
-
-    const handleCustomColor = () => {
-        const _value = colorInputRef!.current!.value
-
-        localStorage.setItem("customcolor", _value)
-        setCustomLightColor(_value)
-    }
-
-    const setPlanMockData = () => {
-        localStorage.setItem("plandata", JSON.stringify({ ...PLAN_MOCK }))
-    }
-
-    const setWorkMockData = () => {
-        localStorage.setItem("workdata", JSON.stringify({ ...RESULT_MOCK }))
-    }
-
     const handleSubmitInfo = async (type: number) => {
         const _myName = infoRef.current![0].value
         const _org = infoRef.current![1].value
         const _part = infoRef.current![2].value
         const _role = infoRef.current![3].value
-        const _color = colorInputRef.current!.value
+        const _color = localStorage.getItem("customcolor")!
         const _updateAt = new Date()
         const _uid = JSON.parse(localStorage.getItem("user")!).uid
         const _email = JSON.parse(localStorage.getItem("user")!).email
         const userRef = doc(db, "users", _uid)
-        handleCustomColor()
         localStorage.setItem("isfirst", "false")
 
         if (type === 0) {
@@ -117,7 +110,6 @@ function CustomFormContainer({ props, defaultValue }: any) {
                 email: _email,
                 updateat: _updateAt,
             }
-
             await setCustomInfo(_newInfo)
             await updateDoc(userRef, _newInfo)
         }
@@ -135,9 +127,6 @@ function CustomFormContainer({ props, defaultValue }: any) {
             await setCustomInfo(_newInfo)
             await updateDoc(userRef, _newInfo)
         }
-
-        // setPlanMockData()
-        // setWorkMockData()
     }
 
     return (
@@ -172,24 +161,14 @@ function CustomFormContainer({ props, defaultValue }: any) {
                         <label htmlFor="user-cicolor">
                             <h6>메인 색상</h6>
                         </label>
-
-                        <div s-box="h-box" s-gap="8px">
-                            <InputText
-                                id="user-cicolor"
-                                size="lg"
-                                placeholder="메인 색상를 작성해주세요."
-                                ref={colorInputRef}
-                                // defaultValue={
-                                //     !isFirst &&
-                                //     localStorage.getItem("customcolor")
-                                // }
-                                length={"calc(100% - 128px)"}
-                            />
+                        <div s-box="v-box" s-gap="8px">
                             <Button
                                 size="lg"
-                                buttonName="색 변경확인"
-                                length="120px"
-                                onClick={handleCustomColor}
+                                variant="transparent-line"
+                                buttonName="색상 선택하기"
+                                onClick={() => {
+                                    handleModalActive("colorPickerModal")
+                                }}
                             />
                         </div>
                     </div>
@@ -214,10 +193,14 @@ function CustomFormContainer({ props, defaultValue }: any) {
                     buttonName={isFirst ? "다음에 설정하기" : "변경취소"}
                     onClick={() => {
                         isFirst && handleSubmitInfo(0)
+                        localStorage.setItem("customcolor", prevColor)
+
+                        setCustomLightColor(prevColor)
                     }}
                     length="100%"
                 />
             </BasicContainer>
+            {isModalActive.colorPickerModal && <ColorPickerModal />}
         </>
     )
 }

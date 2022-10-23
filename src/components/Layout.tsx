@@ -18,6 +18,7 @@ import { isDarkMode } from "../utils/DeviceUtils"
 import { useModalActive } from "../utils/ModalUtils"
 import GlobalHeader from "./Header/GlobalHeader"
 import GlobalNav from "./Nav/GlobalNav"
+import { off } from "process"
 
 interface iLayout {
     children: ReactElement
@@ -46,14 +47,13 @@ function Layout({ children }: iLayout) {
         // receiveFcm()
         checkDevice()
         checkUseGeolocation()
-
+        const _initColor = localStorage.getItem("customcolor")
         if (isDarkMode()) {
             setThemeAtom({ ...themeAtom, theme: "dark" })
         } else {
             setThemeAtom({ ...themeAtom, theme: "light" })
         }
-        if (localStorage.getItem("customcolor")) {
-            const _initColor = localStorage.getItem("customcolor")
+        if (typeof _initColor === "string") {
             setCustomLightColor(_initColor!)
         }
         if (localStorage.getItem("userinfo")) {
@@ -90,29 +90,30 @@ function Layout({ children }: iLayout) {
     }, [themeAtom])
 
     useEffect(() => {
-        const root = document.documentElement
-        const rootDark = document.querySelector(
-            `[data-theme="dark"]`,
-        ) as HTMLElement
+        if (customLightColor) {
+            const root = document.documentElement
+            const rootDark = document.querySelector(
+                `[data-theme="dark"]`,
+            ) as HTMLElement
+            const rootStyle = getComputedStyle(root)
+            const darkHue = (
+                parseInt(customLightColor.split(",")[2].split("%")[0]) - 10
+            )
+                .toString()
+                .concat("%")
 
-        const rootStyle = getComputedStyle(root)
-        console.log(rootStyle.getPropertyValue("--sy-pri-normal"))
-        const darkHue = (
-            parseInt(customLightColor.split(",")[2].split("%")[0]) - 10
-        )
-            .toString()
-            .concat("%")
+            const darkColor = customLightColor.split(", ")
+            darkColor[2] = darkHue
+            const darkColorResult = darkColor.join(",")
 
-        const darkColor = customLightColor.split(", ")
-        darkColor[2] = darkHue
-        const darkColorResult = darkColor.join(",")
-
-        root.style.setProperty("--sy-pri-normal", `${customLightColor}`)
-        root.style.setProperty("--sy-pri-dark", `${darkColorResult}`)
-        rootDark?.style.setProperty("--sy-pri-normal", `${darkColorResult}`)
-        rootDark?.style.setProperty("--sy-pri-dark", `${darkColorResult}`)
-        const hslPrimaryColor = rootStyle.getPropertyValue("--sy-pri-normal")
-        setPrimaryColor(hslPrimaryColor)
+            root.style.setProperty("--sy-pri-normal", `${customLightColor}`)
+            root.style.setProperty("--sy-pri-dark", `${darkColorResult}`)
+            rootDark?.style.setProperty("--sy-pri-normal", `${darkColorResult}`)
+            rootDark?.style.setProperty("--sy-pri-dark", `${darkColorResult}`)
+            const hslPrimaryColor =
+                rootStyle.getPropertyValue("--sy-pri-normal")
+            setPrimaryColor(hslPrimaryColor)
+        }
     }, [customLightColor])
 
     const checkDevice = () => {
