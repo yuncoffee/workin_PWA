@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { memo, useEffect, useRef, useState } from "react"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import {
     rcCustomInfoAtom,
@@ -67,6 +67,8 @@ function CustomFormContainer({ props, defaultValue }: any) {
     const [prevColor, setPrevColor] = useState("")
 
     useEffect(() => {
+        console.log("test")
+
         if (isFirst) {
             setPrevColor("0, 0%, 0%")
         } else {
@@ -80,6 +82,7 @@ function CustomFormContainer({ props, defaultValue }: any) {
     }, [isFirst])
 
     useEffect(() => {
+        console.log("test2")
         localStorage.setItem("userinfo", JSON.stringify({ ...customInfo }))
         const _changeableInfo: changeableInfo = { ...customInfo }
 

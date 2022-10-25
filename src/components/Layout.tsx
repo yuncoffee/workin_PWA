@@ -18,7 +18,6 @@ import { checkUseGeolocation, isDarkMode } from "../utils/DeviceUtils"
 import { useModalActive } from "../utils/ModalUtils"
 import GlobalHeader from "./Header/GlobalHeader"
 import GlobalNav from "./Nav/GlobalNav"
-import { off } from "process"
 
 interface iLayout {
     children: ReactElement
