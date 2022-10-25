@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ChromePicker, ColorResult } from "react-color"
 import { useResetRecoilState, useSetRecoilState } from "recoil"
 import { rcCustomLightColor, rcIsModalActiveAtom } from "../../../recoil/Common"
@@ -18,26 +18,30 @@ function ColorPickerModal() {
     }
 
     const handleCustomColor = (type?: number) => {
-        const _value = hexToHsl(color?.hex) as number[]
-        const _color = _value.map((color, index) => {
-            let colorToString = color.toString()
-            if (index > 0) {
-                colorToString = colorToString + `%`
+        if (color) {
+            const _value = hexToHsl(color?.hex) as number[]
+            console.log(_value)
+            const _color = _value.map((color, index) => {
+                let colorToString = color.toString()
+                if (index > 0) {
+                    colorToString = colorToString + `%`
+                }
+                return colorToString
+            })
+
+            const [h, s, l] = _color
+
+            setCustomLightColor(`${h}, ${s}, ${l}`)
+            if (type === 1) {
+                localStorage.setItem("customcolor", `${h}, ${s}, ${l}`)
             }
-            return colorToString
-        })
-
-        const [h, s, l] = _color
-
-        setCustomLightColor(`${h}, ${s}, ${l}`)
-        if (type === 1) {
-            localStorage.setItem("customcolor", `${h}, ${s}, ${l}`)
         }
     }
 
     const handleColorChange = useCallback(
         (_color: ColorResult) => {
             setColor(_color)
+
             color && handleCustomColor()
         },
         [color],
