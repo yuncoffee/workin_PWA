@@ -1,6 +1,30 @@
+import { Dispatch, SetStateAction } from "react"
+
 export const isDarkMode = () =>
     window.matchMedia &&
     window.matchMedia("(prefers-color-scheme: dark)").matches
+
+export const checkUseGeolocation = (
+    currentLocation: { location: string; coordinate: number[] },
+    setCurrentLocation: Dispatch<
+        SetStateAction<{ location: string; coordinate: number[] }>
+    >,
+) => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            console.log(position)
+            const latitude = position.coords.latitude
+            const longitude = position.coords.longitude
+
+            setCurrentLocation({
+                ...currentLocation,
+                coordinate: [latitude, longitude],
+            })
+        })
+    } else {
+        alert("위치정보 사용불가")
+    }
+}
 
 export function rgbToHsl(r: any, g: any, b: any) {
     var min,

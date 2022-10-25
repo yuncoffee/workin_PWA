@@ -5,11 +5,14 @@ import {
     rcCurrentAddressAtom,
     rcCurrentLocationAtom,
 } from "../../recoil/Common"
+import { checkUseGeolocation } from "../../utils/DeviceUtils"
 import MapInfoContainer from "./MapInfoContainer/MapInfoContainer"
 import styles from "./_Map.module.scss"
 
 function NaverMap() {
-    const currentLocation = useRecoilValue(rcCurrentLocationAtom)
+    const [currentLocation, setCurrentLocation] = useRecoilState(
+        rcCurrentLocationAtom,
+    )
     let map: any = null
     let marker: any = null
     const [currentAddress, setCurrentAddress] =
@@ -71,6 +74,8 @@ function NaverMap() {
     }, [addressData])
 
     const handleMap = () => {
+        checkUseGeolocation(currentLocation, setCurrentLocation)
+
         const _current = new naver.maps.LatLng(
             currentLocation.coordinate[0] - 0.0004,
             currentLocation.coordinate[1],
@@ -95,7 +100,7 @@ function NaverMap() {
                 handleMap={handleMap}
             />
             <div s-divider="line" />
-            <div className={styles.canvas} id="map"></div>
+            <div className={styles.canvas} id="map" />
         </article>
     )
 }

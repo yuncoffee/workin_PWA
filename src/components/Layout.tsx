@@ -14,7 +14,7 @@ import {
     rcPrimaryColorAtom,
     rcThemeAtom,
 } from "../recoil/Common"
-import { isDarkMode } from "../utils/DeviceUtils"
+import { checkUseGeolocation, isDarkMode } from "../utils/DeviceUtils"
 import { useModalActive } from "../utils/ModalUtils"
 import GlobalHeader from "./Header/GlobalHeader"
 import GlobalNav from "./Nav/GlobalNav"
@@ -46,7 +46,7 @@ function Layout({ children }: iLayout) {
         // getFcmToken()
         // receiveFcm()
         checkDevice()
-        checkUseGeolocation()
+        checkUseGeolocation(currentLocation, setCurrentLocation)
         const _initColor = localStorage.getItem("customcolor")
         if (isDarkMode()) {
             setThemeAtom({ ...themeAtom, theme: "dark" })
@@ -78,6 +78,7 @@ function Layout({ children }: iLayout) {
 
     useEffect(() => {
         const exceptPath = ["/", "/signup", "/appsettings"]
+        checkUseGeolocation(currentLocation, setCurrentLocation)
         if (exceptPath.includes(router.pathname)) {
             setViewOnly(true)
         } else {
@@ -131,23 +132,6 @@ function Layout({ children }: iLayout) {
         } else {
             //아이폰, 안드로이드 외 모바일
             setDeviceAtom({ ...deviceAtom, device: "web" })
-        }
-    }
-
-    const checkUseGeolocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                console.log(position)
-                const latitude = position.coords.latitude
-                const longitude = position.coords.longitude
-
-                setCurrentLocation({
-                    ...currentLocation,
-                    coordinate: [latitude, longitude],
-                })
-            })
-        } else {
-            alert("위치정보 사용불가")
         }
     }
 
