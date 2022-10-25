@@ -59,15 +59,22 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
         const _resetArr = [0, 0, 0, 0, 0, 0, 0].map((number: number) => {
             return WORK_TIME_LIST[number]
         })
-        setSelectedPlan(_resetArr)
 
         const _filteredList = swiperList.filter((list, index) => {
             return index > currentDateAtom.day()
         })
 
-        _filteredList.forEach((swiper) => {
-            swiper.slideTo(0)
-        })
+        setSelectedPlan(_resetArr)
+
+        if (currentDateAtom.week() === todayDateAtom.week()) {
+            _filteredList.forEach((swiper) => {
+                swiper.slideTo(0)
+            })
+        } else {
+            swiperList.forEach((swiper) => {
+                swiper.slideTo(0)
+            })
+        }
     }
 
     const changeSlide = (type: number, index: number) => {
