@@ -70,9 +70,14 @@ function CustomFormContainer({ props, defaultValue }: any) {
         if (isFirst) {
             setPrevColor("0, 0%, 0%")
         } else {
-            setPrevColor(localStorage.getItem("customcolor")!)
+            if (localStorage.getItem("customcolor")) {
+                setPrevColor(localStorage.getItem("customcolor")!)
+            } else {
+                localStorage.setItem("customcolor", prevColor)
+                setPrevColor("0, 0%, 0%")
+            }
         }
-    }, [])
+    }, [isFirst])
 
     useEffect(() => {
         localStorage.setItem("userinfo", JSON.stringify({ ...customInfo }))
@@ -83,7 +88,8 @@ function CustomFormContainer({ props, defaultValue }: any) {
 
         setChangeableInfo(_changeableInfo)
 
-        if (JSON.parse(localStorage.getItem("isfirst")!)) {
+        const _isFirst = localStorage.getItem("isfirst")
+        if (typeof _isFirst === "string" && JSON.parse(_isFirst)) {
             setIsFirst(true)
         }
     }, [customInfo])
@@ -193,7 +199,7 @@ function CustomFormContainer({ props, defaultValue }: any) {
                     buttonName={isFirst ? "다음에 설정하기" : "변경취소"}
                     onClick={() => {
                         isFirst && handleSubmitInfo(0)
-                        // localStorage.setItem("customcolor", prevColor)
+
                         setCustomLightColor(prevColor)
                     }}
                     length="100%"
