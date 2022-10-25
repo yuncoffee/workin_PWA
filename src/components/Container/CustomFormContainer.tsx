@@ -150,12 +150,13 @@ function CustomFormContainer({ props, defaultValue }: any) {
                                     id={info.id}
                                     size="lg"
                                     placeholder={info.placeholder}
-                                    defaultValue={
-                                        !isFirst &&
-                                        JSON.parse(
-                                            localStorage.getItem("userinfo")!,
-                                        )[info.tag]
-                                    }
+                                    // defaultValue={
+                                    //     !isFirst &&
+                                    //     localStorage.getItem("userinfo") &&
+                                    //     JSON.parse(
+                                    //         localStorage.getItem("userinfo")!,
+                                    //     )[info.tag]
+                                    // }
                                     ref={(el: HTMLInputElement) => {
                                         infoRef.current![index] = el
                                     }}
