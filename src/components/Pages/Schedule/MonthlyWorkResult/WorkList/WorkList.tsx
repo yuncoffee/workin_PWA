@@ -36,21 +36,6 @@ function WorkList({ workResult }: iWorkList) {
                                 </>
                             </Tag>
                         )}
-                        {/* {workResult.record.map((item, index) => {
-                        return (
-                            <Tag
-                                className={styles.status}
-                                dataType={item.status}
-                                key={index}
-                                variant="block"
-                            >
-                                <>
-                                    <span>{item.status}</span>
-                                    <h6>{item.time}</h6>
-                                </>
-                            </Tag>
-                        )
-                    })} */}
                     </div>
                     <IconButton
                         variant="text"
