@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { iModalPlanWorkModal } from "../../../models/Components/Layout/modal"
-import { rcCurrentDateAtom } from "../../../recoil/Common"
+import { rcCurrentDateAtom, rcToDayDateAtom } from "../../../recoil/Common"
 import { WEEK_LIST } from "../../../utils/DayjsUtils"
 import {
     reqCurrentWeekPlanData,
@@ -21,6 +21,7 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
     const [selectedPlan, setSelectedPlan] = useState<string[]>([])
     const [swiperList, setSwiperList] = useState<any[]>([])
     const currentDateAtom = useRecoilValue(rcCurrentDateAtom)
+    const todayDateAtom = useRecoilValue(rcToDayDateAtom)
     const [initData, setInitData] = useState<any>()
 
     useEffect(() => {
@@ -60,7 +61,11 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
         })
         setSelectedPlan(_resetArr)
 
-        swiperList.forEach((swiper) => {
+        const _filteredList = swiperList.filter((list, index) => {
+            return index > currentDateAtom.day()
+        })
+
+        _filteredList.forEach((swiper) => {
             swiper.slideTo(0)
         })
     }
@@ -94,8 +99,10 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
             </div>
             <article className={styles.timeSwiperListContainer}>
                 {WEEK_LIST.map((day, index) => {
-                    const _disabled = currentDateAtom.day() >= index
-                    console.log(_disabled)
+                    const _disabled =
+                        currentDateAtom.week() === todayDateAtom.week() &&
+                        currentDateAtom.day() >= index
+
                     return (
                         <div className={styles.timeSwiperListItem} key={index}>
                             <h4 s-box="h-box" s-gap="8px">
