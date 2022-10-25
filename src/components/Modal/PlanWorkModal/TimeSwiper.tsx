@@ -11,6 +11,7 @@ function TimeSwiper({
     index,
     setSwiperList,
     swiperList,
+    disabled,
 }: iTimeSwiper) {
     const [selected, setSelected] = useState<number>()
 
@@ -32,6 +33,7 @@ function TimeSwiper({
                 onSwiper={(swiper) => {
                     setSwiperList([...swiperList, (swiperList[index] = swiper)])
                 }}
+                allowTouchMove={!disabled}
             >
                 {WORK_TIME_LIST.map((time, index) => {
                     return (

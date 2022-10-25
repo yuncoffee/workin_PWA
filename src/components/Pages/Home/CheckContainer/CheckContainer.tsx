@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useRecoilValue } from "recoil"
-import { rcToDayDateAtom } from "../../../../recoil/Common"
+import { rcToDayDateAtom, rcWorkStatusAtom } from "../../../../recoil/Common"
 import { useModalActive } from "../../../../utils/ModalUtils"
 import { parseStartTimeOnlyToList } from "../../../../utils/WorkUtils"
 import Button from "../../../Core/Button/Button"
@@ -14,6 +14,7 @@ interface iCheckContainer {
 function CheckContainer({ render }: iCheckContainer) {
     const { handleModalActive } = useModalActive()
     const router = useRouter()
+    const workStatusAtom = useRecoilValue(rcWorkStatusAtom)
     const todayDateAtom = useRecoilValue(rcToDayDateAtom)
     const [workPlanTime, setWorkPlanTime] = useState<any[]>([])
     const [workResultTime, setWorkResultTime] = useState<any[]>([])
@@ -58,7 +59,11 @@ function CheckContainer({ render }: iCheckContainer) {
             router.push("/schedule")
             return
         }
-        handleModalActive("recordTimeModal")
+        if (workStatusAtom !== 2) {
+            handleModalActive("recordTimeModal")
+        } else {
+            alert("근무를 다 했구네요!")
+        }
     }
 
     return (

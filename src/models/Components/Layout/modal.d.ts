@@ -27,6 +27,7 @@ export interface iTimeSwiper {
     index: number
     setSwiperList: any
     swiperList: any[]
+    disabled?: boolean
 }
 
 export interface iModalBase {

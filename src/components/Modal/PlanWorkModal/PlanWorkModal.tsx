@@ -25,6 +25,7 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
 
     useEffect(() => {
         reqCurrentWeekPlanData(currentDateAtom, setInitData)
+        console.log(currentDateAtom.day())
     }, [])
 
     useEffect(() => {
@@ -93,6 +94,8 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
             </div>
             <article className={styles.timeSwiperListContainer}>
                 {WEEK_LIST.map((day, index) => {
+                    const _disabled = currentDateAtom.day() >= index
+                    console.log(_disabled)
                     return (
                         <div className={styles.timeSwiperListItem} key={index}>
                             <h4 s-box="h-box" s-gap="8px">
@@ -109,6 +112,7 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
                                     onClick={() => {
                                         changeSlide(0, index)
                                     }}
+                                    disabled={_disabled}
                                 />
 
                                 <TimeSwiper
@@ -117,6 +121,7 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
                                     index={index}
                                     setSwiperList={setSwiperList}
                                     swiperList={swiperList}
+                                    disabled={_disabled}
                                 />
                                 <IconButton
                                     iconName="ri-arrow-down-s-line"
@@ -125,6 +130,7 @@ function PlanWorkModal({ setRender }: iModalPlanWorkModal) {
                                     onClick={() => {
                                         changeSlide(1, index)
                                     }}
+                                    disabled={_disabled}
                                 />
                             </div>
                         </div>
