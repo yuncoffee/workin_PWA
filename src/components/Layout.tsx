@@ -78,7 +78,9 @@ function Layout({ children }: iLayout) {
 
     useEffect(() => {
         const exceptPath = ["/", "/signup", "/appsettings"]
-        checkUseGeolocation(currentLocation, setCurrentLocation)
+        if (router.pathname === "/home") {
+            checkUseGeolocation(currentLocation, setCurrentLocation)
+        }
         if (exceptPath.includes(router.pathname)) {
             setViewOnly(true)
         } else {
