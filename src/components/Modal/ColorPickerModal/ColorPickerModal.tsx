@@ -20,7 +20,6 @@ function ColorPickerModal() {
     const handleCustomColor = (type?: number) => {
         if (color) {
             const _value = hexToHsl(color?.hex) as number[]
-            console.log(_value)
             const _color = _value.map((color, index) => {
                 let colorToString = color.toString()
                 if (index > 0) {
@@ -41,8 +40,6 @@ function ColorPickerModal() {
     const handleColorChange = useCallback(
         (_color: ColorResult) => {
             setColor(_color)
-
-            color && handleCustomColor()
         },
         [color],
     )
