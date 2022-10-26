@@ -17,23 +17,25 @@ function SettingList() {
     const VERSION_NUM = "0.0.1"
     const [themeAtom, setThemeAtom] = useRecoilState(rcThemeAtom)
 
-    const [isThemeDark, setIsThemeDark] = useState<boolean>(
-        themeAtom.theme === "dark",
-    )
+    const [isThemeDark, setIsThemeDark] = useState<boolean>()
 
     useEffect(() => {
-        if (themeAtom.theme === "light") {
-            setIsThemeDark(isDarkMode())
-        }
+        setIsThemeDark(localStorage.getItem("darkmode") === "dark")
     }, [])
 
     useEffect(() => {
         if (isThemeDark) {
-            setThemeAtom({ ...themeAtom, theme: "dark" })
+            localStorage.setItem("darkmode", "dark")
+            setThemeAtom({ ...themeAtom, theme: isDarkMode() })
         } else {
-            setThemeAtom({ ...themeAtom, theme: "light" })
+            localStorage.setItem("darkmode", "light")
+            setThemeAtom({ ...themeAtom, theme: isDarkMode() })
         }
     }, [isThemeDark])
+
+    const setLocalMode = () => {
+        localStorage.setItem("darkmode", themeAtom.theme)
+    }
 
     const handleCoachMarkButton = () => {
         console.log("!")

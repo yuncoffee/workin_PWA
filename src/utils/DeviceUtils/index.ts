@@ -1,8 +1,24 @@
 import { Dispatch, SetStateAction } from "react"
+import { Device, Theme } from "../../models/Data/common"
 
-export const isDarkMode = () =>
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
+export const isDarkMode = () => {
+    const _modeSetting = localStorage.getItem("darkmode")
+    console.log("_modeSetting", _modeSetting)
+    if (typeof _modeSetting === "object") {
+        // 처음 들어가서 세팅 안함
+        if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+            return "dark"
+        } else {
+            return "light"
+        }
+    } else {
+        // 다크모드 세팅값 넣어주셈
+        return _modeSetting as Theme
+    }
+}
 
 export const checkUseGeolocation = (
     currentLocation: { location: string; coordinate: number[] },
@@ -23,6 +39,28 @@ export const checkUseGeolocation = (
         })
     } else {
         alert("위치정보 사용불가")
+    }
+}
+
+/**
+ * 앱을 실행하는 디바이스 체크를 위한 함수
+ * @returns Device
+ */
+export const checkDevice = () => {
+    const userAgent = navigator.userAgent.toLowerCase()
+    if (userAgent.indexOf("android") > -1) {
+        //안드로이드
+        return "and"
+    } else if (
+        userAgent.indexOf("iphone") > -1 ||
+        userAgent.indexOf("ipad") > -1 ||
+        userAgent.indexOf("ipod") > -1
+    ) {
+        //IOS
+        return "ios"
+    } else {
+        //아이폰, 안드로이드 외 모바일
+        return "web"
     }
 }
 

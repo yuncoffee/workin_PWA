@@ -1,8 +1,8 @@
-import Head from "next/head"
-import { useRouter } from "next/router"
 import { cloneElement, ReactElement, useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil"
 import dayjs from "dayjs"
+import Head from "next/head"
+import { useRouter } from "next/router"
 import weekOfYear from "dayjs/plugin/weekOfYear"
 import duration from "dayjs/plugin/duration"
 import {
@@ -14,20 +14,23 @@ import {
     rcPrimaryColorAtom,
     rcThemeAtom,
 } from "../recoil/Common"
-import { checkUseGeolocation, isDarkMode } from "../utils/DeviceUtils"
+import {
+    checkDevice,
+    checkUseGeolocation,
+    isDarkMode,
+} from "../utils/DeviceUtils"
 import { useModalActive } from "../utils/ModalUtils"
 import GlobalHeader from "./Header/GlobalHeader"
 import GlobalNav from "./Nav/GlobalNav"
+import { Layout } from "../models/Components/Layout/layout"
 
-interface iLayout {
-    children: ReactElement
-}
+function Layout({ children }: Layout) {
+    dayjs.extend(weekOfYear) // dayjs plugin 추가
+    dayjs.extend(duration) // dayjs plugin 추가
 
-function Layout({ children }: iLayout) {
-    dayjs.extend(weekOfYear)
-    dayjs.extend(duration)
     const router = useRouter()
     const { handleCloseModal } = useModalActive()
+
     const [customInfo, setCustomInfo] = useRecoilState(rcCustomInfoAtom)
     const [customLightColor, setCustomLightColor] =
         useRecoilState(rcCustomLightColor)
@@ -38,20 +41,15 @@ function Layout({ children }: iLayout) {
         rcCurrentLocationAtom,
     )
     const isModalActive = useRecoilValue(rcIsModalActiveAtom)
-    const closeModal = useResetRecoilState(rcIsModalActiveAtom)
     const [viewOnly, setViewOnly] = useState(false)
+
     useEffect(() => {
-        // requestPermission()
-        // getFcmToken()
-        // receiveFcm()
-        checkDevice()
-        checkUseGeolocation(currentLocation, setCurrentLocation)
         const _initColor = localStorage.getItem("customcolor")
-        if (isDarkMode()) {
-            setThemeAtom({ ...themeAtom, theme: "dark" })
-        } else {
-            setThemeAtom({ ...themeAtom, theme: "light" })
-        }
+
+        setDeviceAtom({ ...deviceAtom, device: checkDevice() })
+        setThemeAtom({ ...themeAtom, theme: isDarkMode() })
+        checkUseGeolocation(currentLocation, setCurrentLocation)
+
         if (typeof _initColor === "string") {
             setCustomLightColor(_initColor!)
         }
@@ -118,24 +116,6 @@ function Layout({ children }: iLayout) {
         }
     }, [customLightColor])
 
-    const checkDevice = () => {
-        const userAgent = navigator.userAgent.toLowerCase()
-        if (userAgent.indexOf("android") > -1) {
-            //안드로이드
-            setDeviceAtom({ ...deviceAtom, device: "and" })
-        } else if (
-            userAgent.indexOf("iphone") > -1 ||
-            userAgent.indexOf("ipad") > -1 ||
-            userAgent.indexOf("ipod") > -1
-        ) {
-            //IOS
-            setDeviceAtom({ ...deviceAtom, device: "ios" })
-        } else {
-            //아이폰, 안드로이드 외 모바일
-            setDeviceAtom({ ...deviceAtom, device: "web" })
-        }
-    }
-
     return (
         <>
             <Head>
@@ -153,7 +133,6 @@ function Layout({ children }: iLayout) {
                 data-viewonly={viewOnly}
             >
                 {cloneElement(children, { setCustomLightColor })}
-                {/* {children} */}
             </main>
             <div
                 id="modal-root"

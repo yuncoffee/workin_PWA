@@ -54,6 +54,7 @@ function CheckContainer({ render }: iCheckContainer) {
     }, [render])
 
     const handleCheckTime = () => {
+        // TODO : coffee alert 토스트 처리
         const _plan = localStorage.getItem("plandata")
         if (!_plan) {
             router.push("/schedule")
