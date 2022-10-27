@@ -79,6 +79,9 @@ export const rcIsModalActiveAtom = atom<iModal>({
     },
 })
 
+/**
+ * 화면에 보여질 유저정보 데이터를 위한 atom
+ */
 export const rcCustomInfoAtom = atom<CustomInfo>({
     key: "rcCustomInfoAtom",
     default: {
