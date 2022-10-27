@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic"
-import React from "react"
+import React, { useEffect } from "react"
+import { useRecoilState } from "recoil"
+import { rcCustomInfoAtom, rcPrevFromData } from "../../src/recoil/Common"
 
 function index() {
     const CSRComponent = dynamic(

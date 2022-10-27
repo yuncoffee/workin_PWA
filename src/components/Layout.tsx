@@ -11,6 +11,7 @@ import {
     rcCustomLightColor,
     rcDeviceAtom,
     rcIsModalActiveAtom,
+    rcPrevFromData,
     rcPrimaryColorAtom,
     rcThemeAtom,
 } from "../recoil/Common"
@@ -52,8 +53,13 @@ function Layout({ children }: Layout) {
         checkUseGeolocation(currentLocation, setCurrentLocation)
 
         _initColor && setCustomLightColor(_initColor)
+
         _userInfo && setCustomInfo(getCustomInfo(customInfo, _userInfo))
     }, [])
+
+    useEffect(() => {
+        console.log(customInfo)
+    }, [customInfo])
 
     useEffect(() => {
         const exceptPath = ["/", "/signup", "/appsettings"]

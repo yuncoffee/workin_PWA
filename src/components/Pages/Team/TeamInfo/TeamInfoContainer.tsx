@@ -27,7 +27,7 @@ function TeamInfoContainer({ isMyTeam }: iTeamInfoContainer) {
             member: _mockMember,
         }
         setTeamInfo(_newInfo)
-    }, [])
+    }, [customInfoAtom])
 
     return (
         <BasicContainer

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import BasicContainer from "../../../Container/BasicContainer"
 import Button from "../../../Core/Button/Button"
 import Profile from "../../../Core/Profile/Profile"
@@ -12,13 +12,22 @@ import { useRouter } from "next/router"
 
 function MyInfoContainer() {
     const router = useRouter()
-    const customInfoAtom = useRecoilValue(rcCustomInfoAtom)
-    const [userName, setUserName] = useState(customInfoAtom.name)
+    const customInfo = useRecoilValue(rcCustomInfoAtom)
+    const [userName, setUserName] = useState(customInfo.name)
     const [detailInfo, setDetailInfo] = useState({
-        team: customInfoAtom.part,
-        work: customInfoAtom.role,
-        email: customInfoAtom.email,
+        team: customInfo.part,
+        work: customInfo.role,
+        email: customInfo.email,
     })
+
+    useEffect(() => {
+        setDetailInfo({
+            team: customInfo.part,
+            work: customInfo.role,
+            email: customInfo.email,
+        })
+        setUserName(customInfo.name)
+    }, [customInfo])
 
     const handleInfoChange = () => {
         console.log("change!")
