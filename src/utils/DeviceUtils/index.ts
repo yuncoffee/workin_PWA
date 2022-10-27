@@ -85,7 +85,7 @@ export const getPrimaryColor = (color: string) => {
 
     // TODO: coffee : 다크모드 추가작업 필요
     // 다크모드 시 설정
-    _rootDark?.style.setProperty("--sy-pri-normal", `${_darkColorResult}`)
+    _rootDark?.style.setProperty("--sy-pri-normal", `${color}`)
     _rootDark?.style.setProperty("--sy-pri-dark", `${_darkColorResult}`)
 
     const hslPrimaryColor = _rootStyle.getPropertyValue("--sy-pri-normal")
