@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { rcDeviceAtom, rcThemeAtom } from "../../../../recoil/Common"
 import { isDarkMode } from "../../../../utils/DeviceUtils"
@@ -33,20 +33,14 @@ function SettingList() {
         }
     }, [isThemeDark])
 
-    const setLocalMode = () => {
-        localStorage.setItem("darkmode", themeAtom.theme)
-    }
-
-    const handleCoachMarkButton = () => {
-        console.log("!")
-    }
-
     return (
         <article className={styles.settingList}>
             <SettingListItem name={`다크모드 : ${isThemeDark ? "켬" : "끔"}`}>
                 <Toggle
-                    toggleState={isThemeDark}
-                    setToggleState={setIsThemeDark}
+                    toggleState={isThemeDark as boolean}
+                    setToggleState={
+                        setIsThemeDark as Dispatch<SetStateAction<boolean>>
+                    }
                 />
             </SettingListItem>
             {SETTING_LINK_LIST.map((item, index) => {

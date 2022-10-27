@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 import { atom } from "recoil"
-import { Device, Theme } from "../../models/Data/common"
+import { CustomInfo, Device, Theme } from "../../models/Data/common"
 import { iModal } from "../../models/Data/Modal/modal"
 
 /**
@@ -34,11 +34,17 @@ export const rcPrimaryColorAtom = atom<string>({
     default: undefined,
 })
 
+/**
+ * 앱의 priamry 컬러 설정을 위한 atom
+ */
 export const rcCustomLightColor = atom({
     key: "rcCustomLightColor",
     default: "0, 0%, 17%",
 })
 
+/**
+ * 네이버 지도 및 위치정보 데이터를 위한 atom
+ */
 export const rcCurrentLocationAtom = atom<{
     location: string
     coordinate: number[]
@@ -73,7 +79,7 @@ export const rcIsModalActiveAtom = atom<iModal>({
     },
 })
 
-export const rcCustomInfoAtom = atom({
+export const rcCustomInfoAtom = atom<CustomInfo>({
     key: "rcCustomInfoAtom",
     default: {
         email: "",

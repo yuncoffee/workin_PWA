@@ -67,8 +67,6 @@ function CustomFormContainer({ props, defaultValue }: any) {
     const [prevColor, setPrevColor] = useState("")
 
     useEffect(() => {
-        console.log("test")
-
         if (isFirst) {
             setPrevColor("0, 0%, 0%")
         } else {
