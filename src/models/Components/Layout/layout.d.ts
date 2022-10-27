@@ -1,6 +1,10 @@
 import dayjs from "dayjs"
 import { ReactNode } from "react"
 
+export interface Layout {
+    children: ReactElement
+}
+
 export interface iBasicContainer {
     title?: string
     children?: ReactNode

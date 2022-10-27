@@ -1,21 +1,50 @@
 import dayjs from "dayjs"
 import { atom } from "recoil"
+import { CustomInfo, Device, Theme } from "../../models/Data/common"
 import { iModal } from "../../models/Data/Modal/modal"
 
-export const rcDeviceAtom = atom({
+/**
+ * 앱을 실행하는 디바이스에 대한 정보
+ * @type Device = "and" | "ios" | "web"
+ */
+export const rcDeviceAtom = atom<{ device: Device | "" }>({
     key: "rcDeviceAtom",
     default: {
         device: "",
     },
 })
 
-export const rcThemeAtom = atom({
+/**
+ * 앱의 라이트모드 다크모드 변경을 위한 atom
+ * @type Theme = "light" | "dark"
+ */
+export const rcThemeAtom = atom<{ theme: Theme }>({
     key: "rcThemeAtom",
     default: {
         theme: "light",
     },
 })
 
+/**
+ * 앱의 priamry 컬러 변경을 위한 atom
+ */
+
+export const rcPrimaryColorAtom = atom<string>({
+    key: "rcPrimaryColorAtom",
+    default: undefined,
+})
+
+/**
+ * 앱의 priamry 컬러 설정을 위한 atom
+ */
+export const rcCustomLightColor = atom({
+    key: "rcCustomLightColor",
+    default: "0, 0%, 17%",
+})
+
+/**
+ * 네이버 지도 및 위치정보 데이터를 위한 atom
+ */
 export const rcCurrentLocationAtom = atom<{
     location: string
     coordinate: number[]
@@ -37,16 +66,6 @@ export const rcToDayDateAtom = atom({
     default: dayjs(),
 })
 
-export const rcPrimaryColorAtom = atom<string>({
-    key: "rcPrimaryColorAtom",
-    default: undefined,
-})
-
-export const rcCustomLightColor = atom({
-    key: "rcCustomLightColor",
-    default: "0, 0%, 17%",
-})
-
 export const rcIsModalActiveAtom = atom<iModal>({
     key: "rcIsModalActiveAtom",
     default: {
@@ -60,7 +79,10 @@ export const rcIsModalActiveAtom = atom<iModal>({
     },
 })
 
-export const rcCustomInfoAtom = atom({
+/**
+ * 화면에 보여질 유저정보 데이터를 위한 atom
+ */
+export const rcCustomInfoAtom = atom<CustomInfo>({
     key: "rcCustomInfoAtom",
     default: {
         email: "",

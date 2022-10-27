@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import {
     rcCustomInfoAtom,
@@ -13,67 +13,30 @@ import { doc, updateDoc } from "firebase/firestore/lite"
 import { db } from "../../utils/Firebase/firebase"
 import ColorPickerModal from "../Modal/ColorPickerModal/ColorPickerModal"
 import { useModalActive } from "../../utils/ModalUtils"
+import { CustomInfo } from "../../models/Data/common"
+import { USER_INFO_TEMPLATE } from "../../utils/UserUtils"
 
-type changeableInfo = {
-    [key: string]: string | Date | undefined
-    name: string
-    org: string
-    part: string
-    role: string
-    color: string
-    email?: string
-    updateat?: Date
-}
-
-function CustomFormContainer({ props, defaultValue }: any) {
-    const USER_INFO_TEMPLATE = [
-        {
-            id: "user-name",
-            tag: "name",
-            label: "사용자명",
-            placeholder: "등록할 사용자명을 작성해주세요.",
-        },
-        {
-            id: "user-org",
-            tag: "org",
-            label: "내 조직",
-            placeholder: "내가 속한 조직명을 작성해주세요",
-        },
-        {
-            id: "user-part",
-            tag: "part",
-            label: "내 부서",
-            placeholder: "내가 속한 부서명을 작성해주세요",
-        },
-        {
-            id: "user-role",
-            tag: "role",
-            label: "내 역할",
-            placeholder: "조직에서의 내 역할을 작성해주세요",
-        },
-    ]
-    const isModalActive = useRecoilValue(rcIsModalActiveAtom)
+function CustomFormContainer() {
     const { handleModalActive } = useModalActive()
-
     const infoRef = useRef<null | HTMLInputElement[]>([])
-
-    const setCustomLightColor = useSetRecoilState(rcCustomLightColor)
     const [customInfo, setCustomInfo] = useRecoilState(rcCustomInfoAtom)
-    const [changeableInfo, setChangeableInfo] = useState<changeableInfo | null>(
+    const isModalActive = useRecoilValue(rcIsModalActiveAtom)
+    const setCustomLightColor = useSetRecoilState(rcCustomLightColor)
+    const [changeableInfo, setChangeableInfo] = useState<CustomInfo | null>(
         null,
     )
     const [isFirst, setIsFirst] = useState(false)
-
     const [prevColor, setPrevColor] = useState("")
+    const [_defaultValue, _setDefaultValue] = useState()
 
     useEffect(() => {
-        console.log("test")
-
         if (isFirst) {
             setPrevColor("0, 0%, 0%")
         } else {
-            if (localStorage.getItem("customcolor")) {
-                setPrevColor(localStorage.getItem("customcolor")!)
+            const _customColor = localStorage.getItem("customcolor")
+            console.log(_customColor)
+            if (_customColor) {
+                setPrevColor(_customColor)
             } else {
                 localStorage.setItem("customcolor", prevColor)
                 setPrevColor("0, 0%, 0%")
@@ -82,20 +45,21 @@ function CustomFormContainer({ props, defaultValue }: any) {
     }, [isFirst])
 
     useEffect(() => {
-        console.log("test2")
-        localStorage.setItem("userinfo", JSON.stringify({ ...customInfo }))
-        const _changeableInfo: changeableInfo = { ...customInfo }
+        customInfo &&
+            localStorage.setItem("userinfo", JSON.stringify({ ...customInfo }))
+        const _changeableInfo: CustomInfo = { ...customInfo }
+        const _isFirst = localStorage.getItem("isfirst")
 
         delete _changeableInfo.updateat
         delete _changeableInfo.email
 
         setChangeableInfo(_changeableInfo)
-
-        const _isFirst = localStorage.getItem("isfirst")
-        if (typeof _isFirst === "string" && JSON.parse(_isFirst)) {
-            setIsFirst(true)
-        }
+        _isFirst && JSON.parse(_isFirst) && setIsFirst(true)
     }, [customInfo])
+
+    useEffect(() => {
+        console.log(changeableInfo)
+    }, [changeableInfo])
 
     const handleSubmitInfo = async (type: number) => {
         const _myName = infoRef.current![0].value
@@ -149,21 +113,24 @@ function CustomFormContainer({ props, defaultValue }: any) {
                                 <label htmlFor={info.id}>
                                     <h6>{info.label}</h6>
                                 </label>
-                                <InputText
-                                    id={info.id}
-                                    size="lg"
-                                    placeholder={info.placeholder}
-                                    // defaultValue={
-                                    //     !isFirst &&
-                                    //     localStorage.getItem("userinfo") &&
-                                    //     JSON.parse(
-                                    //         localStorage.getItem("userinfo")!,
-                                    //     )[info.tag]
-                                    // }
-                                    ref={(el: HTMLInputElement) => {
-                                        infoRef.current![index] = el
-                                    }}
-                                />
+                                {changeableInfo ? (
+                                    <InputText
+                                        id={info.id}
+                                        size="lg"
+                                        placeholder={info.placeholder}
+                                        dataValue={changeableInfo[info.tag]}
+                                        defaultValue={
+                                            !isFirst && changeableInfo
+                                                ? changeableInfo[info.tag]
+                                                : undefined
+                                        }
+                                        ref={(el: HTMLInputElement) => {
+                                            infoRef.current![index] = el
+                                        }}
+                                    />
+                                ) : (
+                                    ""
+                                )}
                             </div>
                         )
                     })}
@@ -187,7 +154,7 @@ function CustomFormContainer({ props, defaultValue }: any) {
             <BasicContainer>
                 <LinkButton
                     buttonType="button"
-                    href={"/home"}
+                    href={isFirst ? "/home" : "/settings"}
                     size="xl"
                     buttonName={isFirst ? "시작하기" : "변경하기"}
                     length="100%"
@@ -198,7 +165,7 @@ function CustomFormContainer({ props, defaultValue }: any) {
                 <LinkButton
                     buttonType="button"
                     variant="transparent-line"
-                    href={"/home"}
+                    href={isFirst ? "/home" : "/settings"}
                     size="xl"
                     buttonName={isFirst ? "다음에 설정하기" : "변경취소"}
                     onClick={() => {
