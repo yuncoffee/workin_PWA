@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import {
     rcCustomInfoAtom,
     rcCustomLightColor,
     rcIsModalActiveAtom,
+    rcPrevFromData,
 } from "../../recoil/Common"
 import Button from "../Core/Button/Button"
 import LinkButton from "../Core/Button/LinkButton"
@@ -20,6 +21,7 @@ function CustomFormContainer() {
     const { handleModalActive } = useModalActive()
     const infoRef = useRef<null | HTMLInputElement[]>([])
     const [customInfo, setCustomInfo] = useRecoilState(rcCustomInfoAtom)
+    const [prevFormData, setPrevFormData] = useRecoilState(rcPrevFromData)
     const isModalActive = useRecoilValue(rcIsModalActiveAtom)
     const setCustomLightColor = useSetRecoilState(rcCustomLightColor)
     const [changeableInfo, setChangeableInfo] = useState<CustomInfo | null>(
@@ -45,21 +47,23 @@ function CustomFormContainer() {
     }, [isFirst])
 
     useEffect(() => {
-        customInfo &&
+        if (customInfo) {
             localStorage.setItem("userinfo", JSON.stringify({ ...customInfo }))
+        }
+
         const _changeableInfo: CustomInfo = { ...customInfo }
         const _isFirst = localStorage.getItem("isfirst")
 
         delete _changeableInfo.updateat
         delete _changeableInfo.email
-
+        console.log(infoRef && infoRef.current && infoRef.current![0])
         setChangeableInfo(_changeableInfo)
         _isFirst && JSON.parse(_isFirst) && setIsFirst(true)
     }, [customInfo])
 
     useEffect(() => {
-        console.log(changeableInfo)
-    }, [changeableInfo])
+        console.log(prevFormData)
+    }, [prevFormData])
 
     const handleSubmitInfo = async (type: number) => {
         const _myName = infoRef.current![0].value
@@ -102,28 +106,45 @@ function CustomFormContainer() {
         }
     }
 
+    const handlePrevData = (key: string, value: string) => {
+        const _newData = { ...prevFormData, [key]: value }
+        // _newData = {_newData[key] : value}
+
+        setPrevFormData(_newData)
+        console.log(_newData)
+    }
+
     return (
         <>
             <BasicContainer title="앱 사용을 위한 정보를 작성해주세요" />
             <BasicContainer title="회원 정보">
                 <section s-box="v-box" s-gap="8px">
                     {USER_INFO_TEMPLATE.map((info, index) => {
+                        const _tag: "name" | "org" | "part" | "role" =
+                            info.tag as "name" | "org" | "part" | "role"
                         return (
                             <div s-box="v-box" s-gap="4px" key={index}>
                                 <label htmlFor={info.id}>
                                     <h6>{info.label}</h6>
                                 </label>
-                                {changeableInfo ? (
+                                {prevFormData ? (
                                     <InputText
                                         id={info.id}
                                         size="lg"
                                         placeholder={info.placeholder}
-                                        dataValue={changeableInfo[info.tag]}
                                         defaultValue={
-                                            !isFirst && changeableInfo
-                                                ? changeableInfo[info.tag]
+                                            !isFirst && prevFormData
+                                                ? prevFormData[_tag]
                                                 : undefined
                                         }
+                                        onChange={(event) => {
+                                            const _target =
+                                                event.target as HTMLInputElement
+                                            handlePrevData(
+                                                info.tag,
+                                                _target.value,
+                                            )
+                                        }}
                                         ref={(el: HTMLInputElement) => {
                                             infoRef.current![index] = el
                                         }}
@@ -151,12 +172,13 @@ function CustomFormContainer() {
                     </div>
                 </section>
             </BasicContainer>
+
             <BasicContainer>
                 <LinkButton
                     buttonType="button"
                     href={isFirst ? "/home" : "/settings"}
                     size="xl"
-                    buttonName={isFirst ? "시작하기" : "변경하기"}
+                    buttonName={isFirst ? "설정완료" : "변경하기"}
                     length="100%"
                     onClick={() => {
                         handleSubmitInfo(1)
@@ -171,7 +193,7 @@ function CustomFormContainer() {
                     onClick={() => {
                         isFirst && handleSubmitInfo(0)
 
-                        setCustomLightColor(prevColor)
+                        setCustomLightColor(prevFormData.color)
                     }}
                     length="100%"
                 />

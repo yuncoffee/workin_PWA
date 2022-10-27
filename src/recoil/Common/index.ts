@@ -104,3 +104,14 @@ export const rcCurrentAddressAtom = atom({
     key: "rcCurrentAddressAtom",
     default: "주소를 불러오는 중입니다..",
 })
+
+export const rcPrevFromData = atom({
+    key: "rcPrevFromData",
+    default: {
+        name: "",
+        org: "",
+        part: "",
+        role: "",
+        color: "",
+    },
+})
