@@ -20,25 +20,23 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
                 <link rel="manifest" href="/manifest.json" />
                 <link
-                    href="/images/icons/favicon-16x16.png"
+                    href="/images/ios/16.png"
                     rel="icon"
                     type="image/png"
                     sizes="16x16"
                 />
                 <link
-                    href="/images/icons/favicon-32x32.png"
+                    href="/images/ios/32.png"
                     rel="icon"
                     type="image/png"
                     sizes="32x32"
                 />
-                <link
-                    rel="apple-touch-icon"
-                    href="/images/icons/apple-icon.png"
-                ></link>
+                <link rel="apple-touch-icon" href="/images/ios/192.png"></link>
                 <link
                     href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
                     rel="stylesheet"
                 />
+                <link rel="favicon" href="/favicon.ico"></link>
                 <script
                     type="text/javascript"
                     src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_MAP_CLIENT_ID}`}
